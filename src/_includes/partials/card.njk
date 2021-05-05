@@ -2,35 +2,6 @@
     <article class="post-card {{post.class}}">
         {% if post.feature_image %}
             <a class="post-card-image-link" href="{{post.url}}">
-                {# <img
-                    class="post-card-image"
-
-                    {% set featureImagePath = post.feature_image %}
-                    {% if '/content/images' in featureImagePath %}
-                        srcset="{{ featureImagePath | replace('/images/', '/images/size/w300/') }} 300w,
-                            {{ featureImagePath | replace('/images/', '/images/size/w600/') }} 600w,
-                            {{ featureImagePath | replace('/images/', '/images/size/w1000/') }} 1000w,
-                            {{ featureImagePath | replace('/images/', '/images/size/w2000/') }} 2000w"
-                        sizes="(max-width: 360px) 300px, (max-width: 655px) 600px, (max-width: 767px) 1000px, (min-width: 768px) 300px, 92vw"
-                    {% else %}
-                        src="{{ post.feature_image }}"
-                    {% endif %}
-
-                    onerror="this.style.display='none'"
-                    alt="{{ post.title }}"
-                /> #}
-
-                <!-- async test -->
-                {# {% image
-                    post.feature_image, post.title,
-                    "(max-width: 360px) 300px, 
-                     (max-width: 655px) 600px,
-                     (max-width: 767px) 1000px,
-                     (min-width: 768px) 300px,
-                     92vw"
-                %} #}
-
-                <!-- sync test -->
                 {% 
                     image
                     post.feature_image,
@@ -78,7 +49,6 @@
                                 </div>
                                 {% if author.profile_image %}
                                     <a href="{{ author.url}}" class="static-avatar">
-                                        {# <img class="author-profile-image" src="{{author.profile_image}}" alt="{{author.name}}" /> #}
                                         {% 
                                             image
                                             author.profile_image,
