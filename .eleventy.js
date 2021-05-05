@@ -13,7 +13,7 @@ const htmlMinTransform = require("./src/transforms/html-min-transform.js");
 const api = new ghostContentAPI({
   url: process.env.GHOST_API_URL,
   key: process.env.GHOST_CONTENT_API_KEY,
-  version: "v2"
+  version: "v3"
 });
 
 // Strip Ghost domain from urls
@@ -150,7 +150,8 @@ module.exports = function(config) {
     collection = await api.tags
       .browse({
         include: "count.posts",
-        limit: "all"
+        limit: "all",
+        filter: "visibility:public"
       })
       .catch(err => {
         console.error(err);
@@ -203,7 +204,7 @@ module.exports = function(config) {
     },
 
     // Files read by Eleventy, add as needed
-    templateFormats: ["css", "njk", "md", "txt"],
+    templateFormats: ["css", "njk", "md", "txt", "hbs"],
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
     passthroughFileCopy: true
