@@ -1,35 +1,73 @@
 {% macro card(post) %}
-    <a class="post-card{% if post.featured %}  post-card-featured{% endif %}" href="{{ post.url }}">
-        <header class="post-card-header">
-            {% if post.feature_image %}
-                <img class="post-card-image" src="{{ post.feature_image }}" alt="{{ post.title }}">
-            {% endif %}
-            <div class="post-card-tags">
-                {% if post.tags %}{% for tag in post.tags %}{{ tag.name }} {% endfor %}{% endif %}
+    <article class="post-card {{post.class}}">
+        {% if post.feature_image %}
+            <a class="post-card-image-link" href="{{post.url}}">
+                <img
+                    class="post-card-image"
+
+                    {% set featureImagePath = post.feature_image %}
+                    {% if '/content/images' in featureImagePath %}
+                        srcset="{{ featureImagePath | replace('/images/', '/images/size/w300/') }} 300w,
+                            {{ featureImagePath | replace('/images/', '/images/size/w600/') }} 600w,
+                            {{ featureImagePath | replace('/images/', '/images/size/w1000/') }} 1000w,
+                            {{ featureImagePath | replace('/images/', '/images/size/w2000/') }} 2000w"
+                        sizes="(max-width: 360px) 300px, (max-width: 655px) 600px, (max-width: 767px) 1000px, (min-width: 768px) 300px, 92vw"
+                    {% else %}
+                        src="{{ post.feature_image }}"
+                    {% endif %}
+
+                    onerror="this.style.display='none'"
+                    alt="{{ post.title }}"
+                />
+            </a>
+        {% else %}
+            <div class="no-feature-image-offsetter"></div>
+        {% endif %}
+
+        <div class="post-card-content">
+            <div class="post-card-content-link">
+                <header class="post-card-header">
+                    {%if post.primary_tag %}
+                        <span class="post-card-tags">
+                            <a href="{{post.primary_tag.url}}">
+                                #{{post.primary_tag.name}}
+                            </a>
+                        </span>
+                    {% endif %}
+                    <h2 class="post-card-title">
+                        <a href="{{post.url}}">
+                            {{post.title}}
+                        </a>
+                    </h2>
+                </header>
             </div>
-            <h2 class="post-card-title">
-                {{ post.title }}
-            </h2>
-        </header>
-        <div class="post-card-excerpt">
-            <p>{{ post.excerpt }}</p>
-        </div>
-        <footer class="post-card-footer">
-            <div class="post-card-footer-left">
-                {% if post.primary_author.profile_image %}
-                <div class="post-card-avatar">
-                    <img
-                        class="author-profile-image"
-                        src="{{ post.primary_author.profile_image }}"
-                        alt="{{ post.primary_author.name }}"
-                    />
-                </div>
+
+            <footer class="post-card-meta">
+                {% if post.primary_author.name == "freeCodeCamp.org" %}
+                    <time class="meta-item-single">{{ post.published_at }}</time>
+                {% else %}
+                    <ul class="author-list">
+                        {% for author in post.authors %}
+                            <li class="author-list-item">
+                                <div class="author-name-tooltip">
+                                    {{ author.name }}
+                                </div>
+                                {% if author.profile_image %}
+                                    <a href="{{ author.url}}" class="static-avatar">
+                                        <img class="author-profile-image" src="{{author.profile_image}}" alt="{{author.name}}" />
+                                    </a>
+                                {% else %}
+                                    <a href="{{author.url}}" class="static-avatar author-profile-image">Add avatar icon</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <span class="meta-content">
+                        <a class="meta-item" href="{{post.primary_author.url}}">{{post.primary_author.name}}</a>
+                        <time class="meta-item">{{ post.published_at }}</time>
+                    </span>
                 {% endif %}
-                <span>{{ post.primary_author.name }}</span>
-            </div>
-            <div class="post-card-footer-right">
-                <div>{{ post.html | safe | getReadingTime }} min read</div>
-            </div>
-        </footer>
-    </a>
+            </footer>
+        </div>
+    </article>
 {% endmacro %}
