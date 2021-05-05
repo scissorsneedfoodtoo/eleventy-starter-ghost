@@ -43,6 +43,7 @@
     "html-minifier": "^4.0.0"
   },
   "devDependencies": {
+    "@11ty/eleventy-img": "^0.8.3",
     "eslint": "^7.25.0",
     "eslint-plugin-ghost": "^2.1.0"
   }

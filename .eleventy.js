@@ -2,9 +2,9 @@ require("dotenv").config();
 
 const cleanCSS = require("clean-css");
 const fs = require("fs");
+const path = require("path");
+const Image = require("@11ty/eleventy-img");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
-const localImages = require("eleventy-plugin-local-images");
-const lazyImages = require("eleventy-plugin-lazyimages");
 const ghostContentAPI = require("@tryghost/content-api");
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
@@ -28,19 +28,37 @@ module.exports = function(config) {
   // Assist RSS feed template
   config.addPlugin(pluginRSS);
 
-  // Apply performance attributes to images
-  config.addPlugin(lazyImages, {
-    cacheFile: ""
-  });
-
   // Copy images over from Ghost
-  config.addPlugin(localImages, {
-    distPath: "dist",
-    assetPath: "/assets/images",
-    selector: "img",
-    attribute: "data-src", // Lazy images attribute
-    verbose: false
-  });
+  function imageShortcode(src, cls, alt, sizes, widths) {
+    const imageFormats = ["webp", "jpeg"];
+    const imageExtension = path.extname(src);
+    const imageName = path.basename(src, imageExtension).split('?')[0]; // strip off url params, if any
+    const options = {
+      widths: widths,
+      formats: imageFormats,
+      outputDir: "./dist/assets/images/",
+      filenameFormat: function (id, src, width, format, options) {
+        return `${imageName}-${width}w.${format}`
+      }
+    }
+
+    // generate images, while this is async we don’t wait
+    Image(src, options);
+
+    return `
+      <img
+        srcset="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
+        sizes="${sizes}"
+        src="/assets/images/${imageName}-${widths[0]}w.webp"
+        class="${cls}"
+        alt="${alt}"
+        loading="lazy"
+        decoding="async"
+      />
+    `;
+  }
+  
+  config.addNunjucksShortcode("image", imageShortcode);
 
   // Inline CSS
   config.addFilter("cssmin", code => {
