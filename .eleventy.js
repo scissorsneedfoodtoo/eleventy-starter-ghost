@@ -244,14 +244,16 @@ module.exports = function(config) {
       });
 
     // Attach posts to their respective tags
-    collection.forEach(async tag => {
+    collection.forEach(async targetTag => {
       const taggedPosts = posts.filter(post => {
         post.url = stripDomain(post.url);
-        return post.primary_tag && post.primary_tag.slug === tag.slug;
-      });
-      if (taggedPosts.length) tag.posts = taggedPosts;
+        if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
 
-      tag.url = stripDomain(tag.url);
+        return post.tags.map(tag => tag.slug).includes(targetTag.slug);
+      });
+      if (taggedPosts.length) targetTag.posts = taggedPosts;
+
+      targetTag.url = stripDomain(targetTag.url);
     });
 
     return collection;
