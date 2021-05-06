@@ -7,6 +7,15 @@ const Image = require("@11ty/eleventy-img");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
 const ghostContentAPI = require("@tryghost/content-api");
 
+const dayjs = require('dayjs');
+const localizedFormat = require('dayjs/plugin/localizedFormat');
+const relativeTime = require('dayjs/plugin/relativeTime');
+
+// Load dayjs plugins and set locale
+dayjs.extend(localizedFormat);
+dayjs.extend(relativeTime);
+dayjs.locale(`{{ site.lang }}`);
+
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
 
 // Init Ghost API
@@ -99,6 +108,13 @@ module.exports = function(config) {
   }
   
   config.addNunjucksShortcode("featureImage", featureImageShortcode);
+
+  // Date and time shortcodes
+  function timeAgoShortcode(dateStr) {
+    return dayjs().to(dayjs(dateStr));
+  }
+
+  config.addNunjucksShortcode("timeAgo", timeAgoShortcode);
 
   // Inline CSS
   config.addFilter("cssmin", code => {

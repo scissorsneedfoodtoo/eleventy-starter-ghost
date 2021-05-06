@@ -22,4 +22,22 @@ pagination:
     </main>
 
     {% include "partials/pagination.njk" %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const readMoreBtn = document.getElementById('readMoreBtn');
+            const postDates = [...document.querySelectorAll('.post-card-meta > .meta-content > time.meta-item')];
+            
+            // Load dayjs plugins and set locale
+            dayjs.extend(dayjs_plugin_localizedFormat);
+            dayjs.extend(dayjs_plugin_relativeTime);
+            dayjs.locale(`{{ site.lang }}`);
+
+            postDates.forEach(date => {
+                const dateStr = date.getAttribute('datetime');
+
+                // Display time ago date
+                date.innerHTML = dayjs().to(dayjs(dateStr));
+            });
+        });
+    </script>
 {% endblock%}

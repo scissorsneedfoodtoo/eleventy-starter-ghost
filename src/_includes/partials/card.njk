@@ -78,7 +78,7 @@
                     </ul>
                     <span class="meta-content">
                         <a class="meta-item" href="{{post.primary_author.url}}">{{post.primary_author.name}}</a>
-                        <time class="meta-item">{{ post.published_at }}</time>
+                        <time class="meta-item" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
                     </span>
                 {% endif %}
             </footer>
