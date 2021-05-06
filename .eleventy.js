@@ -91,6 +91,8 @@ module.exports = function(config) {
           onerror="this.style.display='none'"
           src="/assets/images/${imageName}-${widths[0]}w.webp"
           alt="${alt}" 
+          loading="lazy"
+          decoding="async"
         >
       </picture>
     `;
