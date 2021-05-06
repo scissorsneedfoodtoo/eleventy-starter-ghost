@@ -1,21 +1,83 @@
-<footer class="site-foot">
-    <div class="site-foot-nav container">
-        <div class="site-foot-nav-left">
-            <a aria-current="page" class="" href="/">
-                {{ site.title }}
-            </a> &copy; 2020 – Published with
-            <a class="site-foot-nav-item" href="https://ghost.org" target="_blank" rel="noopener noreferrer">
-                Ghost
-            </a>
-        </div>
-        {% if collections.docs %}
-            <div class="site-foot-nav-right">
-                {% for doc in collections.docs %}
-                    <a {% if page.url == doc.url %}aria-current="page"{% endif %}  class="site-foot-nav-item" href="{{ doc.url }}">
-                        {{ doc.meta_title if doc.meta_title else doc.title }}
-                    </a>
-                {% endfor %}
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-top">
+            <div class="footer-desc-col">
+                <p>
+                    "footer-desc-1"
+                </p>
+                <p>
+                    "footer-desc-2"
+                </p>
+                <p>
+                    "footer-desc-3"
+                </p>
+                <p class="footer-donation">
+                    "footer-donation"
+                </p>
             </div>
-        {% endif %}
+            <div class="trending-guides">
+                <div class="col-header">"footer-trending-guides-header"</div>
+                <div class="trending-guides-row">
+                    <div class="footer-col footer-col-1">
+                        <a id="article0" rel="noopener noreferrer" target="_blank">article0</a>
+                        <a id="article1" rel="noopener noreferrer" target="_blank">article1</a>
+                        <a id="article2" rel="noopener noreferrer" target="_blank">article2</a>
+                        <a id="article3" rel="noopener noreferrer" target="_blank">article3</a>
+                        <a id="article4" rel="noopener noreferrer" target="_blank">article4</a>
+                        <a id="article5" rel="noopener noreferrer" target="_blank">article5</a>
+                        <a id="article6" rel="noopener noreferrer" target="_blank">article6</a>
+                        <a id="article7" rel="noopener noreferrer" target="_blank">article7</a>
+                        <a id="article8" rel="noopener noreferrer" target="_blank">article8</a>
+                        <a id="article9" rel="noopener noreferrer" target="_blank">article9</a>
+                    </div>
+                    <div class="footer-col footer-col-2">
+                        <a id="article10" rel="noopener noreferrer" target="_blank">article10</a>
+                        <a id="article11" rel="noopener noreferrer" target="_blank">article11</a>
+                        <a id="article12" rel="noopener noreferrer" target="_blank">article12</a>
+                        <a id="article13" rel="noopener noreferrer" target="_blank">article13</a>
+                        <a id="article14" rel="noopener noreferrer" target="_blank">article14</a>
+                        <a id="article15" rel="noopener noreferrer" target="_blank">article15</a>
+                        <a id="article16" rel="noopener noreferrer" target="_blank">article16</a>
+                        <a id="article17" rel="noopener noreferrer" target="_blank">article17</a>
+                        <a id="article18" rel="noopener noreferrer" target="_blank">article18</a>
+                        <a id="article19" rel="noopener noreferrer" target="_blank">article19</a>
+                    </div>
+                    <div class="footer-col footer-col-3">
+                        <div class="footer-left">
+                            <a id="article20" rel="noopener noreferrer" target="_blank">article20</a>
+                            <a id="article21" rel="noopener noreferrer" target="_blank">article21</a>
+                            <a id="article22" rel="noopener noreferrer" target="_blank">article22</a>
+                            <a id="article23" rel="noopener noreferrer" target="_blank">article23</a>
+                            <a id="article24" rel="noopener noreferrer" target="_blank">article24</a>
+                        </div>
+
+                        <div class="footer-right">
+                            <a id="article25" rel="noopener noreferrer" target="_blank">article25</a>
+                            <a id="article26" rel="noopener noreferrer" target="_blank">article26</a>
+                            <a id="article27" rel="noopener noreferrer" target="_blank">article27</a>
+                            <a id="article28" rel="noopener noreferrer" target="_blank">article28</a>
+                            <a id="article29" rel="noopener noreferrer" target="_blank">article29</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='footer-bottom'>
+            <div class="col-header">"footer-our-nonprofit-header"</div>
+            <div class="footer-divider"></div>
+            <div class="our-nonprofit">
+                <a id="about" rel="noopener noreferrer" target="_blank">"footer-about"</a>
+                <a id="alumni" rel="noopener noreferrer" target="_blank">"footer-alumni"</a>
+                <a id="open-source" rel="noopener noreferrer" target="_blank">"footer-open-source"</a>
+                <a id="shop" rel="noopener noreferrer" target="_blank">"footer-shop"</a>
+                <a id="support" rel="noopener noreferrer" target="_blank">"footer-support"</a>
+                <a id="sponsors" rel="noopener noreferrer" target="_blank">"footer-sponsors"</a>
+                <a id="honesty" rel="noopener noreferrer" target="_blank">"footer-honesty"</a>
+                <a id="coc" rel="noopener noreferrer" target="_blank">"footer-coc"</a>
+                <a id="privacy" rel="noopener noreferrer" target="_blank">"footer-privacy"</a>
+                <a id="tos" rel="noopener noreferrer" target="_blank">"footer-tos"</a>
+                <a id="copyright" rel="noopener noreferrer" target="_blank">"footer-copyright"</a>
+            </div>
+        </div>
     </div>
 </footer>
