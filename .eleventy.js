@@ -174,6 +174,7 @@ module.exports = function(config) {
       post.url = stripDomain(post.url);
       post.primary_author.url = stripDomain(post.primary_author.url);
       post.tags.map(tag => (tag.url = stripDomain(tag.url)));
+      if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
       post.authors.forEach(author => author.url = stripDomain(author.url));
 
       // Convert publish date into a Date object
