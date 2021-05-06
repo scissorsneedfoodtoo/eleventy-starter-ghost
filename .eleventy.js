@@ -259,6 +259,26 @@ module.exports = function(config) {
     return collection;
   });
 
+  // Get the post popular tags
+  config.addCollection("popularTags", async function(collection) {
+    collection = await api.tags
+      .browse({
+        include: "count.posts",
+        limit: "15",
+        filter: "visibility:public",
+        order: "count.posts desc"
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    collection.forEach(tag => {
+      tag.url = stripDomain(tag.url);
+    });
+
+    return collection;
+  });
+
   // Display 404 page in BrowserSnyc
   config.setBrowserSyncConfig({
     callbacks: {

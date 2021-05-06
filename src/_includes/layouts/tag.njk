@@ -2,48 +2,7 @@
 {% from "partials/card.njk" import card %}
 
 {% set title = tag.name %}
-
-{#
-    {{#tag}}
-    <div class="under-header-content">
-        <h1 class="site-title tags-title">#{{name}}</h1>
-        <h2 class="site-description">
-            {{#if description}}
-            {{description}}
-            {{else}}
-            {{plural ../pagination.total empty=(t "A collection of posts") singular=(t "A collection of 1 post") plural=(t "A collection of % posts")}}
-            {{/if}}
-        </h2>
-        <div class="tags-row">
-
-            {{#get 'tags' limit='15' include='count.posts' order='count.posts desc'}}
-            {{#foreach tags}}
-            <a class='tag' href='{{ url }}'>
-                <h3>#{{ name }} <small> | {{ count.posts }}</small></h3>
-            </a>
-            {{/foreach}}
-            {{/get}}
-        </div>
-    </div>
-
-    </header>
-    {{/tag}}
-
-    {{!-- The main content area --}}
-    <main id="site-main" class="site-main outer">
-        <div class="inner">
-            <div class="post-feed">
-                {{#foreach posts}}
-                {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
-                {{> "post-card"}}
-                {{/foreach}}
-            </div>
-            <div class="read-more-row">
-                <button id="readMoreBtn">{{t "Load More Articles"}}</button>
-            </div>
-        </div>
-    </main>
-#}
+{% set popularTags = collections.popularTags %}
 
 {% block content %}
     <div class="under-header-content">
@@ -51,9 +10,13 @@
         <h2 class="site-description">A collection of {{ content | safe }} {{ "post" if (content == 1) else "posts" }}
         </h2>
         
-        {# <div class="tags-row">
-            can we fetch other tags?
-        </div> #}
+        <div class="tags-row">
+            {% for tag in popularTags %}
+                <a class='tag' href="{{ tag.url }}">
+                    <h3>#{{ tag.name }} <small> | {{ tag.count.posts }}</small></h3>
+                </a>
+            {% endfor %}
+        </div>
     </div>
     <section class="post-feed">
         {% if tag.posts %}
