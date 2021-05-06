@@ -60,6 +60,44 @@ module.exports = function(config) {
   
   config.addNunjucksShortcode("image", imageShortcode);
 
+  // Copy images over from Ghost
+  function featureImageShortcode(src, cls, alt, sourceOptions) {
+    const imageFormats = ["webp"];
+    const imageExtension = path.extname(src);
+    const imageName = path.basename(src, imageExtension).split('?')[0]; // strip off url params, if any
+    const widths = [...new Set(sourceOptions.map(obj => obj.width))]; // get unique widths
+    const options = {
+      widths: widths,
+      formats: imageFormats,
+      outputDir: "./dist/assets/images/",
+      filenameFormat: function (id, src, width, format, options) {
+        return `${imageName}-${width}w.${format}`
+      }
+    }
+
+    // generate images, while this is async we don’t wait
+    Image(src, options);
+
+    return `
+      <picture>
+        ${sourceOptions.map(obj => `
+          <source 
+            media="${obj.mediaStr}"
+            srcset="/assets/images/${imageName}-${obj.width}w.webp"
+          >`).join('')
+        }
+        <img 
+          class="${cls}"
+          onerror="this.style.display='none'"
+          src="/assets/images/${imageName}-${widths[0]}w.webp"
+          alt="${alt}" 
+        >
+      </picture>
+    `;
+  }
+  
+  config.addNunjucksShortcode("featureImage", featureImageShortcode);
+
   // Inline CSS
   config.addFilter("cssmin", code => {
     return new cleanCSS({}).minify(code).styles;

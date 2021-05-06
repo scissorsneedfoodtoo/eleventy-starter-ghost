@@ -1,18 +1,30 @@
 {% macro card(post) %}
     <article class="post-card {{post.class}}">
         {% if post.feature_image %}
-            <a class="post-card-image-link" href="{{post.url}}">
+            <a class="post-card-image-link" href="{{post.url}}">                
                 {% 
-                    image
+                    featureImage
                     post.feature_image,
                     "post-card-image",
                     post.title,
-                    "(max-width: 360px) 300px, 
-                     (max-width: 655px) 600px,
-                     (max-width: 767px) 1000px,
-                     (min-width: 768px) 300px,
-                     92vw",
-                     [300, 600, 1000, 2000]
+                    [
+                        {
+                            mediaStr: "(max-width: 360px)",
+                            width: 300
+                        },
+                        {
+                            mediaStr: "(max-width: 655px)",
+                            width: 600
+                        },
+                        {
+                            mediaStr: "(max-width: 767px)",
+                            width: 1000
+                        },
+                        {
+                            mediaStr: "(min-width: 768px)",
+                            width: 300
+                        }
+                    ]
                 %}
             </a>
         {% else %}
