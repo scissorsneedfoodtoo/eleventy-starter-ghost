@@ -36,6 +36,7 @@
             <meta property="article:author" content="{{ site.url }}">
         {%- endblock -%}
 
+        <link rel="icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon.ico" type="image/png">
         <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism.min.css" />
         <noscript><link rel="stylesheet" href="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism.min.css"></noscript>
         <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
@@ -43,10 +44,6 @@
         <noscript><link rel="stylesheet" href="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism-unescaped-markup.css"></noscript>
 
         <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Roboto+Mono:400,700?&display=swap">
-
-        <!-- Defualt Styles -->
-        {# {% set css %}{% include "css/styles.css" %}{% endset %}
-        <style>{{ css | cssmin | safe }}</style> #}
 
         <!-- News Theme Styles -->
         {% set css %}{% include "css/screen.css" %}{% endset %}
