@@ -2,7 +2,14 @@
 
 <div class="under-header-content">
     {% if author.profile_image %}
-        <img class="author-profile-image" src="{{ author.profile_image }}" alt="{{ author.name }}">
+        {% 
+            image
+            author.profile_image,
+            "author-profile-image",
+            author.name,
+            "150px",
+            [150]
+        %}
     {% endif %}
     <h1>{{ author.name }}</h1>
     {% if author.bio %}
