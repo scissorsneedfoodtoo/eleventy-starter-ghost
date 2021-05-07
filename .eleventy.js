@@ -191,6 +191,7 @@ module.exports = function(config) {
   config.addCollection("authors", async function(collection) {
     collection = await api.authors
       .browse({
+        include: "count.posts",
         limit: "all"
       })
       .catch(err => {
@@ -215,6 +216,7 @@ module.exports = function(config) {
       });
       if (authorsPosts.length) author.posts = authorsPosts;
 
+      author.absolute_url = author.url;
       author.url = stripDomain(author.url);
     });
 
