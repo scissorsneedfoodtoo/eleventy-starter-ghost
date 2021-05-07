@@ -201,7 +201,7 @@ module.exports = function(config) {
     // Get all posts with their authors attached
     const posts = await api.posts
       .browse({
-        include: "authors",
+        include: "tags,authors",
         limit: "all"
       })
       .catch(err => {
@@ -212,6 +212,9 @@ module.exports = function(config) {
     collection.forEach(async author => {
       const authorsPosts = posts.filter(post => {
         post.url = stripDomain(post.url);
+        post.primary_author.url = stripDomain(post.primary_author.url);
+        post.tags.map(tag => (tag.url = stripDomain(tag.url)));
+        if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
         return post.primary_author.id === author.id;
       });
       if (authorsPosts.length) author.posts = authorsPosts;
@@ -249,6 +252,7 @@ module.exports = function(config) {
     collection.forEach(async targetTag => {
       const taggedPosts = posts.filter(post => {
         post.url = stripDomain(post.url);
+        post.primary_author.url = stripDomain(post.primary_author.url);
         if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
 
         return post.tags.map(tag => tag.slug).includes(targetTag.slug);
