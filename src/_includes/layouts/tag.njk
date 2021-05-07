@@ -18,15 +18,17 @@
             {% endfor %}
         </div>
     </div>
-    <section class="post-feed">
-        {% if tag.posts %}
-            {% for post in tag.posts %}
-                {{ card(post) }}
-            {% endfor %}
-        {% else %}
-            <p>No posts to be found</p>
-        {% endif %}
-    </section>
+    <main id="site-main" class="site-main outer">
+        <div class="inner">
+            <section class="post-feed">
+                {% if tag.posts %}
+                    {% for post in tag.posts %}
+                        {{ card(post) }}
+                    {% endfor %}
+                {% endif %}
+            </section>
+        </div>
+    </main>
 {% endblock %}
 
 {%- block seo -%}
