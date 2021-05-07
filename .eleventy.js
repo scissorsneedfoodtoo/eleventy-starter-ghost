@@ -39,7 +39,7 @@ module.exports = function(config) {
 
   // Copy images over from Ghost
   function imageShortcode(src, cls, alt, sizes, widths) {
-    const imageFormats = ["webp", "jpeg"];
+    const imageFormats = ["webp"];
     const imageExtension = path.extname(src);
     const imageName = path.basename(src, imageExtension).split('?')[0]; // strip off url params, if any
     const options = {
