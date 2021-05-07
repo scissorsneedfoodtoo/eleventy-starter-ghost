@@ -1,0 +1,17 @@
+<section class="author-card">
+    {% if post.primary_author.profile_image %}
+        {% 
+            image
+            post.primary_author.profile_image,
+            "author-profile-image",
+            author.name,
+            "60px",
+            [60]
+        %}
+    {% else %}
+        <span class="avatar-wrapper">{% include "partials/icons/avatar.njk" %}</span>
+    {% endif %}
+    <section class="author-card-content author-card-content-no-bio">
+          <h4 class="author-card-name"><a href="{{ post.primary_author.url }}">{{ post.primary_author.name }}</a></h4>
+    </section>
+</section>
