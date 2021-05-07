@@ -97,7 +97,6 @@ module.exports = function(config) {
         }
         <img 
           class="${cls}"
-          onerror="this.style.display='none'"
           src="/assets/images/${imageName}-${widths[0]}w.webp"
           alt="${alt}" 
           loading="lazy"
@@ -110,6 +109,12 @@ module.exports = function(config) {
   config.addNunjucksShortcode("featureImage", featureImageShortcode);
 
   // Date and time shortcodes
+  function publishedDateShortcode(dateStr) {
+    return dayjs(dateStr).format('LL');
+  }
+
+  config.addNunjucksShortcode("publishedDate", publishedDateShortcode);
+
   function timeAgoShortcode(dateStr) {
     return dayjs().to(dayjs(dateStr));
   }
