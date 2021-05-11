@@ -7,11 +7,30 @@ permalink: 404.html
 {% set codeinjection_head = doc.codeinjection_head %}
 {% set codeinjection_foot = doc.codeinjection_foot %}
 
-{% set title = "Error 404" %}
+{% set title = "Developer News | 404 - Page not found" %}
 
 {% block content %}
-    <article class="content" style="text-align:center">
-        <h1 class="content-title">Error 404</h1>
-        <section class="content-body">Page not found, <a href="/">return home</a> to start over</section>
-    </article>
+    <div class="error-template">
+        <main id="site-main" class="site-main outer">
+            <div class="inner">
+                <section class="error-message">
+                    <h1 class="error-code">404</h1>
+                    <p class="error-description">Page not found</p>
+                    <a class="error-link" href="{{ site.url }}">Go to the front page →</a>
+                </section>
+            </div>
+        </main>
+
+        {# {{#get "posts" include="tags,authors" limit="4"}}
+        <aside class="outer">
+            <div class="inner">
+                <div class="post-feed">
+                    {{#foreach posts}}
+                    {{> "post-card"}}
+                    {{/foreach}}
+                </div>
+            </div>
+        </aside>
+        {{/get}} #}
+    </div>
 {% endblock %}
