@@ -297,6 +297,8 @@ module.exports = function(config) {
         const content_404 = fs.readFileSync("dist/404.html");
 
         bs.addMiddleware("*", (req, res) => {
+          res.writeHead(404, { "Content-Type": "text/html; charset=UTF-8" });
+          
           // Provides the 404 content without redirect.
           res.write(content_404);
           res.end();
