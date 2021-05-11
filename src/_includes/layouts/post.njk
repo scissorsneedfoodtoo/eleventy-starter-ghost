@@ -4,82 +4,6 @@
 {% set codeinjection_head = post.codeinjection_head %}
 {% set codeinjection_foot = post.codeinjection_foot %}
 
-{# <main id="site-main" class="site-main outer">
-    <div class="inner">
-
-        <article class="post-full {{post_class}} {{#unless feature_image}}no-image{{/unless}}">
-
-            <header class="post-full-header">
-                <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="{{date format="LL"}}">{{date format="LL"}}</time>
-                    {{#if primary_tag}}
-                    <span class="date-divider">/</span>
-                    {{#primary_tag}}
-                    <a href="{{url}}">
-                        #{{name}}
-                    </a>
-                    {{/primary_tag}}
-                    {{/if}}
-                </section>
-                <h1 class="post-full-title">{{title}}</h1>
-            </header>
-
-            <div class="post-full-author-header">
-
-                {{!-- There are two options for how we display the byline/author-info.
-                If the post has more than one author, we load a specific template
-                from includes/byline-multiple.hbs, otherwise, we just use the
-                default byline. --}}
-
-                {{#has author="freeCodeCamp.org"}}
-                {{else}}
-                {{> "byline-single-no-bio"}}
-                {{/has}}
-            </div>
-
-            {{#if feature_image}}
-            <figure class="post-full-image">
-                {{!-- This is a responsive image, it loads different sizes depending on device
-                https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
-                <img srcset="{{img_url feature_image size="s"}} 300w,
-                            {{img_url feature_image size="m"}} 600w,
-                            {{img_url feature_image size="l"}} 1000w,
-                            {{img_url feature_image size="xl"}} 2000w" sizes="(max-width: 800px) 400px,
-                            (max-width: 1170px) 700px,
-                            1400px" src="{{img_url feature_image size="xl"}}" alt="{{title}}"
-                    onerror="this.style.display='none'" />
-            </figure>
-            {{/if}}
-
-            <section class="post-full-content">
-                {{#has author="freeCodeCamp.org"}}
-                <div class="post-content medium-migrated-article">
-                    {{content}}
-                </div>
-                {{else}}
-                <div class="post-content">
-                    {{content}}
-                </div>
-                {{/has}}
-                <hr />
-
-                {{#has author="freeCodeCamp.org"}}
-                {{else}}
-                <div class="post-full-author-header">
-                    {{> "byline-single"}}
-                </div>
-                <hr />
-                {{/has}}
-
-                {{> "social-row"}}
-                {{> "learn-cta-row"}}
-                {{> "comments"}}
-            </section>
-
-        </article>
-    </div>
-</main> #}
-
 {% block content %}
     <main id="site-main" class="site-main outer">
         <div class="inner">
@@ -120,7 +44,7 @@
                                     width: 600
                                 },
                                 {
-                                    mediaStr: "(min-width: 768px)",
+                                    mediaStr: "(min-width: 656px)",
                                     width: 1000
                                 }
                             ]
@@ -138,13 +62,6 @@
                         %} #}
                     </figure>
                 {% endif %}
-                {# <section class="post-full-content">
-                    <h1 class="content-title">{{ title }}</h1>
-                    <section class="content-body load-external-scripts">
-                        {{ content | safe }}
-                    </section>
-                </section> #}
-
                 <section class="post-full-content">
                     <section class="post-content {{ "medium-migrated-article" if (post.primary_author.name == "freeCodeCamp.org") }}"">
                         {{ content | safe }}
@@ -160,33 +77,6 @@
                     {% include "partials/social-row.njk" %}
                     {% include "partials/learn-cta-row.njk" %}
                 </section>
-
-{# 
-                <section class="post-full-content">
-                    {{#has author="freeCodeCamp.org"}}
-                    <div class="post-content medium-migrated-article">
-                        {{content}}
-                    </div>
-                    {{else}}
-                    <div class="post-content">
-                        {{content}}
-                    </div>
-                    {{/has}}
-                    <hr />
-
-                    {{#has author="freeCodeCamp.org"}}
-                    {{else}}
-                    <div class="post-full-author-header">
-                        {{> "byline-single"}}
-                    </div>
-                    <hr />
-                    {{/has}}
-
-                    {{> "social-row"}}
-                    {{> "learn-cta-row"}}
-                    {{> "comments"}}
-                </section> #}
-
             </article>
         </div>
     </main>
