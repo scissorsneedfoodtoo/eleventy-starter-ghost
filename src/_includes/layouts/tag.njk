@@ -1,7 +1,7 @@
 {% extends 'layouts/default.njk' %}
 {% from "partials/card.njk" import card %}
 
-{% set title = tag.name %}
+{% set title = tag.name + " – " + site.title %}
 {% set popularTags = collections.popularTags %}
 
 {% block content %}

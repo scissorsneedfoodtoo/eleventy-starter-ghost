@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang }}" class="no-js">
     <head>
-        <title>{{ site.title }}</title>
+        <title>
+            <!-- Fall back to site.title if no specific title is set -->
+            {%- if title -%}
+                {{ title }}
+            {%- else -%}
+                {{ site.title }}
+            {%- endif -%}
+        </title>
         <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
         <meta name="robots" content="index,follow">
         <meta name="generator" content="Eleventy">

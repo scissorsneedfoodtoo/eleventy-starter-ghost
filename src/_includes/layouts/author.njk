@@ -1,7 +1,7 @@
 {% extends 'layouts/default.njk' %}
 {% from "partials/card.njk" import card %}
 
-{% set title = author.name %}
+{% set title = author.name + " – " + site.title %}
 
 {% block content %}
     {% include "partials/author-info.njk" %}
