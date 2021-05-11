@@ -5,19 +5,58 @@
 {% set codeinjection_foot = doc.codeinjection_foot %}
 
 {% block content %}
-    <article class="content">
-        {% if doc.feature_image %}
-            <figure class="post-feature-image">
-                <img src="{{ doc.feature_image }}" alt="{{ title }}">
-            </figure>
-        {% endif %}
-        <section class="post-full-content">
-            <h1 class="content-title">{{ title }}</h1>
-            <section class="content-body load-external-scripts">
-                {{ content | safe }}
-            </section>
-        </section>
-    </article>
+    <main id="site-main" class="site-main outer page-template">
+        <div class="inner">
+            <article class="post-full post {{ "no-image" if not (doc.feature_image) }}">
+                <header class="post-full-header">
+                    <h1 class="post-full-title">{{ title }}</h1>
+                </header>
+                {% if doc.feature_image %}
+                    <figure class="post-full-image">
+                        {% 
+                            featureImage
+                            doc.feature_image,
+                            "post-card-image",
+                            doc.title,
+                            [
+                                {
+                                    mediaStr: "(max-width: 365px)",
+                                    width: 300
+                                },
+                                {
+                                    mediaStr: "(max-width: 655px)",
+                                    width: 600
+                                },
+                                {
+                                    mediaStr: "(min-width: 656px)",
+                                    width: 1000
+                                }
+                            ]
+                        %}
+
+                        {# {% 
+                            image
+                            doc.feature_image,
+                            "post-card-image",
+                            doc.title,
+                            "(max-width: 800px) 400px,
+                             (max-width: 1170px) 700px,
+                             1400px",
+                            [300, 600, 1000]
+                        %} #}
+                    </figure>
+                {% endif %}
+                <section class="post-full-content">
+                    <section class="post-content">
+                        {{ content | safe }}
+                    </section>
+                    <hr />
+                    {% include "partials/social-row.njk" %}
+                    {% include "partials/learn-cta-row.njk" %}
+                </section>
+            </article>
+        </div>
+    </main>
 {% endblock %}
 
 {%- block seo -%}
