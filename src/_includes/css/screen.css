@@ -737,8 +737,8 @@ make sure this only happens on large viewports / desktop-ish devices.
 /* 7. Single Post
 /* ---------------------------------------------------------- */
 
-.post-template .site-main,
-.page-template .site-main {
+.post-template,
+.page-template {
     padding-bottom: 4vw;
     background: #fff;
 }
