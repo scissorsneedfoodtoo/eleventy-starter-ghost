@@ -203,7 +203,6 @@ module.exports = function(config) {
     // Bring featured post to the top of the list
     collection.sort((post, nextPost) => nextPost.featured - post.featured);
 
-    console.log(collection);
     return collection;
   });
 
@@ -268,20 +267,6 @@ module.exports = function(config) {
         console.error(err);
       });
 
-    // // Attach posts to their respective tags
-    // collection.forEach(async targetTag => {
-      // const taggedPosts = posts.filter(post => {
-      //   post.url = stripDomain(post.url);
-      //   post.primary_author.url = stripDomain(post.primary_author.url);
-      //   if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
-
-      //   return post.tags.map(tag => tag.slug).includes(targetTag.slug);
-      // });
-      // if (taggedPosts.length) targetTag.posts = taggedPosts;
-
-      // targetTag.url = stripDomain(targetTag.url);
-    // });
-
     collection = [];
 
     allTags.forEach(tag => {
@@ -307,67 +292,8 @@ module.exports = function(config) {
       }
     });
 
-    // [{
-		// 	tagName: "tag1",
-		// 	pageNumber: 0
-		// 	pageData: [] // array of items
-		// },{
-		// 	tagName: "tag1",
-		// 	pageNumber: 1
-		// 	pageData: [] // array of items
-		// },{
-		// 	tagName: "tag1",
-		// 	pageNumber: 2
-		// 	pageData: [] // array of items
-		// },{
-		// 	tagName: "tag2",
-		// 	pageNumber: 0
-		// 	pageData: [] // array of items
-		// }]
-
-    // console.log(collection);
     return collection;
   });
-
-  // // Get all tags
-  // config.addCollection("tags", async function(collection) {
-  //   collection = await api.tags
-  //     .browse({
-  //       include: "count.posts",
-  //       limit: "all",
-  //       filter: "visibility:public"
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //     });
-
-  //   // Get all posts with their tags attached
-  //   const posts = await api.posts
-  //     .browse({
-  //       include: "tags,authors",
-  //       limit: "all"
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //     });
-
-  //   // Attach posts to their respective tags
-  //   collection.forEach(async targetTag => {
-  //     const taggedPosts = posts.filter(post => {
-  //       post.url = stripDomain(post.url);
-  //       post.primary_author.url = stripDomain(post.primary_author.url);
-  //       if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
-
-  //       return post.tags.map(tag => tag.slug).includes(targetTag.slug);
-  //     });
-  //     if (taggedPosts.length) targetTag.posts = taggedPosts;
-
-  //     targetTag.url = stripDomain(targetTag.url);
-  //   });
-
-  //   console.log(collection);
-  //   return collection;
-  // });
 
   // Get the post popular tags
   config.addCollection("popularTags", async function(collection) {

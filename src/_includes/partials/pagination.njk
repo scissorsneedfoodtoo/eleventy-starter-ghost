@@ -1,5 +1,7 @@
-{% if pagination.previousPageHref or pagination.nextPageHref %}
-    {% if page.permalink != pagination.nextPageHref %}
+{% set nextPageRegExp = r/\/\d+\/$/g %}
+
+{% if pagination.nextPageHref %}
+    {% if nextPageRegExp.test(pagination.nextPageHref) %}
         <div class="read-more-row">
             <button id="readMoreBtn">Load More Articles</button>
         </div>
