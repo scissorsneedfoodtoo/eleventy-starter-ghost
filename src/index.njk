@@ -16,10 +16,9 @@ pagination:
                     {{ card(post) }}
                 {% endfor %}
             </section>
+            {% include "partials/pagination.njk" %}
         </div>
     </main>
-
-    {% include "partials/pagination.njk" %}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const readMoreBtn = document.getElementById('readMoreBtn');
