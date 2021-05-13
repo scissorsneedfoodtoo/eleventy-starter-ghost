@@ -5,5 +5,5 @@ pagination:
   alias: author
   addAllPagesToCollections: true
 layout: 'layouts/author.njk'
-permalink: '{{ author.url }}'
+permalink: '{{ author.url }}/{% if author.page %}{{ author.page }}/{% endif %}'
 ---

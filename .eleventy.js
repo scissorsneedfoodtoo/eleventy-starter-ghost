@@ -17,8 +17,7 @@ dayjs.extend(relativeTime);
 dayjs.locale(`{{ site.lang }}`);
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
-
-const postsPerPage = 2;
+const postsPerPage = process.env.POSTS_PER_PAGE;
 
 // Init Ghost API
 const api = new ghostContentAPI({
@@ -208,7 +207,7 @@ module.exports = function(config) {
 
   // Get all authors
   config.addCollection("authors", async function(collection) {
-    collection = await api.authors
+    const allAuthors = await api.authors
       .browse({
         include: "count.posts",
         limit: "all"
@@ -227,8 +226,10 @@ module.exports = function(config) {
         console.error(err);
       });
 
+    collection = [];
+
     // Attach posts to their respective authors
-    collection.forEach(async author => {
+    allAuthors.forEach(async author => {
       const authorsPosts = posts.filter(post => {
         post.url = stripDomain(post.url);
         post.primary_author.url = stripDomain(post.primary_author.url);
@@ -240,6 +241,18 @@ module.exports = function(config) {
 
       author.absolute_url = author.url;
       author.url = stripDomain(author.url);
+
+      const paginatedAuthorPosts = chunkArray(authorsPosts, postsPerPage);
+
+      for( let page = 0, max = paginatedAuthorPosts.length; page < max; page++) {
+        // For each entry in paginatedAuthorPosts, add the tag object
+        // with some extra data for custom pagination
+        collection.push({
+          ...author,
+          page,
+          posts: paginatedAuthorPosts[page]
+        });
+      }
     });
 
     return collection;
