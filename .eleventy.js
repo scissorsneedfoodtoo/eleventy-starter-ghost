@@ -10,11 +10,12 @@ const api = require("./utils/ghost-api");
 const dayjs = require('dayjs');
 const localizedFormat = require('dayjs/plugin/localizedFormat');
 const relativeTime = require('dayjs/plugin/relativeTime');
+require('dayjs/locale/es');
+require('dayjs/locale/zh-cn');
 
-// Load dayjs plugins and set locale
+// Load dayjs plugins
 dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
-dayjs.locale(`{{ site.lang }}`);
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
 const postsPerPage = process.env.POSTS_PER_PAGE;
@@ -115,17 +116,26 @@ module.exports = function(config) {
   config.addNunjucksShortcode("featureImage", featureImageShortcode);
 
   // Date and time shortcodes
-  function publishedDateShortcode(dateStr) {
-    return dayjs(dateStr).format('LL');
+  function publishedDateShortcode(dateStr, siteLang) {
+    return dayjs(dateStr).locale(siteLang).format('LL');
   }
 
   config.addNunjucksShortcode("publishedDate", publishedDateShortcode);
 
-  function timeAgoShortcode(dateStr) {
+  function timeAgoShortcode(dateStr, siteLang) {
+    console.log(siteLang);
+    dayjs.locale(siteLang);
+
     return dayjs().to(dayjs(dateStr));
   }
 
   config.addNunjucksShortcode("timeAgo", timeAgoShortcode);
+
+  function pluralShortcode(str, num) {
+    return str.replace('%', num);
+  }
+
+  config.addNunjucksShortcode("plural", pluralShortcode);
 
   // Inline CSS
   config.addFilter("cssmin", code => {

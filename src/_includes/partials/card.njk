@@ -1,4 +1,4 @@
-{% macro card(post) %}
+{% macro card(post, siteLang) %}
     <article class="post-card {{post.class}}">
         {% if post.feature_image %}
             <a class="post-card-image-link" href="{{post.url}}">                
@@ -51,7 +51,7 @@
 
             <footer class="post-card-meta">
                 {% if post.primary_author.name == "freeCodeCamp.org" %}
-                    <time class="meta-item-single">{% timeAgo post.published_at %}</time>
+                    <time class="meta-item-single" datetime="{{ post.published_at }}">{% timeAgo post.published_at, siteLang %}</time>
                 {% else %}
                     <ul class="author-list">
                         {% for author in post.authors %}
@@ -78,7 +78,7 @@
                     </ul>
                     <span class="meta-content">
                         <a class="meta-item" href="{{post.primary_author.url}}">{{post.primary_author.name}}</a>
-                        <time class="meta-item" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
+                        <time class="meta-item" datetime="{{ post.published_at }}">{% timeAgo post.published_at, siteLang %}</time>
                     </span>
                 {% endif %}
             </footer>

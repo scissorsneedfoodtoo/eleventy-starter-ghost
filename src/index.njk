@@ -18,7 +18,7 @@ pagination:
         <div class="inner">
             <section class="post-feed">
                 {% for post in posts %}
-                    {{ card(post) }}
+                    {{ card(post, site.lang) }}
                 {% endfor %}
             </section>
             {% include "partials/pagination.njk" %}
