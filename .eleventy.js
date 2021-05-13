@@ -1,11 +1,12 @@
 require("dotenv").config();
 
 const cleanCSS = require("clean-css");
-const fs = require("fs");
-const path = require("path");
+const { readFileSync } = require("fs");
+const { basename, extname } = require("path");
 const Image = require("@11ty/eleventy-img");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
 const api = require("./utils/ghost-api");
+const i18next = require("./i18n/config");
 
 const dayjs = require('dayjs');
 const localizedFormat = require('dayjs/plugin/localizedFormat');
@@ -47,8 +48,8 @@ module.exports = function(config) {
   // Copy images over from Ghost
   function imageShortcode(src, cls, alt, sizes, widths) {
     const imageFormats = ["webp"];
-    const imageExtension = path.extname(src);
-    const imageName = path.basename(src, imageExtension).split('?')[0]; // strip off url params, if any
+    const imageExtension = extname(src);
+    const imageName = basename(src, imageExtension).split('?')[0]; // strip off url params, if any
     const options = {
       widths: widths,
       formats: imageFormats,
@@ -79,8 +80,8 @@ module.exports = function(config) {
   // Copy images over from Ghost
   function featureImageShortcode(src, cls, alt, sourceOptions) {
     const imageFormats = ["webp"];
-    const imageExtension = path.extname(src);
-    const imageName = path.basename(src, imageExtension).split('?')[0]; // strip off url params, if any
+    const imageExtension = extname(src);
+    const imageName = basename(src, imageExtension).split('?')[0]; // strip off url params, if any
     const widths = [...new Set(sourceOptions.map(obj => obj.width))]; // get unique widths
     const options = {
       widths: widths,
@@ -123,13 +124,22 @@ module.exports = function(config) {
   config.addNunjucksShortcode("publishedDate", publishedDateShortcode);
 
   function timeAgoShortcode(dateStr, siteLang) {
-    console.log(siteLang);
     dayjs.locale(siteLang);
 
     return dayjs().to(dayjs(dateStr));
   }
 
   config.addNunjucksShortcode("timeAgo", timeAgoShortcode);
+
+  async function translateShortcode(key, siteLang) {
+    // temporarily handle quirk with Ghost/Moment.js zh-cn not jiving
+    // with i18next's expected zh-CN format and simplify for the future
+    siteLang.toLowerCase() === 'zh-cn' ? 'zh' : siteLang;
+
+    return await i18next.changeLanguage(siteLang).then(t => t(key));
+  }
+
+  config.addNunjucksAsyncShortcode("t", translateShortcode);
 
   function pluralShortcode(str, num) {
     return str.replace('%', num);
@@ -337,7 +347,7 @@ module.exports = function(config) {
   config.setBrowserSyncConfig({
     callbacks: {
       ready: (err, bs) => {
-        const content_404 = fs.readFileSync("dist/404.html");
+        const content_404 = readFileSync("dist/404.html");
 
         bs.addMiddleware("*", (req, res) => {
           res.writeHead(404, { "Content-Type": "text/html; charset=UTF-8" });
