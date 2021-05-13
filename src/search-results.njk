@@ -19,7 +19,7 @@ permalink: 'search/'
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const client = algoliasearch('QMJYL5WYTI', '89770b24481654192d7a5c402c6ad9a0');
+  const client = algoliasearch('{{ secrets.algoliaAppId }}', '{{ secrets.algoliaApiKey }}');
   const index = client.initIndex('news');
   const urlParams = new URLSearchParams(window.location.search);
   const queryStr = urlParams.get('query');
