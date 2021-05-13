@@ -207,7 +207,7 @@ module.exports = function(config) {
 
   // Get all authors
   config.addCollection("authors", async function(collection) {
-    const allAuthors = await api.authors
+    const authors = await api.authors
       .browse({
         include: "count.posts",
         limit: "all"
@@ -229,30 +229,31 @@ module.exports = function(config) {
     collection = [];
 
     // Attach posts to their respective authors
-    allAuthors.forEach(async author => {
-      const authorsPosts = posts.filter(post => {
+    authors.forEach(async author => {
+      author.absolute_url = author.url;
+      author.url = stripDomain(author.url);
+
+      const currAuthorPosts = posts.filter(post => {
         post.url = stripDomain(post.url);
         post.primary_author.url = stripDomain(post.primary_author.url);
         post.tags.map(tag => (tag.url = stripDomain(tag.url)));
         if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
         return post.primary_author.id === author.id;
       });
-      if (authorsPosts.length) author.posts = authorsPosts;
 
-      author.absolute_url = author.url;
-      author.url = stripDomain(author.url);
+      if (currAuthorPosts.length) author.posts = currAuthorPosts;
 
-      const paginatedAuthorPosts = chunkArray(authorsPosts, postsPerPage);
+      const paginatedCurrAuthorPosts = chunkArray(currAuthorPosts, postsPerPage);
 
-      for( let page = 0, max = paginatedAuthorPosts.length; page < max; page++) {
-        // For each entry in paginatedAuthorPosts, add the tag object
+      paginatedCurrAuthorPosts.forEach((arr, i) => {
+        // For each entry in paginatedCurrAuthorPosts, add the author object
         // with some extra data for custom pagination
         collection.push({
           ...author,
-          page,
-          posts: paginatedAuthorPosts[page]
+          page: i,
+          posts: arr
         });
-      }
+      });
     });
 
     return collection;
@@ -260,7 +261,7 @@ module.exports = function(config) {
 
   // Get all tags and paginate them based on posts per page
   config.addCollection("tags", async function(collection) {
-    const allTags = await api.tags
+    const tags = await api.tags
       .browse({
         include: "count.posts",
         limit: "all",
@@ -282,7 +283,7 @@ module.exports = function(config) {
 
     collection = [];
 
-    allTags.forEach(tag => {
+    tags.forEach(tag => {
       tag.url = stripDomain(tag.url);
 
       const currTagPosts = posts.filter(post => {
@@ -292,17 +293,18 @@ module.exports = function(config) {
 
         return post.tags.map(postTag => postTag.slug).includes(tag.slug); 
       });
+
       const paginatedCurrTagPosts = chunkArray(currTagPosts, postsPerPage);
 
-      for( let page = 0, max = paginatedCurrTagPosts.length; page < max; page++) {
+      paginatedCurrTagPosts.forEach((arr, i) => {
         // For each entry in paginatedCurrTagPosts, add the tag object
         // with some extra data for custom pagination
         collection.push({
           ...tag,
-          page,
-          posts: paginatedCurrTagPosts[page]
+          page: i,
+          posts: arr
         });
-      }
+      });
     });
 
     return collection;
