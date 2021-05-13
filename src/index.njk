@@ -1,9 +1,14 @@
 ---
 pagination:
   data: collections.posts
-  size: 7
+  size: 4
   alias: posts
 ---
+
+{# 
+    size must be set manually,
+    and be the same number as env.POSTS_PER_PAGE
+#}
 
 {% extends 'layouts/default.njk' %}
 {% from "partials/card.njk" import card %}
