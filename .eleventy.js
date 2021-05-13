@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const Image = require("@11ty/eleventy-img");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
-const ghostContentAPI = require("@tryghost/content-api");
+const api = require("./utils/ghost-api");
 
 const dayjs = require('dayjs');
 const localizedFormat = require('dayjs/plugin/localizedFormat');
@@ -18,13 +18,6 @@ dayjs.locale(`{{ site.lang }}`);
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
 const postsPerPage = process.env.POSTS_PER_PAGE;
-
-// Init Ghost API
-const api = new ghostContentAPI({
-  url: process.env.GHOST_API_URL,
-  key: process.env.GHOST_CONTENT_API_KEY,
-  version: "v3"
-});
 
 // Strip Ghost domain from urls
 const stripDomain = url => {
