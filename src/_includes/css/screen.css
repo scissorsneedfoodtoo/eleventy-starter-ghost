@@ -2067,6 +2067,10 @@ p.footer-donation {
     font-size: 18px;
 }
 
+p.footer-donation a:hover {
+    text-decoration: none;
+}
+
 .footer-container .col-spacer {
     margin-top: -3rem;
 }

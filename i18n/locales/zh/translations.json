@@ -22,21 +22,26 @@
   "Load More Articles": "加载更多文章",
   "Show comments": "显示评论",
   "Sorry, we could not load the comments. Please try again after some time.": "抱歉，暂时无法加载评论，请稍后再试。",
-  "footer-desc-1": "freeCodeCamp 是一个捐助者支持的 501(c)(3) 免税非营利组织（税号：82-0779546）。",
-  "footer-desc-2": "我们的使命是“帮助人们免费学习编程”，我们创建了大量视频、文章和交互式编程课程——完全免费向公众开放。世界各地的学员在本地运营数千个学习社区。",
-  "footer-desc-3": "freeCodeCamp 收到的捐款将用于创建教学资源，购买服务器和相关服务，以及聘用员工。",
-  "footer-donation": "你可以<a id='footer-donation' class='inline' rel='noopener noreferrer' target='_blank'>点击这里捐款</a>。",
-  "footer-trending-guides-header": "精选文章",
-  "footer-our-nonprofit-header": "了解我们",
-  "footer-about": "简介",
-  "footer-alumni": "校友网络",
-  "footer-open-source": "开源",
-  "footer-shop": "商店",
-  "footer-support": "支持",
-  "footer-sponsors": "赞助商",
-  "footer-honesty": "学术诚信",
-  "footer-coc": "行为规范",
-  "footer-privacy": "隐私条例",
-  "footer-tos": "服务条款",
-  "footer-copyright": "版权条例"
+  "footer": {
+    "tax-exempt-status": "freeCodeCamp 是捐助者支持的 501(c)(3) 条款下具有免税资格的非营利性组织（税号：82-0779546)。",
+    "mission-statement": "我们的使命：帮助人们免费学习编程。我们通过创建成千上万的视频、文章和交互式编程课程——所有内容向公众免费开放——来实现这一目标。学员在世界各地自发成立数千个 freeCodeCamp 学习小组。",
+    "donation-initiatives": "所有给 freeCodeCamp 的捐款都将用于我们的教育项目，购买服务器和其他服务，以及聘用员工。",
+    "donate-text": "你可以",
+    "donate-link": "点击此处免税捐款",
+    "trending-guides": "精选文章",
+    "our-nonprofit": "关于我们",
+    "links": {
+      "about": "简介",
+      "alumni": "校友网络",
+      "open-source": "开源",
+      "shop": "商店",
+      "support": "支持",
+      "sponsors": "赞助商",
+      "honesty": "学术诚信",
+      "coc": "行为规范",
+      "privacy": "隐私条例",
+      "tos": "服务条款",
+      "copyright": "版权条例"
+    }
+  }
 }

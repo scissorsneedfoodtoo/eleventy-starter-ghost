@@ -25,21 +25,26 @@
   "learn-to-code-cta": "Aprende a codificar de forma gratuita. El plan de estudios de código abierto de freeCodeCamp ha ayudado a más de 40,000 personas a obtener trabajos como desarrolladores.",
   "learn-to-code-cta-btn": "Empieza",
   "Load More Articles": "Carga más Artículos",
-  "footer-desc-1": "freeCodeCamp es una organización sin fines de lucro 501(c)(3) exenta de impuestos apoyada por donantes (Número de identificación fiscal federal de los Estados Unidos: 82-0779546)",
-  "footer-desc-2": "Nuestra misión: ayudar a las personas a aprender a programar de forma gratuita. Logramos esto creando miles de videos, artículos y lecciones de programación interactivas, todas disponibles gratuitamente para el público. También tenemos miles de grupos de estudio freeCodeCamp en todo el mundo.",
-  "footer-desc-3": "Las donaciones a freeCodeCamp van hacia nuestras iniciativas educativas y ayudan a pagar servidores, servicios y personal.",
-  "footer-donation": "Puedes hacer <a id='footer-donation' class='inline' rel='noopener noreferrer' target='_blank'>una donación deducible de impuestos aquí</a>.",
-  "footer-trending-guides-header": "Guías de Tendencias",
-  "footer-our-nonprofit-header": "Nuestra Organización No Lucatriva",
-  "footer-about": "Acerca",
-  "footer-alumni": "Red de Ex-Alumnos",
-  "footer-open-source": "Código Abierto",
-  "footer-shop": "Tienda",
-  "footer-support": "Apoyo",
-  "footer-sponsors": "Patrocinadores",
-  "footer-honesty": "Honestidad Académica",
-  "footer-coc": "Código de Conducta",
-  "footer-privacy": "Política de Privacidad",
-  "footer-tos": "Términos de Servicio",
-  "footer-copyright": "Política de Derechos de Autor"
+  "footer": {
+    "tax-exempt-status": "freeCodeCamp es una organización sin fines de lucro exenta de impuestos 501(c)(3) respaldada por donantes (Número de identificación fiscal federal de los Estados Unidos: 82-0779546)",
+    "mission-statement": "Nuestra misión: ayudar a las personas a aprender a programar de forma gratuita. Logramos esto mediante la creación de miles de videos, artículos y lecciones de programación interactivas, todos disponibles gratuitamente para el público. También tenemos miles de grupos de estudio de FreeCodeCamp en todo el mundo.",
+    "donation-initiatives": "Las donaciones a freeCodeCamp se destinan a nuestras iniciativas educativas y ayudan a pagar los servidores, los servicios y el personal.",
+    "donate-text": "Tú puedes",
+    "donate-link": "hacer una donación deducible de impuestos aquí",
+    "trending-guides": "Guías de tendencias",
+    "our-nonprofit": "Nuestra organización sin fines de lucro",
+    "links": {
+      "about": "Acerca de",
+      "alumni": "Red de ex-Alumnos",
+      "open-source": "Código abierto",
+      "shop": "Tienda",
+      "support": "Soporte",
+      "sponsors": "Patrocinadores",
+      "honesty": "Honestidad Académica",
+      "coc": "Código de Conducta",
+      "privacy": "Política de privacidad",
+      "tos": "Términos de servicio",
+      "copyright": "Política de derechos de autor"
+    }
+  }
 }

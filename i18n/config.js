@@ -15,7 +15,7 @@ i18next
       const isDirectory = lstatSync(joinedPath).isDirectory()
       return isDirectory
     }),
-    ns: ['translations', 'trending', 'meta'],
+    ns: ['translations', 'trending', 'meta', 'links'],
     defaultNS: 'translations',
     backend: {
       loadPath: join(__dirname, './locales/{{lng}}/{{ns}}.json')
