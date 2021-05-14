@@ -71,7 +71,9 @@
                                         %}
                                     </a>
                                 {% else %}
-                                    <a href="{{author.url}}" class="static-avatar author-profile-image">Add avatar icon</a>
+                                    <a href="{{author.url}}" class="static-avatar author-profile-image">
+                                        {% include "partials/icons/avatar.njk" %}
+                                    </a>
                                 {% endif %}
                             </li>
                         {% endfor %}
