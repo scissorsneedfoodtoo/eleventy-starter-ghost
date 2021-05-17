@@ -7,7 +7,7 @@
                 <p>{% t 'footer.donation-initiatives', site.lang %}</p>
                 <p class="footer-donation">
                     {% t 'footer.donate-text', site.lang %}{{ " " }}
-                    <a class="inline" href="{% t 'links:footer.donate', site.lang %}" rel="noopener noreferrer" target="_blank">
+                    <a class="inline" href="{% t 'links:donate-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                         {% t 'footer.donate-link', site.lang %}
                     </a>
                     {{ "。" if (site.lang == 'zh' or site.lang == 'zh-cn') else "." }}
@@ -124,7 +124,7 @@
             <div class="col-header">{% t 'footer.our-nonprofit', site.lang %}</div>
             <div class="footer-divider"></div>
             <div class="our-nonprofit">
-                <a href="{% t 'links:footer.about-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:about-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.about', site.lang %}
                 </a>
                 <a href="https://www.linkedin.com/school/free-code-camp/people/" rel="noopener noreferrer" target="_blank">
@@ -133,28 +133,28 @@
                 <a href="https://github.com/freeCodeCamp/" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.open-source', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.shop-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:shop-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.shop', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.support-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:support-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.support', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.sponsors-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:sponsors-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.sponsors', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.honesty-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:honesty-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.honesty', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.coc-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:coc-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.coc', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.privacy-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:privacy-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.privacy', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.tos-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:tos-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.tos', site.lang %}
                 </a>
-                <a href="{% t 'links:footer.copyright-url', site.lang %}" rel="noopener noreferrer" target="_blank">
+                <a href="{% t 'links:copyright-url', site.lang %}" rel="noopener noreferrer" target="_blank">
                     {% t 'footer.links.copyright', site.lang %}
                 </a>
             </div>
