@@ -140,8 +140,8 @@ module.exports = function(config) {
 
   config.addNunjucksShortcode("timeAgo", timeAgoShortcode);
 
-  async function translateShortcode(key, siteLang) {
-    return await i18next.changeLanguage(siteLangHandler(siteLang)).then(t => t(key));
+  async function translateShortcode(key, siteLang, data) {
+    return await i18next.changeLanguage(siteLangHandler(siteLang)).then(t => t(key, { ...data }));
   }
 
   config.addNunjucksAsyncShortcode("t", translateShortcode);

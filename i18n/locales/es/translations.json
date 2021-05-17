@@ -29,6 +29,13 @@
     "forum": "Foro",
     "donate": "Donar"
   },
+  "search": {
+    "label": "Buscar",
+    "accessible-name": "Enviar su consulta de búsqueda",
+    "placeholder": "Buscar tutoriales",
+    "see-results": "Ver todos los resultados de {{searchQuery}}",
+    "no-tutorials": "No se encontraron tutoriales"
+  },
   "footer": {
     "tax-exempt-status": "freeCodeCamp es una organización sin fines de lucro exenta de impuestos 501(c)(3) respaldada por donantes (Número de identificación fiscal federal de los Estados Unidos: 82-0779546)",
     "mission-statement": "Nuestra misión: ayudar a las personas a aprender a programar de forma gratuita. Logramos esto mediante la creación de miles de videos, artículos y lecciones de programación interactivas, todos disponibles gratuitamente para el público. También tenemos miles de grupos de estudio de FreeCodeCamp en todo el mundo.",

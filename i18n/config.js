@@ -6,7 +6,7 @@ const { join } = require("path");
 i18next
   .use(Backend)
   .init({
-    lng: ['en', 'es', 'zh'],
+    // lng: ['en', 'es', 'zh'],
     fallbackLng: 'en',
     // debug: true,
     initImmediate: false,
