@@ -11,8 +11,10 @@ const i18next = require("./i18n/config");
 const dayjs = require('dayjs');
 const localizedFormat = require('dayjs/plugin/localizedFormat');
 const relativeTime = require('dayjs/plugin/relativeTime');
+
+// Include dayjs locales
 require('dayjs/locale/es');
-require('dayjs/locale/zh-cn');
+require('dayjs/locale/zh');
 
 // Load dayjs plugins
 dayjs.extend(localizedFormat);
@@ -36,6 +38,13 @@ const chunkArray = (arr, size) => {
   }
 
   return chunkedArr;
+}
+
+const siteLangHandler = siteLang => {
+  // temporarily handle quirk with Ghost/Moment.js zh-cn not jiving
+  // with i18next's expected zh-CN format and simplify for the future
+
+  return siteLang.toLowerCase() === 'zh-cn' ? 'zh' : siteLang;
 }
 
 module.exports = function(config) {
@@ -118,13 +127,13 @@ module.exports = function(config) {
 
   // Date and time shortcodes
   function publishedDateShortcode(dateStr, siteLang) {
-    return dayjs(dateStr).locale(siteLang).format('LL');
+    return dayjs(dateStr).locale(siteLangHandler(siteLang)).format('LL');
   }
 
   config.addNunjucksShortcode("publishedDate", publishedDateShortcode);
 
   function timeAgoShortcode(dateStr, siteLang) {
-    dayjs.locale(siteLang);
+    dayjs.locale(siteLangHandler(siteLang));
 
     return dayjs().to(dayjs(dateStr));
   }
@@ -132,11 +141,7 @@ module.exports = function(config) {
   config.addNunjucksShortcode("timeAgo", timeAgoShortcode);
 
   async function translateShortcode(key, siteLang) {
-    // temporarily handle quirk with Ghost/Moment.js zh-cn not jiving
-    // with i18next's expected zh-CN format and simplify for the future
-    siteLang.toLowerCase() === 'zh-cn' ? 'zh' : siteLang;
-
-    return await i18next.changeLanguage(siteLang).then(t => t(key));
+    return await i18next.changeLanguage(siteLangHandler(siteLang)).then(t => t(key));
   }
 
   config.addNunjucksAsyncShortcode("t", translateShortcode);
