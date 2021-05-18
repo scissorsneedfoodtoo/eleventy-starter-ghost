@@ -11,14 +11,13 @@
   "1 post": "1 篇文章",
   "% posts": "% 篇文章",
   "keyword-meta": "freeCodeCamp, freeCodeCamp中文, 编程, 前端, 程序员, Python, JavaScript, Git, AWS, JSON, HTML, CSS, Bootstrap, React, Vue",
-  "learn-to-code-cta": "在 freeCodeCamp 免费学习编程。 freeCodeCamp 的开源课程已帮助 40,000 多人获得开发者工作。",
-  "learn-to-code-cta-btn": "开始学习",
   "Show comments": "显示评论",
   "Sorry, we could not load the comments. Please try again after some time.": "抱歉，暂时无法加载评论，请稍后再试。",
   "buttons": {
     "forum": "论坛",
     "donate": "捐款",
-    "load-more-articles": "加载更多文章"
+    "load-more-articles": "加载更多文章",
+    "learn-to-code-cta": "开始学习"
   },
   "search": {
     "label": "搜索",
@@ -30,15 +29,8 @@
   "banner": {
     "text": "学习编程 — <span>3,000 小时免费课程</span>"
   },
-  "social-row": {
-    "text": {
-      "author-has-twitter-text": "Si leíste hasta aquí, haz un tweet al autor para mostrarle que te importa su trabajo.",
-      "author-no-twitter-text": "Si este artículo te fue útil,"
-    },
-    "buttons": {
-      "author-has-twitter": "Realiza un Tweet de agradecimiento",
-      "author-no-twitter": "haz un tweet"
-    }
+  "learn-to-code-cta": {
+    "text": "在 freeCodeCamp 免费学习编程。 freeCodeCamp 的开源课程已帮助 40,000 多人获得开发者工作。"
   },
   "footer": {
     "tax-exempt-status": "freeCodeCamp 是捐助者支持的 501(c)(3) 条款下具有免税资格的非营利性组织（税号：82-0779546)。",

@@ -1,8 +1,8 @@
 <div class='learn-cta-row'>
     <p>
-        {% t 'translations:learn-to-code-cta', site.lang %}
-        <a class="cta-button" id="learn-to-code-cta" rel="noopener noreferrer" target="_blank">
-          Get started
+        {% t 'learn-to-code-cta.text', site.lang %}
+        <a href="{% t 'links:learn-to-code-cta-url', site.lang %}" class="cta-button" id="learn-to-code-cta" rel="noopener noreferrer" target="_blank">
+          {% t 'buttons.learn-to-code-cta', site.lang %}
         </a>
     </p>
 </div>
