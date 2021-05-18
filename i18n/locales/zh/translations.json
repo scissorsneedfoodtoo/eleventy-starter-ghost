@@ -11,12 +11,6 @@
   "1 post": "1 篇文章",
   "% posts": "% 篇文章",
   "keyword-meta": "freeCodeCamp, freeCodeCamp中文, 编程, 前端, 程序员, Python, JavaScript, Git, AWS, JSON, HTML, CSS, Bootstrap, React, Vue",
-  "Search 6,000+ tutorials": "搜索文章",
-  "No tutorials found": "未搜索到相关文章",
-  "See all results for": "查看所有相关文章",
-  "Forum": "论坛",
-  "Donate": "捐款",
-  "banner": "学习编程 — <span>3,000 小时免费课程</span>",
   "learn-to-code-cta": "在 freeCodeCamp 免费学习编程。 freeCodeCamp 的开源课程已帮助 40,000 多人获得开发者工作。",
   "learn-to-code-cta-btn": "开始学习",
   "Load More Articles": "加载更多文章",
@@ -32,6 +26,9 @@
     "placeholder": "搜索 400+ 篇教程",
     "see-results": "查看 {{searchQuery}} 的所有结果",
     "no-tutorials": "未找到教程"
+  },
+  "banner": {
+    "text": "学习编程 — <span>3,000 小时免费课程</span>"
   },
   "footer": {
     "tax-exempt-status": "freeCodeCamp 是捐助者支持的 501(c)(3) 条款下具有免税资格的非营利性组织（税号：82-0779546)。",
