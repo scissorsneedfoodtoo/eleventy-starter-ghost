@@ -11,17 +11,14 @@
   "1 post": "1 artículo",
   "% posts": "% artículos",
   "keyword-meta": "freeCodeCamp, programación, front-end, programador, artículo, expresiones regulares, Python, JavaScript, AWS, JSON, HTML, CSS, Bootstrap, React, Vue, Webpack",
-  "If this article was helpful,": "Si este artículo te fue útil,",
-  "tweet it": "haz un tweet",
-  "If you read this far, tweet to the author to show them you care.": "Si leíste hasta aquí, haz un tweet al autor para mostrarle que te importa su trabajo.",
-  "Tweet a thanks": "Realiza un Tweet de agradecimiento",
-  "Thank you {twitter} for writing this helpful article": "Gracias {twitter} por escribir este útil artículo",
   "learn-to-code-cta": "Aprende a codificar de forma gratuita. El plan de estudios de código abierto de freeCodeCamp ha ayudado a más de 40,000 personas a obtener trabajos como desarrolladores.",
   "learn-to-code-cta-btn": "Empieza",
   "buttons": {
     "forum": "Foro",
     "donate": "Donar",
-    "load-more-articles": "Carga más Artículos"
+    "load-more-articles": "Carga más Artículos",
+    "author-has-twitter": "Realiza un Tweet de agradecimiento",
+    "author-no-twitter": "haz un tweet"
   },
   "search": {
     "label": "Buscar",
@@ -32,6 +29,11 @@
   },
   "banner": {
     "text": "<span>Charla con otros desarrolladores en español</span>"
+  },
+  "social-row": {
+    "author-has-twitter": "Si leíste hasta aquí, haz un tweet al autor para mostrarle que te importa su trabajo.",
+    "author-no-twitter": "Si este artículo te fue útil",
+    "default-tweet": "Gracias {{twitter}} por escribir este útil artículo"
   },
   "footer": {
     "tax-exempt-status": "freeCodeCamp es una organización sin fines de lucro exenta de impuestos 501(c)(3) respaldada por donantes (Número de identificación fiscal federal de los Estados Unidos: 82-0779546)",

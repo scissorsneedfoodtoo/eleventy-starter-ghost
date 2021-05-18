@@ -5,7 +5,9 @@
   "buttons": {
     "forum": "Forum",
     "donate": "Donate",
-    "load-more-articles": "Load More Articles"
+    "load-more-articles": "Load More Articles",
+    "author-has-twitter": "Tweet a thanks",
+    "author-no-twitter": "tweet it"
   },
   "search": {
     "label": "Search",
@@ -16,6 +18,11 @@
   },
   "banner": {
     "text": "Learn to code — <span>free 3,000-hour curriculum</span>"
+  },
+  "social-row": {
+    "author-has-twitter": "If you read this far, tweet to the author to show them you care.",
+    "author-no-twitter": "If this article was helpful",
+    "default-tweet": "Thank you {{twitter}} for writing this helpful article"
   },
   "footer": {
     "tax-exempt-status": "freeCodeCamp is a donor-supported tax-exempt 501(c)(3) nonprofit organization (United States Federal Tax Identification Number: 82-0779546)",
