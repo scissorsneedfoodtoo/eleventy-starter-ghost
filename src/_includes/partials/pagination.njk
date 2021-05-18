@@ -3,7 +3,7 @@
 {% if pagination.nextPageHref %}
     {% if nextPageRegExp.test(pagination.nextPageHref) %}
         <div class="read-more-row">
-            <button id="readMoreBtn">Load More Articles</button>
+            <button id="readMoreBtn">{% t 'buttons.load-more-articles', site.lang %}</button>
         </div>
     {% endif %}
 {% endif %}

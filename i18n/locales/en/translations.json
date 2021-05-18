@@ -4,7 +4,8 @@
   "learn-to-code-cta-btn": "Get started",
   "buttons": {
     "forum": "Forum",
-    "donate": "Donate"
+    "donate": "Donate",
+    "load-more-articles": "Load More Articles"
   },
   "search": {
     "label": "Search",

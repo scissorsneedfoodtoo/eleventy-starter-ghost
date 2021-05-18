@@ -13,12 +13,12 @@
   "keyword-meta": "freeCodeCamp, freeCodeCamp中文, 编程, 前端, 程序员, Python, JavaScript, Git, AWS, JSON, HTML, CSS, Bootstrap, React, Vue",
   "learn-to-code-cta": "在 freeCodeCamp 免费学习编程。 freeCodeCamp 的开源课程已帮助 40,000 多人获得开发者工作。",
   "learn-to-code-cta-btn": "开始学习",
-  "Load More Articles": "加载更多文章",
   "Show comments": "显示评论",
   "Sorry, we could not load the comments. Please try again after some time.": "抱歉，暂时无法加载评论，请稍后再试。",
   "buttons": {
     "forum": "论坛",
-    "donate": "捐款"
+    "donate": "捐款",
+    "load-more-articles": "加载更多文章"
   },
   "search": {
     "label": "搜索",

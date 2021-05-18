@@ -18,10 +18,10 @@
   "Thank you {twitter} for writing this helpful article": "Gracias {twitter} por escribir este útil artículo",
   "learn-to-code-cta": "Aprende a codificar de forma gratuita. El plan de estudios de código abierto de freeCodeCamp ha ayudado a más de 40,000 personas a obtener trabajos como desarrolladores.",
   "learn-to-code-cta-btn": "Empieza",
-  "Load More Articles": "Carga más Artículos",
   "buttons": {
     "forum": "Foro",
-    "donate": "Donar"
+    "donate": "Donar",
+    "load-more-articles": "Carga más Artículos"
   },
   "search": {
     "label": "Buscar",
