@@ -1,7 +1,4 @@
 {
-  "<a href='{url}'>More posts</a> by {name}": "<a href='{url}'>Más publicaciones</a> por {name}",
-  "Continue reading about": "Segue leyendo sobre",
-  "See all % posts": "Ver todos los % artículos",
   "keyword-meta": "freeCodeCamp, programación, front-end, programador, artículo, expresiones regulares, Python, JavaScript, AWS, JSON, HTML, CSS, Bootstrap, React, Vue, Webpack",
   "buttons": {
     "forum": "Foro",

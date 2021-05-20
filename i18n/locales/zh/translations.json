@@ -1,7 +1,4 @@
 {
-  "<a href='{url}'>More posts</a> by {name}": "<a href='{url}'>更多文章</a> by {name}",
-  "Continue reading about": "继续阅读",
-  "See all % posts": "查看所有 % 篇文章",
   "keyword-meta": "freeCodeCamp, freeCodeCamp中文, 编程, 前端, 程序员, Python, JavaScript, Git, AWS, JSON, HTML, CSS, Bootstrap, React, Vue",
   "Show comments": "显示评论",
   "Sorry, we could not load the comments. Please try again after some time.": "抱歉，暂时无法加载评论，请稍后再试。",
