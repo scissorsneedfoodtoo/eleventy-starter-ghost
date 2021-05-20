@@ -27,7 +27,7 @@
   "tag-page": {
     "collection-of-posts": "A collection of posts",
     "one-post": "A collection of 1 post",
-    "num-of-posts": "A collection of {{postCount}} posts"
+    "multiple-posts": "A collection of {{postCount}} posts"
   },
   "404-page": {
     "page-not-found": "Page not found",

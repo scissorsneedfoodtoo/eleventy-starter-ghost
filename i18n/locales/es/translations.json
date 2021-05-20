@@ -33,7 +33,7 @@
   "tag-page": {
     "collection-of-posts": "Una colección de artículos",
     "one-post": "Una colección de 1 artículo",
-    "num-of-posts": "Una colección de {{postCount}} artículos"
+    "multiple-posts": "Una colección de {{postCount}} artículos"
   },
   "404-page": {
     "page-not-found": "Página no encontrada",

@@ -14,7 +14,7 @@
             {% elif content == 1 %}
                 {% t 'tag-page.one-post', site.lang %}
             {% else %}
-                {% t 'tag-page.num-of-posts', site.lang, { postCount: postCount } %}
+                {% t 'tag-page.multiple-posts', site.lang, { postCount: postCount } %}
             {% endif %}
         </h2>
         
