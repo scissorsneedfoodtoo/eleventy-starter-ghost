@@ -36,7 +36,7 @@
     "multiple-posts": "共 {{postCount}} 篇文章"
   },
   "404-page": {
-    "page-not-found": "找不到网页",
+    "page-not-found": "页面不存在",
     "go-to-front-page": "返回上一页"
   },
   "learn-to-code-cta": {
