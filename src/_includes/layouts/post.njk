@@ -63,7 +63,7 @@
                     </figure>
                 {% endif %}
                 <section class="post-full-content">
-                    <section class="post-content {{ "medium-migrated-article" if (post.primary_author.name == "freeCodeCamp.org") }}"">
+                    <section class="post-content {{ "medium-migrated-article" if (post.primary_author.name == "freeCodeCamp.org") }}">
                         {{ content | safe }}
                     </section>
                     <hr />
@@ -74,7 +74,10 @@
                         <hr />
                     {% endif %}
 
-                    {% include "partials/social-row.njk" %}
+                    {# Conditionally show social-row based on Ghost language setting #}
+                    {% if not (site.lang == "zh" or site.lang == "zh-cn") %}
+                        {% include "partials/social-row.njk" %}
+                    {% endif %}
                     {% include "partials/learn-cta-row.njk" %}
                 </section>
             </article>

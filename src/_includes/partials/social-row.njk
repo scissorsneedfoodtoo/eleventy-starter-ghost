@@ -8,27 +8,21 @@
 </p>
 
 <script>
-    // Conditionally remove social-row based on the publication language setting
-    const hideSocialRowList = ['zh-cn', 'zh'];
     const socialRow = document.getElementsByClassName('social-row')[0];
-
-    if (hideSocialRowList.includes(`{{ site.lang }}`)) socialRow.remove();
-    else {
-        const title = `{{ post.title | safe }}`.replace(/'/g, '%27');
-        const twitter = `{{ post.primary_author.twitter }}`;
-        const url = window.location;
-        const thanks = `{% t 'social-row.default-tweet', site.lang, { twitter: post.primary_author.twitter } %}.` +
-            `%0A%0A${title}%0A%0A${url}`;
-        const button = document.getElementById('tweet-btn');
-        button.addEventListener('click', () => {
-            if (twitter) {
-                window.open(`https://twitter.com/intent/tweet?text=${thanks}`, `share-twitter`, `width=550, height=235`);
-                return false;
-            }
-            else {
-                window.open(`https://twitter.com/intent/tweet?text=${title}%0A%0A${url}`, `share-twitter`, `width=550, height=235`);
-                return false;
-            }
-        });
-    }
+    const title = `{{ post.title | safe }}`.replace(/'/g, '%27');
+    const twitter = `{{ post.primary_author.twitter }}`;
+    const url = window.location;
+    const thanks = `{% t 'social-row.default-tweet', site.lang, { twitter: post.primary_author.twitter } %}.` +
+        `%0A%0A${title}%0A%0A${url}`;
+    const button = document.getElementById('tweet-btn');
+    button.addEventListener('click', () => {
+        if (twitter) {
+            window.open(`https://twitter.com/intent/tweet?text=${thanks}`, `share-twitter`, `width=550, height=235`);
+            return false;
+        }
+        else {
+            window.open(`https://twitter.com/intent/tweet?text=${title}%0A%0A${url}`, `share-twitter`, `width=550, height=235`);
+            return false;
+        }
+    });
 </script>

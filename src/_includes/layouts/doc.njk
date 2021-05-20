@@ -51,7 +51,10 @@
                         {{ content | safe }}
                     </section>
                     <hr />
-                    {% include "partials/social-row.njk" %}
+                    {# Conditionally show social-row based on Ghost language setting #}
+                    {% if not (site.lang == "zh" or site.lang == "zh-cn") %}
+                        {% include "partials/social-row.njk" %}
+                    {% endif %}
                     {% include "partials/learn-cta-row.njk" %}
                 </section>
             </article>
