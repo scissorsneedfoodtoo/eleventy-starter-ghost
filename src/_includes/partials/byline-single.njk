@@ -18,7 +18,9 @@
         {% if post.primary_author.bio %}
             <p>{{ post.primary_author.bio }}</p>
         {% else %}
-            <p>{% t 'author.byline.read-more', site.lang, { authorUrl: post.primary_author.url } %}.</p>
+            <p>
+                {% t 'author.byline.read-more', site.lang, { authorUrl: post.primary_author.url } %}{% fullStopHandler site.lang %}
+            </p>
         {% endif %}
     </section>
 </section>

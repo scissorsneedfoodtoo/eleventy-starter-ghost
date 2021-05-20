@@ -146,6 +146,14 @@ module.exports = function(config) {
 
   config.addNunjucksAsyncShortcode("t", translateShortcode);
 
+  function fullStopHandlerShortcode(siteLang) {
+    const ideographicFullStopLanguageCodes = ['zh', 'zh-cn'];
+
+    return ideographicFullStopLanguageCodes.includes(siteLang) ? '。' : '.';
+  }
+
+  config.addNunjucksShortcode("fullStopHandler", fullStopHandlerShortcode);
+
   // Inline CSS
   config.addFilter("cssmin", code => {
     return new cleanCSS({}).minify(code).styles;

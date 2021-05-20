@@ -6,11 +6,12 @@
                 <p>{% t 'footer.mission-statement', site.lang %}</p>
                 <p>{% t 'footer.donation-initiatives', site.lang %}</p>
                 <p class="footer-donation">
-                    {% t 'footer.donate-text', site.lang %}{{ " " }}
-                    <a class="inline" href="{% t 'links:donate-url', site.lang %}" rel="noopener noreferrer" target="_blank">
-                        {% t 'footer.donate-link', site.lang %}
-                    </a>
-                    {{ "。" if (site.lang == 'zh' or site.lang == 'zh-cn') else "." }}
+                    {% t 'footer.donate-text', site.lang %}&nbsp;<a
+                        class="inline"
+                        href="{% t 'links:donate-url', site.lang %}"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >{% t 'footer.donate-link', site.lang %}</a>{% fullStopHandler site.lang %}
                 </p>
             </div>
             <div class="trending-guides">

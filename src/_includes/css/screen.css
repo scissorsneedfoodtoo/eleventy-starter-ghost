@@ -2060,6 +2060,7 @@ pre.runkit-element {
 }
 
 p.footer-donation {
+    /* display: flex; */
     font-weight: 700;
     font-size: 18px;
 }
