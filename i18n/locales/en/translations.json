@@ -19,7 +19,11 @@
     "text": "Learn to code — <span>free 3,000-hour curriculum</span>"
   },
   "author": {
-    "page": {},
+    "page": {
+      "no-posts": "No posts",
+      "one-post": "1 post",
+      "multiple-posts": "{{postCount}} posts"
+    },
     "byline": {
       "read-more": "Read <a href='{{authorUrl}}'>more posts</a> by this author"
     }

@@ -1,10 +1,7 @@
 {
   "<a href='{url}'>More posts</a> by {name}": "<a href='{url}'>Más publicaciones</a> por {name}",
-  "No posts": "No hay artículos",
   "Continue reading about": "Segue leyendo sobre",
   "See all % posts": "Ver todos los % artículos",
-  "1 post": "1 artículo",
-  "% posts": "% artículos",
   "keyword-meta": "freeCodeCamp, programación, front-end, programador, artículo, expresiones regulares, Python, JavaScript, AWS, JSON, HTML, CSS, Bootstrap, React, Vue, Webpack",
   "buttons": {
     "forum": "Foro",
@@ -25,7 +22,11 @@
     "text": "<span>Charla con otros desarrolladores en español</span>"
   },
   "author": {
-    "page": {},
+    "page": {
+      "no-posts": "No hay artículos",
+      "one-post": "1 artículo",
+      "multiple-posts": "{{postCount}} artículos"
+    },
     "byline": {
       "read-more": "Leer <a href='{{authorUrl}}'>más publicaciones</a> de este autor"
     }

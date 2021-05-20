@@ -1,10 +1,7 @@
 {
   "<a href='{url}'>More posts</a> by {name}": "<a href='{url}'>更多文章</a> by {name}",
-  "No posts": "没有文章",
   "Continue reading about": "继续阅读",
   "See all % posts": "查看所有 % 篇文章",
-  "1 post": "1 篇文章",
-  "% posts": "% 篇文章",
   "keyword-meta": "freeCodeCamp, freeCodeCamp中文, 编程, 前端, 程序员, Python, JavaScript, Git, AWS, JSON, HTML, CSS, Bootstrap, React, Vue",
   "Show comments": "显示评论",
   "Sorry, we could not load the comments. Please try again after some time.": "抱歉，暂时无法加载评论，请稍后再试。",
@@ -25,7 +22,11 @@
     "text": "学习编程 — <span>3,000 小时免费课程</span>"
   },
   "author": {
-    "page": {},
+    "page": {
+      "no-posts": "没有文章",
+      "one-post": "1 篇文章",
+      "multiple-posts": "{{postCount}} 篇文章"
+    },
     "byline": {
       "read-more": "阅读该作者的<a href='{{authorUrl}}'>更多文章</a>"
     }

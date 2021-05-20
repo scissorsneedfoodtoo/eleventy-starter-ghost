@@ -25,13 +25,12 @@
             </div>
         {% endif %}
         <div class="author-stats">
-            {{ postCount }}
             {% if postCount == 0 %}
-                No posts
+                {% t 'author.page.no-posts', site.lang %}
             {% elif postCount == 1 %}
-                post
+                {% t 'author.page.one-post', site.lang %}
             {% else %}
-                posts
+                {% t 'author.page.multiple-posts', site.lang, { postCount: postCount } %}
             {% endif %}
             <span class="bull">
                 &bull;
