@@ -1,5 +1,4 @@
 {
-  "Go to the front page": "返回上一页",
   "<a href='{url}'>More posts</a> by {name}": "<a href='{url}'>更多文章</a> by {name}",
   "No posts": "没有文章",
   "Continue reading about": "继续阅读",
@@ -30,6 +29,10 @@
     "collection-of-posts": "文章汇总",
     "one-post": "共 1 篇文章",
     "num-of-posts": "共 {{postCount}} 篇文章"
+  },
+  "404-page": {
+    "page-not-found": "找不到网页",
+    "go-to-front-page": "返回上一页"
   },
   "learn-to-code-cta": {
     "text": "在 freeCodeCamp 免费学习编程。 freeCodeCamp 的开源课程已帮助 40,000 多人获得开发者工作。"

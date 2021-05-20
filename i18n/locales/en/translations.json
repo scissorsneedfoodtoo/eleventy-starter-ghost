@@ -23,6 +23,10 @@
     "one-post": "A collection of 1 post",
     "num-of-posts": "A collection of {{postCount}} posts"
   },
+  "404-page": {
+    "page-not-found": "Page not found",
+    "go-to-front-page": "Go to the front page"
+  },
   "social-row": {
     "author-has-twitter": "If you read this far, tweet to the author to show them you care.",
     "author-no-twitter": "If this article was helpful",
