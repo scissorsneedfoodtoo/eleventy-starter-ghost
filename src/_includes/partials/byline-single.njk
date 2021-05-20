@@ -1,5 +1,5 @@
 <section class="author-card">
-  {% if post.primary_author.profile_image %}
+    {% if post.primary_author.profile_image %}
         {% 
             image
             post.primary_author.profile_image,
@@ -18,7 +18,7 @@
         {% if post.primary_author.bio %}
             <p>{{ post.primary_author.bio }}</p>
         {% else %}
-            <p>Read <a href="{{ post.primary_author.url }}">more posts</a> by this author.</p>
+            <p>{% t 'author.byline.read-more', site.lang, { authorUrl: post.primary_author.url } %}.</p>
         {% endif %}
     </section>
 </section>

@@ -18,6 +18,12 @@
   "banner": {
     "text": "Learn to code — <span>free 3,000-hour curriculum</span>"
   },
+  "author": {
+    "page": {},
+    "byline": {
+      "read-more": "Read <a href='{{authorUrl}}'>more posts</a> by this author"
+    }
+  },
   "tag-page": {
     "collection-of-posts": "A collection of posts",
     "one-post": "A collection of 1 post",
