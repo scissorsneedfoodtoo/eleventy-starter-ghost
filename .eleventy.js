@@ -170,6 +170,10 @@ module.exports = function(config) {
     return new Date(dateObj).toISOString().split("T")[0];
   });
 
+  config.addFilter("commentsEnabled", tagsArr => {
+    return !tagsArr.map(tag => tag.name).includes('#disable-comments');
+  });
+
   // Don't ignore the same files ignored in the git repo
   config.setUseGitIgnore(false);
 
