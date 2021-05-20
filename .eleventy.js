@@ -146,12 +146,6 @@ module.exports = function(config) {
 
   config.addNunjucksAsyncShortcode("t", translateShortcode);
 
-  function pluralShortcode(str, num) {
-    return str.replace('%', num);
-  }
-
-  config.addNunjucksShortcode("plural", pluralShortcode);
-
   // Inline CSS
   config.addFilter("cssmin", code => {
     return new cleanCSS({}).minify(code).styles;

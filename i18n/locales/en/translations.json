@@ -18,6 +18,11 @@
   "banner": {
     "text": "Learn to code — <span>free 3,000-hour curriculum</span>"
   },
+  "tag-page": {
+    "collection-of-posts": "A collection of posts",
+    "one-post": "A collection of 1 post",
+    "num-of-posts": "A collection of {{postCount}} posts"
+  },
   "social-row": {
     "author-has-twitter": "If you read this far, tweet to the author to show them you care.",
     "author-no-twitter": "If this article was helpful",

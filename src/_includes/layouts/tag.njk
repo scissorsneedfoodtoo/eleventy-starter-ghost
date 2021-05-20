@@ -9,14 +9,13 @@
     <div class="under-header-content">
         <h1 class="site-title tags-title">#{{ tag.name }}</h1>
         <h2 class="site-description">
-            {# with either i18next or plain 11ty data must replicate keys/values in all json files #}
-            {# {% if content == 0 %}
-                {{ locales[ site.lang ]['A collection of posts'] }}
+            {% if content == 0 %}
+                {% t 'tag-page.collection-of-posts', site.lang %}
             {% elif content == 1 %}
-                {{ locales[ site.lang ]['A collection of 1 post'] }}
+                {% t 'tag-page.one-post', site.lang %}
             {% else %}
-                {% plural locales[ site.lang ]['A collection of % posts'], postCount %}
-            {% endif %} #}
+                {% t 'tag-page.num-of-posts', site.lang, { postCount: postCount } %}
+            {% endif %}
         </h2>
         
         <div class="tags-row">

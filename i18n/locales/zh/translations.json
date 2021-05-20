@@ -1,7 +1,4 @@
 {
-  "A collection of posts": "文章汇总",
-  "A collection of 1 post": "共 1 篇文章",
-  "A collection of % posts": "共 % 篇文章",
   "Go to the front page": "返回上一页",
   "<a href='{url}'>More posts</a> by {name}": "<a href='{url}'>更多文章</a> by {name}",
   "No posts": "没有文章",
@@ -28,6 +25,11 @@
   },
   "banner": {
     "text": "学习编程 — <span>3,000 小时免费课程</span>"
+  },
+  "tag-page": {
+    "collection-of-posts": "文章汇总",
+    "one-post": "共 1 篇文章",
+    "num-of-posts": "共 {{postCount}} 篇文章"
   },
   "learn-to-code-cta": {
     "text": "在 freeCodeCamp 免费学习编程。 freeCodeCamp 的开源课程已帮助 40,000 多人获得开发者工作。"
