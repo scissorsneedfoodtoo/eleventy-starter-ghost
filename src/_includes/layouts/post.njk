@@ -3,6 +3,9 @@
 {% set title = post.title %}
 {% set codeinjection_head = post.codeinjection_head %}
 {% set codeinjection_foot = post.codeinjection_foot %}
+{% set js %}
+  {% include "assets/fitvids.js" %}
+{% endset %}
 
 {% block content %}
     <main id="site-main" class="post-template site-main outer">
@@ -87,6 +90,14 @@
         </div>
     </main>
     <script>
+        {# {{ js | jsmin | safe }} #}
+        {{ js | safe }}
+        {# document.addEventListener('DOMContentLoaded', () => {
+            const postContent = document.querySelector('.post-full-content');
+            fitVids(postContent);
+        }); #}
+    </script>
+    {# <script>
         document.addEventListener('DOMContentLoaded', () => {
             const postContent = document.querySelector('.post-full-content');
             const fitVids = (postContent, options) => {
@@ -174,7 +185,7 @@
 
             fitVids(postContent, { customSelector: 'random selector', ignore: 'mycoolvid' });
         });
-    </script>
+    </script> #}
 {% endblock %}
 
 {%- block seo -%}
