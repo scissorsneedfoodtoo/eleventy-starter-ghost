@@ -104,7 +104,12 @@
                     head.appendChild(div.childNodes[1]);
                 }
 
-                // [...postContent.querySelectorAll('*')].forEach(node => {
+                if (options) {
+                    Object.keys(options).forEach(key => {
+                        settings[key] = options[key];
+                    });
+                }
+
                 [...postContent.children].forEach(node => {
                     const selectors = [
                         'iframe[src*="player.vimeo.com"]',
@@ -117,33 +122,34 @@
                     ];
 
                     if (settings.customSelector) {
-                        selectors.push(settings.customSelector);
+                        settings.customSelector.split(',').forEach(str => selectors.push(str.trim()));
                     }
 
-                    const ignoreList = '.fitvidsignore';
+                    let ignoreList = ['fitvidsignore'];
 
-                    if(settings.ignore) {
-                        ignoreList = ignoreList + ', ' + settings.ignore;
+                    if (settings.ignore) {
+                        settings.ignore.split(',').forEach(str => ignoreList.push(str.replace('.', '').trim()));
                     }
 
                     let allVideos = [...node.querySelectorAll(selectors.join(','))];
-                    allVideos = allVideos.filter(node => node !== 'object object'); // SwfObj conflict patch
-                    allVideos = allVideos.filter(node => !ignoreList.split(',').includes(node)); // Disable FitVids on this video
+                    allVideos = allVideos.filter(node => node !== 'object object'); // SwfObj conflict patch --> double check how this works
+                    allVideos = allVideos.filter(node => !ignoreList.some(str => node.className.includes(str))); // Disable FitVids on this video
 
                     allVideos.forEach(videoNode => {
-                        //if (videoNode.parentNode(ignoreList).length > 0) {
-                        //    return; // Disable FitVids on this video
-                        //}
-                        if (videoNode.tagName.toLowerCase() === 'embed' && videoNode.parentNode.getAttribute('object').length || videoNode.parentNode.classList.contains('.fluid-width-video-wrapper')) { return; }
+                        if (ignoreList.some(str => videoNode.parentNode.className.includes(str))) {
+                            return; // Disable FitVids on this video
+                        }
+                        if (videoNode.tagName.toLowerCase() === 'embed' && videoNode.parentNode.getAttribute('object').length || videoNode.parentNode.classList.contains('fluid-width-video-wrapper')) { return; }
                         if ((!getComputedStyle(videoNode)['height'] && !getComputedStyle(videoNode)['width']) && (isNaN(videoNode.getAttribute('height')) || isNaN(videoNode.getAttribute('width'))))
                         {
                             videoNode.setAttribute('height', 9);
                             videoNode.setAttribute('width', 16);
                         }
 
-                        let height = ( videoNode.tagName.toLowerCase() === 'object' || (videoNode.getAttribute('height') && !isNaN(parseInt(videoNode.getAttribute('height'), 10))) ) ? parseInt(videoNode.getAttribute('height'), 10) : videoNode.getAttribute('height'),
-                            width = !isNaN(parseInt(videoNode.getAttribute('width'), 10)) ? parseInt(videoNode.getAttribute('width'), 10) : videoNode.getAttribute('width'),
+                        let height = ( videoNode.tagName.toLowerCase() === 'object' || (videoNode.getAttribute('height') && !isNaN(parseInt(videoNode.getAttribute('height'), 10))) ) ? parseInt(videoNode.getAttribute('height'), 10) : parseFloat(getComputedStyle(videoNode, null).height.replace('px', '')),
+                            width = !isNaN(parseInt(videoNode.getAttribute('width'), 10)) ? parseInt(videoNode.getAttribute('width'), 10) : parseFloat(getComputedStyle(videoNode, null).width.replace('px', '')),
                             aspectRatio = height / width;
+
                         if(!videoNode.getAttribute('name')){
                             const videoName = 'fitvid' + count;
                             videoNode.setAttribute('name', videoName);
@@ -166,15 +172,8 @@
                 });
             }
 
-            fitVids(postContent);
+            fitVids(postContent, { customSelector: 'random selector', ignore: 'mycoolvid' });
         });
-
-        {# $(document).ready(function () {
-            // Start fitVids
-            var $postContent = $(".post-full-content");
-            $postContent.fitVids();
-            // End fitVids
-        }); #}
     </script>
 {% endblock %}
 
