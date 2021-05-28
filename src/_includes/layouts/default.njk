@@ -55,11 +55,11 @@
         <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Roboto+Mono:400,700?&display=swap">
 
         <!-- News Theme Styles -->
-        {% set css %}{% include "css/screen.css" %}{% endset %}
-        <style>{{ css | cssmin | safe }}</style>
-        {% set css %}{% include "css/global.css" %}{% endset %}
-        <style>{{ css | cssmin | safe }}</style>
-        {% set css %}{% include "css/algolia-search.css" %}{% endset %}
+        {% set css %}
+            {% include "css/screen.css" %}
+            {% include "css/global.css" %}
+            {% include "css/algolia-search.css" %}
+        {% endset %}
         <style>{{ css | cssmin | safe }}</style>
 
         <!-- Algolia search assets -->
