@@ -157,6 +157,11 @@
                 src="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism-typescript.min.js"></script>
             <script defer type="text/javascript"
                 src="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism-yaml.min.js"></script>
+            
+            {% set js %}
+                {% include "assets/algolia-search.js" %}
+            {% endset %}
+            <script>{{ js | safe }}</script>
 
             {{ site.codeinjection_foot | safe if site.codeinjection_foot }}
             {{ codeinjection_foot | safe if codeinjection_foot }}

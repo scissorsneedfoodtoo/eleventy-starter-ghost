@@ -1,5 +1,6 @@
 <a class="banner" id="banner" rel="noopener noreferrer" href="{% t 'links:banner-url', site.lang %}" target="_blank">
     <p>
-        {% t 'banner.text', site.lang %}
+        {# {% t 'banner.text', site.lang %} #}
+        {% tSync 'banner.text' %}
     </p>
 </a>

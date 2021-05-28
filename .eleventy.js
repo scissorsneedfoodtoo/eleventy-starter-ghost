@@ -146,6 +146,12 @@ module.exports = function(config) {
 
   config.addNunjucksAsyncShortcode("t", translateShortcode);
 
+  function translateSyncShortcode(key, data) {
+    return i18next.t(key, { ...data });
+  }
+
+  config.addNunjucksShortcode("tSync", translateSyncShortcode);
+
   function fullStopHandlerShortcode(siteLang) {
     const ideographicFullStopLanguageCodes = ['zh', 'zh-cn'];
 
