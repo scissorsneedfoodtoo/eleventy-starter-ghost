@@ -46,56 +46,88 @@ document.addEventListener('DOMContentLoaded', () => {
       const dateStylingClassName =
         authorName === 'freeCodeCamp.org' ? 'meta-item-single' : 'meta-item';
       const timeEl = `<time class="post-full-meta-date ${dateStylingClassName}" datetime="${publishedAt}"></time>`;
-      const displayAuthorAndTime = () => {
-        return authorName === 'freeCodeCamp.org'
-          ? timeEl
-          : `
-            <ul class="author-list">
-              <li class="author-list-item">
-                <div class="author-name-tooltip">
-                  ${authorName}
-                </div>
-                <a href="${authorUrl}" class="static-avatar">
-                  <img class="author-profile-image" src="${authorImage}" alt="${authorName}">
-                </a>
-              </li>
-            </ul>
-            <a class="meta-item" href="${authorUrl}">${authorName}</a>
-            ${timeEl}
-          `;
-      };
-
       const articleItem = document.createElement('article');
       articleItem.className =
         'post-card post tag-javascript tag-news featured post-card-large';
-      const codeBlock = `
+      const articleHTML = `
+        ${
+          featureImage
+            ? `
           <a class="post-card-image-link" href="${url}">
-            <img class="post-card-image" srcset="${featureImage} 300w,
-              ${featureImage} 600w,
-              ${featureImage} 1000w,
-              ${featureImage} 2000w" sizes="(max-width: 1000px) 400px, 700px" src="${featureImage}" alt="${title}"
-            >
+            <img
+              class="post-card-image"
+              srcset="
+                ${featureImage}  300w,
+                ${featureImage}  600w,
+                ${featureImage} 1000w,
+                ${featureImage} 2000w
+              "
+              sizes="
+                (max-width: 360px) 300px,
+                (max-width: 655px) 600px,
+                (max-width: 767px) 1000px,
+                (min-width: 768px) 300px,
+                92vw
+              "
+              onerror="this.style.display='none'"
+              src="${featureImage}"
+              alt="${title}"
+            />
           </a>
-          <div class="post-card-content">
-            <div class="post-card-content-link">
-              <header class="post-card-header">
-                <span class="post-card-tags">
-                  ${primaryTagCodeBlock}
-                </span>
-                <h2 class="post-card-title">
-                  <a href="${url}">
-                    ${title}
-                  </a>
-                </h2>
-              </header>
-            </div>
-            <footer class="post-card-meta">
-              ${displayAuthorAndTime()}
-            </footer>
-          </div>
-        `;
+        `
+            : `
+          <div class="no-feature-image-offsetter"></div>
+        `
+        }
+      <div class="post-card-content">
+        <div class="post-card-content-link">
+          <header class="post-card-header">
+            <span class="post-card-tags">
+              ${primaryTagCodeBlock}
+            </span>
+            <h2 class="post-card-title">
+              <a href="${url}">
+                ${title}
+              </a>
+            </h2>
+          </header>
+        </div>
+        <footer class="post-card-meta">
+          ${
+            authorName === 'freeCodeCamp.org'
+              ? timeEl
+              : `
+          <ul class="author-list">
+            <li class="author-list-item">
+              <div class="author-name-tooltip">
+                ${authorName}
+              </div>
+              ${
+                authorImage
+                  ? `
+                <a href="${authorUrl}" class="static-avatar">
+                  <img class="author-profile-image" src="${authorImage}" alt="${authorName}">
+                </a>
+              `
+                  : `
+                <a href="${authorUrl}" class="static-avatar author-profile-image">
+                  {% include "partials/icons/avatar.njk" %}
+                </a>
+              `
+              }
+            </li>
+          </ul>
+          <span class="meta-content">
+            <a class="meta-item" href="${authorUrl}">${authorName}</a>
+            ${timeEl}
+          </span>
+        `
+          }
+        </footer>
+      </div>
+    `;
 
-      articleItem.innerHTML = codeBlock;
+      articleItem.innerHTML = articleHTML;
       postFeed.appendChild(articleItem);
     });
   }
@@ -154,10 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const postDates = [...document.getElementsByClassName('post-full-meta-date')];
   // temporarily handle quirk with Ghost/Moment.js zh-cn not jiving
   // with i18next's expected zh-CN format and simplify for the future
-  const siteLang =
-    `{{ site.lang }}`.toLowerCase() === 'zh-cn'
-      ? 'zh'
-      : `{{ site.lang }}`.toLowerCase();
+  const siteLang = `{% siteLangHandler site.lang %}`;
 
   // Load dayjs plugins and set locale
   dayjs.extend(dayjs_plugin_localizedFormat);

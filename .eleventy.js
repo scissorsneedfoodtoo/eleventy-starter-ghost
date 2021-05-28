@@ -49,6 +49,9 @@ const siteLangHandler = siteLang => {
 }
 
 module.exports = function(config) {
+  // Remove when we can set lang for Chinese news to zh
+  config.addNunjucksShortcode("siteLangHandler", siteLangHandler);
+
   // Minify HTML
   config.addTransform("htmlmin", htmlMinTransform);
 
