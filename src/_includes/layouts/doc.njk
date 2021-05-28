@@ -63,6 +63,10 @@
             </article>
         </div>
     </main>
+    {% set js %}
+        {% include "assets/fitvids.js" %}
+    {% endset %}
+    <script>{{ js | safe }}</script>
 {% endblock %}
 
 {%- block seo -%}
