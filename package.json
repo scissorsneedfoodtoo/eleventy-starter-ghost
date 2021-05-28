@@ -41,7 +41,8 @@
     "eslint-utils": "^2.1.0",
     "html-minifier": "^4.0.0",
     "i18next": "^20.2.2",
-    "i18next-fs-backend": "^1.1.1"
+    "i18next-fs-backend": "^1.1.1",
+    "terser": "^5.7.0"
   },
   "devDependencies": {
     "@11ty/eleventy-img": "^0.8.3",

@@ -20,5 +20,5 @@ permalink: 'search/'
     {% set js %}
         {% include "assets/search-results.js" %}
     {% endset %}
-    <script>{{ js | safe }}</script>
+    <script>{{ js | jsmin | safe }}</script>
 {% endblock %}

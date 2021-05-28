@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const cleanCSS = require("clean-css");
+const { minify } = require("terser");
 const { readFileSync } = require("fs");
 const { basename, extname } = require("path");
 const Image = require("@11ty/eleventy-img");
@@ -50,6 +51,25 @@ const siteLangHandler = siteLang => {
 module.exports = function(config) {
   // Minify HTML
   config.addTransform("htmlmin", htmlMinTransform);
+
+  // Inline CSS
+  config.addFilter("cssmin", code => {
+    return new cleanCSS({}).minify(code).styles;
+  });
+
+  config.addNunjucksAsyncFilter("jsmin", async (
+    code,
+    callback
+  ) => {
+    try {
+      const minified = await minify(code);
+      callback(null, minified.code);
+    } catch (err) {
+      console.error("Terser error: ", err);
+      // Fail gracefully
+      callback(null, code);
+    }
+  });
 
   // Assist RSS feed template
   config.addPlugin(pluginRSS);
@@ -159,11 +179,6 @@ module.exports = function(config) {
   }
 
   config.addNunjucksShortcode("fullStopHandler", fullStopHandlerShortcode);
-
-  // Inline CSS
-  config.addFilter("cssmin", code => {
-    return new cleanCSS({}).minify(code).styles;
-  });
 
   config.addFilter("getReadingTime", text => {
     const wordsPerMinute = 200;
