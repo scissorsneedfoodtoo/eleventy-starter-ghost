@@ -1,51 +1,57 @@
 /* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', () => {
-  const client = algoliasearch('{{ secrets.algoliaAppId }}', '{{ secrets.algoliaApiKey }}');
+  const client = algoliasearch(
+    '{{ secrets.algoliaAppId }}',
+    '{{ secrets.algoliaApiKey }}'
+  );
   const index = client.initIndex('news');
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
-  const hitsToRender = (screenWidth >= 767 && screenHeight >= 768) ? 8 : 5;
+  const hitsToRender = screenWidth >= 767 && screenHeight >= 768 ? 8 : 5;
   const searchForm = document.getElementById('search-form');
   const input = document.getElementById('search-input');
   const dropdownContainer = document.getElementById('dropdown-container');
   let searchQuery, hitSelected, hits;
 
-  input.addEventListener('input', e => {
+  input.addEventListener('input', (e) => {
     searchQuery = e.target.value;
   });
 
   // Prevent form from being submitted with magnifying
   // glass or enter when there is no query or hits
-  searchForm.addEventListener('submit', e => {
+  searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     submitSearch();
   });
 
-  const search = autocomplete('#search-input', {
+  const search = autocomplete(
+    '#search-input',
+    {
       hint: false,
       keyboardShortcuts: ['s', 191],
       openOnFocus: true,
       appendTo: dropdownContainer,
-      debug: true // allow tabbing through results
-    }, [
-    {
-      source: autocomplete.sources.hits(index, { hitsPerPage: hitsToRender }),
-      debounce: 250,
-      templates: {
-        suggestion: (suggestion) => {
-          hits = true;
-          return `
+      debug: true, // allow tabbing through results
+    },
+    [
+      {
+        source: autocomplete.sources.hits(index, { hitsPerPage: hitsToRender }),
+        debounce: 250,
+        templates: {
+          suggestion: (suggestion) => {
+            hits = true;
+            return `
             <a href="${suggestion.url}">
               <div class="algolia-result">
                 <span>${suggestion._highlightResult.title.value}</span>
               </div>
             </a>
           `;
-        },
-        empty: () => {
-          hits = false;
-          return `
+          },
+          empty: () => {
+            hits = false;
+            return `
             <div class="aa-suggestion footer-suggestion no-hits-footer">
               <div class="algolia-result">
                 <span>
@@ -54,10 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
           `;
-        },
-        footer: (query) => {
-          if (!query.isEmpty) {
-            return `
+          },
+          footer: (query) => {
+            if (!query.isEmpty) {
+              return `
               <div class="aa-suggestion footer-suggestion">
                 <a id="algolia-footer-selector" href="{{ site.url }}/search?query=${searchQuery}">
                   <div class="algolia-result algolia-footer">
@@ -66,17 +72,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 </a>
               </div>
             `;
-          }
-        }
-      }
-    }
-  ]).on('autocomplete:selected', (event, suggestion, dataset, context) => {
+            }
+          },
+        },
+      },
+    ]
+  ).on('autocomplete:selected', (event, suggestion, dataset, context) => {
     // If article is selected, set to URL of the article.
     // If footer is selected, set to search results path
-    hitSelected = suggestion ? suggestion.url : `{{ site.url }}/search?query=${searchQuery}`;
+    hitSelected = suggestion
+      ? suggestion.url
+      : `{{ site.url }}/search?query=${searchQuery}`;
 
     // Let browser handle click, and do not go to selection on tab key press
-    if (context.selectionMethod === 'click' || context.selectionMethod === 'tabKey') {
+    if (
+      context.selectionMethod === 'click' ||
+      context.selectionMethod === 'tabKey'
+    ) {
       return;
     }
 
@@ -100,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // close dropbar when clicking off
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     if (e.target !== input) {
       search.autocomplete.close();
     }
