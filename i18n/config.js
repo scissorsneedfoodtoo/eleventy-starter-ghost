@@ -10,7 +10,6 @@ const siteData = require("../src/_data/site");
   i18next
     .use(Backend)
     .init({
-      // lng: ['en', 'es', 'zh'],
       lng: lang,
       fallbackLng: 'en',
       // debug: true,

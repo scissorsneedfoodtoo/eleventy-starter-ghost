@@ -10,11 +10,11 @@
         <h1 class="site-title tags-title">#{{ tag.name }}</h1>
         <h2 class="site-description">
             {% if content == 0 %}
-                {% t 'tag-page.collection-of-posts', site.lang %}
+                {% t 'tag-page.collection-of-posts' %}
             {% elif content == 1 %}
-                {% t 'tag-page.one-post', site.lang %}
+                {% t 'tag-page.one-post' %}
             {% else %}
-                {% t 'tag-page.multiple-posts', site.lang, { postCount: postCount } %}
+                {% t 'tag-page.multiple-posts', { postCount: postCount } %}
             {% endif %}
         </h2>
         

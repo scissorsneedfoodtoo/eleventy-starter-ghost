@@ -41,7 +41,7 @@
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
           } else {
             document.getElementById('discourse-comments').innerHTML =
-              `<div style="text-align: center;">{% t 'comments.error', site.lang %}</div>`;
+              `<div style="text-align: center;">{% t 'comments.error' %}</div>`;
           }
         }
       }
@@ -51,7 +51,7 @@
       // Create comments section
       const commentsDivHtml = `
         <div id='discourse-comments'>
-          <button id='trigger-load-comments'>{% t 'comments.show-comments', site.lang %}</button>
+          <button id='trigger-load-comments'>{% t 'comments.show-comments' %}</button>
         </div>
       `;
       const fullContentSection = document.getElementsByClassName('post-full-content')[0];

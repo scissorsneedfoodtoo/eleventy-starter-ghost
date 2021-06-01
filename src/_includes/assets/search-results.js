@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     readMoreRow.className = 'read-more-row';
 
     const loadMoreBtn = document.createElement('button');
-    loadMoreBtn.innerHTML = `{% tSync 'buttons.load-more-articles', site.lang %}`;
+    loadMoreBtn.innerHTML = `{% t 'buttons.load-more-articles' %}`;
     loadMoreBtn.id = 'readMoreBtn';
 
     loadMoreBtn.addEventListener('click', () => {

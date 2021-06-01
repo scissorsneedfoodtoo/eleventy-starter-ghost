@@ -163,17 +163,11 @@ module.exports = function(config) {
 
   config.addNunjucksShortcode("timeAgo", timeAgoShortcode);
 
-  async function translateShortcode(key, siteLang, data) {
-    return await i18next.changeLanguage(siteLangHandler(siteLang)).then(t => t(key, { ...data }));
-  }
-
-  config.addNunjucksAsyncShortcode("t", translateShortcode);
-
-  function translateSyncShortcode(key, data) {
+  function translateShortcode(key, data) {
     return i18next.t(key, { ...data });
   }
 
-  config.addNunjucksShortcode("tSync", translateSyncShortcode);
+  config.addNunjucksShortcode("t", translateShortcode);
 
   function fullStopHandlerShortcode(siteLang) {
     const ideographicFullStopLanguageCodes = ['zh', 'zh-cn'];

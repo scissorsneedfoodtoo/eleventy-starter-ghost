@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="aa-suggestion footer-suggestion no-hits-footer">
               <div class="algolia-result">
                 <span>
-                  {% tSync 'search.no-tutorials' %}
+                  {% t 'search.no-tutorials' %}
                 </span>
               </div>
             </div>
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="aa-suggestion footer-suggestion">
                 <a id="algolia-footer-selector" href="{{ site.url }}/search?query=${searchQuery}">
                   <div class="algolia-result algolia-footer">
-                    {% tSync 'search.see-results', { searchQuery: '${searchQuery}' } %}
+                    {% t 'search.see-results', { searchQuery: '${searchQuery}' } %}
                   </div>
                 </a>
               </div>
