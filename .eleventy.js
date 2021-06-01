@@ -8,18 +8,8 @@ const Image = require("@11ty/eleventy-img");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
 const api = require("./utils/ghost-api");
 const i18next = require("./i18n/config");
-
-const dayjs = require('dayjs');
-const localizedFormat = require('dayjs/plugin/localizedFormat');
-const relativeTime = require('dayjs/plugin/relativeTime');
-
-// Include dayjs locales
-require('dayjs/locale/es');
-require('dayjs/locale/zh');
-
-// Load dayjs plugins
-dayjs.extend(localizedFormat);
-dayjs.extend(relativeTime);
+const siteLangHandler = require("./utils/site-lang-handler");
+const dayjs = require("./utils/dayjs");
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
 const postsPerPage = process.env.POSTS_PER_PAGE;
@@ -39,13 +29,6 @@ const chunkArray = (arr, size) => {
   }
 
   return chunkedArr;
-}
-
-const siteLangHandler = siteLang => {
-  // temporarily handle quirk with Ghost/Moment.js zh-cn not jiving
-  // with i18next's expected zh-CN format and simplify for the future
-
-  return siteLang.toLowerCase() === 'zh-cn' ? 'zh' : siteLang;
 }
 
 module.exports = function(config) {
@@ -149,15 +132,13 @@ module.exports = function(config) {
   config.addNunjucksShortcode("featureImage", featureImageShortcode);
 
   // Date and time shortcodes
-  function publishedDateShortcode(dateStr, siteLang) {
-    return dayjs(dateStr).locale(siteLangHandler(siteLang)).format('LL');
+  function publishedDateShortcode(dateStr) {
+    return dayjs(dateStr).format('LL');
   }
 
   config.addNunjucksShortcode("publishedDate", publishedDateShortcode);
 
-  function timeAgoShortcode(dateStr, siteLang) {
-    dayjs.locale(siteLangHandler(siteLang));
-
+  function timeAgoShortcode(dateStr) {
     return dayjs().to(dayjs(dateStr));
   }
 

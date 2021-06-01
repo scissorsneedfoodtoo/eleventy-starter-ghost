@@ -51,7 +51,7 @@
 
             <footer class="post-card-meta">
                 {% if post.primary_author.name == "freeCodeCamp.org" %}
-                    <time class="meta-item-single" datetime="{{ post.published_at }}">{% timeAgo post.published_at, siteLang %}</time>
+                    <time class="meta-item-single" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
                 {% else %}
                     <ul class="author-list">
                         {% for author in post.authors %}
@@ -80,7 +80,7 @@
                     </ul>
                     <span class="meta-content">
                         <a class="meta-item" href="{{post.primary_author.url}}">{{post.primary_author.name}}</a>
-                        <time class="meta-item" datetime="{{ post.published_at }}">{% timeAgo post.published_at, siteLang %}</time>
+                        <time class="meta-item" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
                     </span>
                 {% endif %}
             </footer>
