@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const url = hit.url || '#';
       const title = hit.title || '#';
       const authorName = hit.author.name;
-      const authorImage = hit.author.profileImage;
+      const authorImage = hit.author.profileImage
+        .replace('/content/images/', '/content/images/size/w30/'); // Get smaller author image from Ghost
       const authorUrl = hit.author.url;
       const primaryTagCodeBlock =
         hit.tags.length === 0
@@ -55,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ? `
           <a class="post-card-image-link" href="${url}">
             <img
-              class="post-card-image"
-              srcset="
+              class="post-card-image lazyload"
+              data-srcset="
                 ${featureImage}  300w,
                 ${featureImage}  600w,
                 ${featureImage} 1000w,
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 92vw
               "
               onerror="this.style.display='none'"
-              src="${featureImage}"
+              data-src="${featureImage}"
               alt="${title}"
             />
           </a>
@@ -106,7 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 authorImage
                   ? `
                 <a href="${authorUrl}" class="static-avatar">
-                  <img class="author-profile-image" src="${authorImage}" alt="${authorName}">
+                  <img
+                    class="author-profile-image lazyload"
+                    data-srcset="${authorImage} 30w"
+                    data-src="${authorImage}"
+                    alt="${authorName}"
+                  >
                 </a>
               `
                   : `
