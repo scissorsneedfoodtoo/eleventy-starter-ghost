@@ -29,7 +29,7 @@
                 </div>
                 {% if post.feature_image %}
                     <figure class="post-full-image">
-                        {% 
+                        {# {% 
                             featureImage
                             post.feature_image,
                             "post-card-image",
@@ -48,9 +48,9 @@
                                     width: 1000
                                 }
                             ]
-                        %}
+                        %} #}
 
-                        {# {% 
+                        {% 
                             image
                             post.feature_image,
                             "post-card-image",
@@ -58,8 +58,8 @@
                             "(max-width: 800px) 400px,
                              (max-width: 1170px) 700px,
                              1400px",
-                            [300, 600, 1000]
-                        %} #}
+                            [300, 600, 1000, 2000]
+                        %}
                     </figure>
                 {% endif %}
                 <section class="post-full-content">

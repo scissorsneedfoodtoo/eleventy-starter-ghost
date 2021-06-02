@@ -2,7 +2,7 @@
     <article class="post-card {{post.class}}">
         {% if post.feature_image %}
             <a class="post-card-image-link" href="{{post.url}}">                
-                {% 
+                {# {% 
                     featureImage
                     post.feature_image,
                     "post-card-image",
@@ -25,6 +25,19 @@
                             width: 300
                         }
                     ]
+                %} #}
+                
+                {% 
+                    image
+                    post.feature_image,
+                    "post-card-image",
+                    post.title,
+                    "(max-width: 360px) 300px,
+                     (max-width: 655px) 600px,
+                     (max-width: 767px) 1000px,
+                     (min-width: 768px) 300px,
+                     92vw",
+                    [300, 600, 1000]
                 %}
             </a>
         {% else %}

@@ -79,13 +79,12 @@ module.exports = function(config) {
 
     return `
       <img
-        srcset="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
+        data-srcset="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
         sizes="${sizes}"
-        src="/assets/images/${imageName}-${widths[0]}w.webp"
-        class="${cls}"
+        data-src="/assets/images/${imageName}-${widths[0]}w.webp"
+        class="${cls} lazyload"
         alt="${alt}"
-        loading="lazy"
-        decoding="async"
+        onerror="this.style.display='none'"
       />
     `;
   }
