@@ -160,6 +160,7 @@
             
             {% set js %}
                 {% include "assets/algolia-search.js" %}
+                {% include "assets/client-dayjs.js" %}
             {% endset %}
             <script>{{ js | jsmin | safe }}</script>
 
