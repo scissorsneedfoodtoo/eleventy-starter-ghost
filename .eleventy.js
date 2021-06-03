@@ -8,7 +8,6 @@ const Image = require("@11ty/eleventy-img");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
 const api = require("./utils/ghost-api");
 const i18next = require("./i18n/config");
-const siteLangHandler = require("./utils/site-lang-handler");
 const dayjs = require("./utils/dayjs");
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
@@ -32,9 +31,6 @@ const chunkArray = (arr, size) => {
 }
 
 module.exports = function(config) {
-  // Remove when we can set lang for Chinese news to zh
-  config.addNunjucksShortcode("siteLangHandler", siteLangHandler);
-
   // Minify HTML
   config.addTransform("htmlmin", htmlMinTransform);
 

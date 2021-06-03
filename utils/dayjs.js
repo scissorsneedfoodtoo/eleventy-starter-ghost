@@ -11,12 +11,11 @@ dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
 
 const siteData = require('../src/_data/site');
-const siteLangHandler = require('./site-lang-handler');
 
 (async () => {
   const { lang } = await siteData();
   
-  dayjs.locale(siteLangHandler(lang));
+  dayjs.locale(lang);
 })();
 
 module.exports = dayjs;
