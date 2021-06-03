@@ -1,8 +1,8 @@
 /* Table of Contents
 /* ------------------------------------------------------------
 
-This is a development CSS file which is built to a minified
-production stylesheet in assets/built/screen.css
+This is a development CSS file which is minified and included
+on every page through _includes/layouts/default.njk
 
 1.  Global Styles
 2.  Layout
