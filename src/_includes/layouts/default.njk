@@ -58,7 +58,7 @@
         {% set css %}
             {% include "css/screen.css" %}
             {% include "css/global.css" %}
-            {% include "css/algolia-search.css" %}
+            {% include "css/search-bar.css" %}
         {% endset %}
         <style>{{ css | cssmin | safe }}</style>
 
@@ -160,7 +160,7 @@
             
             {% set js %}
                 {% include "assets/lazysizes.min.js" %}
-                {% include "assets/algolia-search.js" %}
+                {% include "assets/search-bar.js" %}
                 {% include "assets/client-dayjs.js" %}
             {% endset %}
             <script>{{ js | jsmin | safe }}</script>
