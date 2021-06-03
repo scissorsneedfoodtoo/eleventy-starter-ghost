@@ -24,8 +24,11 @@ pagination:
             {% include "partials/pagination.njk" %}
         </div>
     </main>
+{% endblock%}
+
+{% block scripts %}
     {% set js %}
         {% include "js/time-ago.js" %}
     {% endset %}
     <script>{{ js | jsmin | safe }}</script>
-{% endblock%}
+{% endblock %}
