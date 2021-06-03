@@ -18,8 +18,8 @@ permalink: 'search/'
     </main>
 
     {% set js %}
-        {% include "assets/search-results.js" %}
-        {% include "assets/published-date.js" %}
+        {% include "js/search-results.js" %}
+        {% include "js/published-date.js" %}
     {% endset %}
     <script>{{ js | jsmin | safe }}</script>
 {% endblock %}

@@ -159,9 +159,9 @@
                 src="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism-yaml.min.js"></script>
             
             {% set js %}
-                {% include "assets/lazysizes.min.js" %}
-                {% include "assets/search-bar.js" %}
-                {% include "assets/client-dayjs.js" %}
+                {% include "js/lazysizes.min.js" %}
+                {% include "js/search-bar.js" %}
+                {% include "js/client-dayjs.js" %}
             {% endset %}
             <script>{{ js | jsmin | safe }}</script>
 

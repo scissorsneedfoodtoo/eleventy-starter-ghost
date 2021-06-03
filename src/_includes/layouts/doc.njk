@@ -64,8 +64,8 @@
         </div>
     </main>
     {% set js %}
-        {% include "assets/fitvids.js" %}
-        {% include "assets/social-row.js" %}
+        {% include "js/fitvids.js" %}
+        {% include "js/social-row.js" %}
     {% endset %}
     <script>{{ js | jsmin | safe }}</script>
 {% endblock %}

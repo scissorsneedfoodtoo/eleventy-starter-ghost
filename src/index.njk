@@ -25,7 +25,7 @@ pagination:
         </div>
     </main>
     {% set js %}
-        {% include "assets/time-ago.js" %}
+        {% include "js/time-ago.js" %}
     {% endset %}
     <script>{{ js | jsmin | safe }}</script>
 {% endblock%}
