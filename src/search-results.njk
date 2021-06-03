@@ -16,7 +16,9 @@ permalink: 'search/'
             </div>
         </div>
     </main>
+{% endblock %}
 
+{% block scripts %}
     {% set js %}
         {% include "js/search-results.js" %}
         {% include "js/published-date.js" %}

@@ -1,10 +1,5 @@
 /* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', () => {
-  const client = algoliasearch(
-    '{{ secrets.algoliaAppId }}',
-    '{{ secrets.algoliaApiKey }}'
-  );
-  const index = client.initIndex('news');
   const urlParams = new URLSearchParams(window.location.search);
   const queryStr = urlParams.get('query');
   const postFeed = document.querySelector('.post-feed');

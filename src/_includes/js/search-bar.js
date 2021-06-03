@@ -1,10 +1,5 @@
 /* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', () => {
-  const client = algoliasearch(
-    '{{ secrets.algoliaAppId }}',
-    '{{ secrets.algoliaApiKey }}'
-  );
-  const index = client.initIndex('news');
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
   const hitsToRender = screenWidth >= 767 && screenHeight >= 768 ? 8 : 5;
