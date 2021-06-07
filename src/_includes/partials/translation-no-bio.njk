@@ -1,0 +1,36 @@
+{% set translator = post.primary_author %}
+{% set originalAuthor = post.original_post.primary_author %}
+
+<section class="author-card">
+    {% if translator.profile_image %}
+        {% 
+            image
+            translator.profile_image,
+            "author-profile-image",
+            translator.name,
+            "60px",
+            [60]
+        %}
+    {% else %}
+        <span class="avatar-wrapper">{% include "partials/icons/avatar.njk" %}</span>
+    {% endif %}
+    <section class="author-card-content author-card-content-no-bio">
+          <h4 class="author-card-name"><a href="{{ translator.url }}">{{ translator.name }}</a></h4>
+    </section>
+
+    {% if originalAuthor.profile_image %}
+        {% 
+            image
+            originalAuthor.profile_image,
+            "author-profile-image",
+            originalAuthor.name,
+            "60px",
+            [60]
+        %}
+    {% else %}
+        <span class="avatar-wrapper">{% include "partials/icons/avatar.njk" %}</span>
+    {% endif %}
+    <section class="author-card-content author-card-content-no-bio">
+          <h4 class="author-card-name"><a href="{{ originalAuthor.url }}">{{ originalAuthor.name }}</a></h4>
+    </section>
+</section>

@@ -1,4 +1,5 @@
 {% macro card(post, siteLang) %}
+    {% set originalAuthor = post.original_post.primary_author %}
     <article class="post-card {{post.class}}">
         {% if post.feature_image %}
             <a class="post-card-image-link" href="{{post.url}}">                
@@ -67,34 +68,65 @@
                     <time class="meta-item-single" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
                 {% else %}
                     <ul class="author-list">
-                        {% for author in post.authors %}
+                        {% if post.original_post %}
                             <li class="author-list-item">
                                 <div class="author-name-tooltip">
-                                    {{ author.name }}
+                                    {{ originalAuthor.name }}
                                 </div>
-                                {% if author.profile_image %}
-                                    <a href="{{ author.url}}" class="static-avatar">
+                                {% if originalAuthor.profile_image %}
+                                    <a href="{{ originalAuthor.url}}" class="static-avatar">
                                         {% 
                                             image
-                                            author.profile_image,
+                                            originalAuthor.profile_image,
                                             "author-profile-image",
-                                            author.name,
+                                            originalAuthor.name,
                                             "30px",
                                             [30]
                                         %}
                                     </a>
                                 {% else %}
-                                    <a href="{{author.url}}" class="static-avatar author-profile-image">
+                                    <a href="{{originalAuthor.url}}" class="static-avatar author-profile-image">
                                         {% include "partials/icons/avatar.njk" %}
                                     </a>
                                 {% endif %}
+                                <span class="meta-content">
+                                    <a class="meta-item" href="{{originalAuthor.url}}">AUTOR: {{originalAuthor.name}}</a>
+                                    <time class="meta-item" datetime="{{ post.original_post.published_at }}">{% timeAgo post.original_post.published_at %}</time>
+                                </span>
                             </li>
-                        {% endfor %}
+                        {% endif %}
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip">
+                                {{ post.primary_author.name }}
+                            </div>
+                            {% if post.primary_author.profile_image %}
+                                <a href="{{ post.primary_author.url}}" class="static-avatar">
+                                    {% 
+                                        image
+                                        post.primary_author.profile_image,
+                                        "author-profile-image",
+                                        post.primary_author.name,
+                                        "30px",
+                                        [30]
+                                    %}
+                                </a>
+                            {% else %}
+                                <a href="{{post.primary_author.url}}" class="static-avatar author-profile-image">
+                                    {% include "partials/icons/avatar.njk" %}
+                                </a>
+                            {% endif %}
+                            <span class="meta-content">
+                                <a class="meta-item" href="{{post.primary_author.url}}">
+                                    {% if post.original_post %}
+                                        TRADUCTOR: {{post.primary_author.name}}
+                                    {% else %}
+                                        {{post.primary_author.name}}
+                                    {% endif %}
+                                </a>
+                                <time class="meta-item" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
+                            </span>
+                        </li>
                     </ul>
-                    <span class="meta-content">
-                        <a class="meta-item" href="{{post.primary_author.url}}">{{post.primary_author.name}}</a>
-                        <time class="meta-item" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
-                    </span>
                 {% endif %}
             </footer>
         </div>

@@ -1,4 +1,4 @@
-const api = require('../../utils/ghost-api');
+const { api } = require('../../utils/ghost-api');
 const siteLangHandler = require('../../utils/site-lang-handler');
 
 // Get all site information

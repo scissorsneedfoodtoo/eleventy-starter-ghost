@@ -7,4 +7,13 @@ const api = new ghostContentAPI({
   version: "v3"
 });
 
-module.exports = api;
+const enApi = new ghostContentAPI({
+  url: process.env.EN_GHOST_API_URL,
+  key: process.env.EN_GHOST_CONTENT_API_KEY,
+  version: "v3"
+});
+
+module.exports = {
+  api,
+  enApi
+};
