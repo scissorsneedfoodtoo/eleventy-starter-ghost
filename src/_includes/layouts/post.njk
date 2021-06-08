@@ -24,7 +24,7 @@
                 </header>
                 <div class="post-full-author-header">
                     {% if post.primary_author.name != "freeCodeCamp.org" %}
-                        {% include "partials/byline-single-no-bio.njk" %}
+                        {% include "partials/byline-no-bio.njk" %}
                     {% endif %}
                 </div>
                 {% if post.feature_image %}
@@ -69,7 +69,7 @@
                     <hr />
                     {% if post.primary_author.name != "freeCodeCamp.org" %}
                         <div class="post-full-author-header">
-                            {% include "partials/byline-single.njk" %}
+                            {% include "partials/byline.njk" %}
                         </div>
                         <hr />
                     {% endif %}
