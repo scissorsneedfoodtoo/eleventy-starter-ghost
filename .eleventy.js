@@ -9,6 +9,8 @@ const pluginRSS = require("@11ty/eleventy-plugin-rss");
 const { api, enApi } = require("./utils/ghost-api");
 const i18next = require("./i18n/config");
 const dayjs = require("./utils/dayjs");
+// const getAllPosts = require("./utils/get-all-posts");
+// console.log(getAllPosts());
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
 const postsPerPage = process.env.POSTS_PER_PAGE;
@@ -195,70 +197,86 @@ module.exports = function(config) {
     return collection;
   });
 
-  // Get all posts
-  config.addCollection("posts", async function(collection) {
+  // // Get all posts
+  // config.addCollection("posts", async function(collection) {
+  //   collection = await api.posts
+  //     .browse({
+  //       include: "tags,authors",
+  //       limit: "all"
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //     });
+
+  //   // remove meta pagination object
+  //   delete collection.meta;
+    
+  //   for (let i in collection) {
+  //     const post = collection[i];
+  //     const originalPostRegex = /const\s+fccOriginalPost\s+\=\s+("|')(?<url>.*)\1\;?/g;
+  //     const match = originalPostRegex.exec(post.codeinjection_head);
+      
+  //     if (match) {
+  //       const url = match.groups.url;
+  //       const urlArr = url.split('/');
+  //       // handle urls that end with a slash,
+  //       // then urls that don't end in a slash
+  //       const originalPostSlug = urlArr[urlArr.length - 1] ?
+  //         urlArr[urlArr.length - 1] :
+  //         urlArr[urlArr.length - 2];
+  //       const originalPostRes = await enApi.posts
+  //         .read({
+  //           include: 'authors',
+  //           slug: originalPostSlug
+  //         })
+  //         .catch(err => {
+  //           console.error(err);
+  //         });
+  //       const {
+  //         title,
+  //         published_at,
+  //         primary_author
+  //       } = originalPostRes;
+
+  //       post.original_post = {
+  //         title,
+  //         published_at,
+  //         url,
+  //         primary_author
+  //       }
+  //     }
+
+  //     post.url = stripDomain(post.url);
+  //     post.primary_author.url = stripDomain(post.primary_author.url);
+  //     post.tags.map(tag => (tag.url = stripDomain(tag.url)));
+  //     if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
+  //     post.authors.forEach(author => author.url = stripDomain(author.url));
+
+  //     // Convert publish date into a Date object
+  //     post.published_at = new Date(post.published_at);
+  //   }
+
+  //   // Bring featured post to the top of the list
+  //   collection.sort((post, nextPost) => nextPost.featured - post.featured);
+
+  //   return collection;
+  // });
+
+  // The RSS feed seems to only work with static data or async collections,
+  // so make another call to the Ghost API here (alternative would be to write
+  // JSON to a separate file in _data/)
+  config.addCollection("rssFeed", async function(collection) {
     collection = await api.posts
       .browse({
         include: "tags,authors",
-        limit: "all"
+        limit: "10"
       })
       .catch(err => {
         console.error(err);
       });
 
-    // remove meta pagination object
-    delete collection.meta;
-    
-    for (let i in collection) {
-      const post = collection[i];
-      const originalPostRegex = /const\s+fccOriginalPost\s+\=\s+("|')(?<url>.*)\1\;?/g;
-      const match = originalPostRegex.exec(post.codeinjection_head);
-      
-      if (match) {
-        const url = match.groups.url;
-        const urlArr = url.split('/');
-        // handle urls that end with a slash,
-        // then urls that don't end in a slash
-        const originalPostSlug = urlArr[urlArr.length - 1] ?
-          urlArr[urlArr.length - 1] :
-          urlArr[urlArr.length - 2];
-        const originalPostRes = await enApi.posts
-          .read({
-            include: 'authors',
-            slug: originalPostSlug
-          })
-          .catch(err => {
-            console.error(err);
-          });
-        const {
-          title,
-          published_at,
-          primary_author
-        } = originalPostRes;
-
-        post.original_post = {
-          title,
-          published_at,
-          url,
-          primary_author
-        }
-      }
-
-      post.url = stripDomain(post.url);
-      post.primary_author.url = stripDomain(post.primary_author.url);
-      post.tags.map(tag => (tag.url = stripDomain(tag.url)));
-      if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
-      post.authors.forEach(author => author.url = stripDomain(author.url));
-
-      // Convert publish date into a Date object
-      post.published_at = new Date(post.published_at);
-    }
-
-    // Bring featured post to the top of the list
-    collection.sort((post, nextPost) => nextPost.featured - post.featured);
-
     return collection;
-  });
+  }); 
 
   // Get all authors
   config.addCollection("authors", async function(collection) {

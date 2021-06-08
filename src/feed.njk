@@ -1,31 +1,48 @@
 ---
-permalink: feed.xml
+permalink: rss.xml
 eleventyExcludeFromCollections: true
 date: Last Modified
 metadata:
   author:
     email: myemailaddress@example.com
 ---
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>{{ site.title }}</title>
-  <subtitle>{{ site.description }}</subtitle>
-  <link href="{{ site.url + page.url }}" rel="self"/>
-  <link href="{{ site.url }}"/>
-  {%- for post in collections.posts.slice(0,1) | sort(true, false, 'updated_at') %}
-  <updated>{{ post.updated_at }}</updated>
-  {%- endfor %}
-  <id>{{ site.url }}/</id>
-  <author>
-    <name>{{ collections.authors[0].name }}</name>
-  </author>
-  {%- for post in collections.posts %}
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ site.url + post.url }}"/>
-    <updated>{{ post.updated_at }}</updated>
-    <id>{{ site.url + post.url }}</id>
-    <content type="html">{{ post.html | htmlToAbsoluteUrls(site.url + page.url) }}</content>
-  </entry>
-  {%- endfor %}
-</feed>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+    <channel>
+        <title>
+            <![CDATA[ {{ site.title }} ]]>
+        </title>
+        <description>
+            <![CDATA[ {{ site.description }} ]]>
+        </description>
+        <link>{{ site.url }}</link>
+        <image>
+            <url>{{ site.url }}/favicon.png</url>
+            <title>{{ site.title }}</title>
+            <link>{{ site.url }}</link>
+        </image>
+        <atom:link href="{{ site.url }}" rel="self" type="application/rss+xml" />
+        <ttl>60</ttl>
+        {% for post in collections.rssFeed %}
+            <item>
+                <title>
+                    <![CDATA[ {{ post.title }} ]]>
+                </title>
+                <description>
+                    <![CDATA[ {{ post.excerpt }} ]]>
+                </description>
+                <guid isPermaLink="false">{{ post.comment_id }}</guid>
+                <category>
+                    <![CDATA[ {{ post.primary_tag.name }} ]]>
+                </category>
+                <dc:creator>
+                    <![CDATA[ {{ post.primary_author.name }} ]]>
+                </dc:creator>
+                <media:content url="{{ post.feature_image }}" medium="image" />
+                <content:encoded>
+                    <![CDATA[ {{ post.excerpt }} ]]>
+                </content:encoded>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>
