@@ -62,7 +62,6 @@
                     </h2>
                 </header>
             </div>
-
             <footer class="post-card-meta">
                 {% if post.primary_author.name == "freeCodeCamp.org" %}
                     <time class="meta-item-single" datetime="{{ post.published_at }}">{% timeAgo post.published_at %}</time>
@@ -90,7 +89,7 @@
                                     </a>
                                 {% endif %}
                                 <span class="meta-content">
-                                    <a class="meta-item" href="{{originalAuthor.url}}">AUTOR: {{originalAuthor.name}}</a>
+                                    <a class="meta-item" href="{{originalAuthor.url}}">{% t 'localization-meta.author', { authorName: originalAuthor.name } %} ({% t 'localization-meta.languages.en' %})</a>
                                     <time class="meta-item" datetime="{{ post.original_post.published_at }}">{% timeAgo post.original_post.published_at %}</time>
                                 </span>
                             </li>
@@ -118,7 +117,7 @@
                             <span class="meta-content">
                                 <a class="meta-item" href="{{post.primary_author.url}}">
                                     {% if post.original_post %}
-                                        TRADUCTOR: {{post.primary_author.name}}
+                                        {% t 'localization-meta.translator', { translatorName: post.primary_author.name } %}
                                     {% else %}
                                         {{post.primary_author.name}}
                                     {% endif %}

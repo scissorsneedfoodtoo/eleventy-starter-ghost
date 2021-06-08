@@ -42,6 +42,15 @@
   "learn-to-code-cta": {
     "text": "在 freeCodeCamp 免费学习编程。 freeCodeCamp 的开源课程已帮助 40,000 多人获得开发者工作。"
   },
+  "localization-meta": {
+    "author": "作者: {{authorName}}",
+    "translator": "翻译: {{translatorName}}",
+    "languages": {
+      "en": "英语",
+      "es": "西班牙语",
+      "zh": "中文"
+    }
+  },
   "footer": {
     "tax-exempt-status": "freeCodeCamp 是捐助者支持的 501(c)(3) 条款下具有免税资格的非营利性组织（税号：82-0779546)。",
     "mission-statement": "我们的使命：帮助人们免费学习编程。我们通过创建成千上万的视频、文章和交互式编程课程——所有内容向公众免费开放——来实现这一目标。学员在世界各地自发成立数千个 freeCodeCamp 学习小组。",
