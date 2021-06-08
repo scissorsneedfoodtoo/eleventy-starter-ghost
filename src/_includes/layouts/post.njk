@@ -24,11 +24,7 @@
                 </header>
                 <div class="post-full-author-header">
                     {% if post.primary_author.name != "freeCodeCamp.org" %}
-                        {% if post.original_post %}
-                            {% include "partials/translation-no-bio.njk" %}
-                        {% else %}
-                            {% include "partials/byline-single-no-bio.njk" %}
-                        {% endif %}
+                        {% include "partials/byline-single-no-bio.njk" %}
                     {% endif %}
                 </div>
                 {% if post.feature_image %}

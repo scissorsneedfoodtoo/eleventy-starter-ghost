@@ -1,10 +1,31 @@
+{% set originalAuthor = post.original_post.primary_author %}
+
+{% if post.original_post %}
+    <section class="author-card">
+        {% if originalAuthor.profile_image %}
+            {% 
+                image
+                originalAuthor.profile_image,
+                "author-profile-image",
+                originalAuthor.name,
+                "60px",
+                [60]
+            %}
+        {% else %}
+            <span class="avatar-wrapper">{% include "partials/icons/avatar.njk" %}</span>
+        {% endif %}
+        <section class="author-card-content author-card-content-no-bio">
+            <h4 class="author-card-name"><a href="{{ originalAuthor.url }}">{% t 'localization-meta.author', { authorName: originalAuthor.name } %} ({% t 'localization-meta.languages.en' %})</a></h4>
+        </section>
+    </section>
+{% endif %}
 <section class="author-card">
     {% if post.primary_author.profile_image %}
         {% 
             image
             post.primary_author.profile_image,
             "author-profile-image",
-            author.name,
+            post.primary_author.name,
             "60px",
             [60]
         %}
@@ -12,6 +33,14 @@
         <span class="avatar-wrapper">{% include "partials/icons/avatar.njk" %}</span>
     {% endif %}
     <section class="author-card-content author-card-content-no-bio">
-          <h4 class="author-card-name"><a href="{{ post.primary_author.url }}">{{ post.primary_author.name }}</a></h4>
+        <h4 class="author-card-name">
+            <a href="{{ post.primary_author.url }}">
+                {% if post.original_post %}
+                    {% t 'localization-meta.translator', { translatorName: post.primary_author.name } %}
+                {% else %}
+                    {{post.primary_author.name}}
+                {% endif %}
+            </a>
+        </h4>
     </section>
 </section>

@@ -1241,12 +1241,6 @@ pre.runkit-element {
 /* 7.1. Post Footer
 /* ---------------------------------------------------------- */
 
-.post-full-author-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .post-full-footer {
     padding: 0;
 }
