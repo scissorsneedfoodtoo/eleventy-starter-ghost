@@ -116,12 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </a>
               `
               }
+              <span class="meta-content">
+                <a class="meta-item" href="${authorUrl}">${authorName}</a>
+                ${timeEl}
+              </span>
             </li>
           </ul>
-          <span class="meta-content">
-            <a class="meta-item" href="${authorUrl}">${authorName}</a>
-            ${timeEl}
-          </span>
         `
           }
         </footer>
