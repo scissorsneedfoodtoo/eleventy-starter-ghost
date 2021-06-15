@@ -90,11 +90,10 @@ module.exports = function(config) {
   config.addNunjucksShortcode("image", imageShortcode);
 
   // Copy images over from Ghost
-  function featureImageShortcode(src, cls, alt, sourceOptions) {
+  function featureImageShortcode(src, alt, sizes, widths) {
     const imageFormats = ["webp"];
     const imageExtension = extname(src);
     const imageName = basename(src, imageExtension).split('?')[0]; // strip off url params, if any
-    const widths = [...new Set(sourceOptions.map(obj => obj.width))]; // get unique widths
     const options = {
       widths: widths,
       formats: imageFormats,
@@ -109,18 +108,20 @@ module.exports = function(config) {
 
     return `
       <picture>
-        ${sourceOptions.map(obj => `
-          <source 
-            media="${obj.mediaStr}"
-            srcset="/assets/images/${imageName}-${obj.width}w.webp"
-          >`).join('')
-        }
-        <img 
-          class="${cls}"
+        <source
+          media="(max-width: 700px)"
+          sizes="1px"
+          srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 1w"
+        />
+        <source 
+          media="(min-width: 701px)"
+          sizes="${sizes}"
+          srcset="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
+        />
+        <img
+          onerror="this.style.display='none'"
           src="/assets/images/${imageName}-${widths[0]}w.webp"
-          alt="${alt}" 
-          loading="lazy"
-          decoding="async"
+          alt="${alt}"
         >
       </picture>
     `;

@@ -29,31 +29,9 @@
                 </div>
                 {% if post.feature_image %}
                     <figure class="post-full-image">
-                        {# {% 
+                        {% 
                             featureImage
                             post.feature_image,
-                            "post-card-image",
-                            post.title,
-                            [
-                                {
-                                    mediaStr: "(max-width: 365px)",
-                                    width: 300
-                                },
-                                {
-                                    mediaStr: "(max-width: 655px)",
-                                    width: 600
-                                },
-                                {
-                                    mediaStr: "(min-width: 656px)",
-                                    width: 1000
-                                }
-                            ]
-                        %} #}
-
-                        {% 
-                            image
-                            post.feature_image,
-                            "post-card-image",
                             post.title,
                             "(max-width: 800px) 400px,
                              (max-width: 1170px) 700px,
