@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function renderSearchResults(arr) {
     arr.forEach((hit) => {
-      const featureImage = hit.featureImage || '#';
+      const featureImage = hit.featureImage || null;
       const url = hit.url || '#';
       const title = hit.title || '#';
       const authorName = hit.author.name;
       const authorImage = hit.author.profileImage
-        .replace('/content/images/', '/content/images/size/w30/'); // Get smaller author image from Ghost
+        .replace('/content/images/', '/content/images/size/w30/'); // Get smaller author image
       const authorUrl = hit.author.url;
       const primaryTagCodeBlock =
         hit.tags.length === 0
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const timeEl = `<time class="post-full-meta-date ${dateStylingClassName}" datetime="${publishedAt}"></time>`;
       const articleItem = document.createElement('article');
       articleItem.className =
-        'post-card post tag-javascript tag-news featured post-card-large';
+        'post-card post';
       const articleHTML = `
         ${
           featureImage
