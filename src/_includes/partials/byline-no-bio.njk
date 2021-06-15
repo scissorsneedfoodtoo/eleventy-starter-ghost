@@ -15,7 +15,7 @@
             <span class="avatar-wrapper">{% include "partials/icons/avatar.njk" %}</span>
         {% endif %}
         <section class="author-card-content author-card-content-no-bio">
-            <h4 class="author-card-name"><a href="{{ originalAuthor.url }}">{% t 'localization-meta.author', { authorName: originalAuthor.name } %} ({% t 'localization-meta.languages.en' %})</a></h4>
+            <span class="author-card-name"><a href="{{ originalAuthor.url }}">{% t 'localization-meta.author', { authorName: originalAuthor.name } %} ({% t 'localization-meta.languages.en' %})</a></span>
         </section>
     </section>
 {% endif %}
@@ -33,7 +33,7 @@
         <span class="avatar-wrapper">{% include "partials/icons/avatar.njk" %}</span>
     {% endif %}
     <section class="author-card-content author-card-content-no-bio">
-        <h4 class="author-card-name">
+        <span class="author-card-name">
             <a href="{{ post.primary_author.url }}">
                 {% if post.original_post %}
                     {% t 'localization-meta.translator', { translatorName: post.primary_author.name } %}
@@ -41,6 +41,6 @@
                     {{post.primary_author.name}}
                 {% endif %}
             </a>
-        </h4>
+        </span>
     </section>
 </section>
