@@ -31,14 +31,14 @@
                 {% 
                     image
                     post.feature_image,
-                    "post-card-image",
+                    "post-card-image lazy",
                     post.title,
                     "(max-width: 360px) 300px,
                      (max-width: 655px) 600px,
                      (max-width: 767px) 1000px,
                      (min-width: 768px) 300px,
                      92vw",
-                    [300, 600, 1000]
+                    [300, 600, 1000, 2000]
                 %}
             </a>
         {% else %}

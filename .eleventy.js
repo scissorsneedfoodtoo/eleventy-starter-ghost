@@ -77,10 +77,10 @@ module.exports = function(config) {
 
     return `
       <img
-        data-srcset="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
+        ${cls.includes('lazyload') ? 'data-srcset' : 'srcset'}="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
         sizes="${sizes}"
-        data-src="/assets/images/${imageName}-${widths[0]}w.webp"
-        class="${cls} lazyload"
+        ${cls.includes('lazyload') ? 'data-src' : 'src'}="/assets/images/${imageName}-${widths[0]}w.webp"
+        class="${cls}"
         alt="${alt}"
         onerror="this.style.display='none'"
       />

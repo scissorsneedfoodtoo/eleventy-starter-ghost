@@ -96,6 +96,11 @@
             {% include "partials/footer.njk" %}
         </div>
 
+        {% set lazysizes %}
+            {% include "js/lazysizes.min.js" %}
+        {% endset %}
+        <script type="text/javascript" async="">{{ lazysizes | jsmin | safe }}</script>
+
         <script defer type="text/javascript" src="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism.min.js"></script>
         <script defer type="text/javascript"
             src="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism-unescaped-markup.min.js"></script>
@@ -160,7 +165,6 @@
             src="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism-yaml.min.js"></script>
 
         {% set js %}
-            {% include "js/lazysizes.min.js" %}
             {% include "js/algolia-locale-setup.js" %}
             {% include "js/search-bar.js" %}
             {% include "js/client-dayjs.js" %}
