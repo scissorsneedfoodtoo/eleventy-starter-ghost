@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .map((mutation) => [...mutation.addedNodes])
       .flat();
     const newPostDates = newNodes
-      .map((node) => [...node.querySelectorAll('.post-full-meta-date')])
+      .map((node) => [...node.querySelectorAll('time')])
       .flat(1);
 
     observer.disconnect();

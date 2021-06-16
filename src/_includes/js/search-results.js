@@ -39,9 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
           </a>
         `;
       const publishedAt = hit.publishedAt;
-      const dateStylingClassName =
-        authorName === 'freeCodeCamp.org' ? 'meta-item-single' : 'meta-item';
-      const timeEl = `<time class="post-full-meta-date ${dateStylingClassName}" datetime="${publishedAt}"></time>`;
+      const originalPost = hit.originalPost || null;
+      const originalAuthor = originalPost ? originalPost.primaryAuthor : null;
+      const originalAuthorImage = originalPost ? originalAuthor.profileImage
+        .replace('/content/images/', '/content/images/size/w30/') : null;
       const articleItem = document.createElement('article');
       articleItem.className =
         'post-card post';
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${
           featureImage
             ? `
-          <a class="post-card-image-link" href="${url}">
+          <a class="post-card-image-link" href="${url}" aria-label="${title}">
             <img
               class="post-card-image lazyload"
               data-srcset="
@@ -91,9 +92,33 @@ document.addEventListener('DOMContentLoaded', () => {
         <footer class="post-card-meta">
           ${
             authorName === 'freeCodeCamp.org'
-              ? timeEl
+              ? `<time class="meta-item-single" datetime="${publishedAt}"></time>`
               : `
           <ul class="author-list">
+            ${ originalPost ? `
+              <li class="author-list-item">
+                <div class="author-name-tooltip">
+                  ${originalAuthor.name}
+                </div>
+                ${originalAuthor.profileImage ? `
+                  <a href="${originalAuthor.url}" class="static-avatar">
+                    <img
+                      class="author-profile-image lazyload"
+                      data-srcset="${originalAuthorImage} 30w"
+                      data-src="${originalAuthorImage}"
+                      alt="${originalAuthor.name}"
+                    >
+                  </a>
+                ` : `
+                <a href="${originalAuthor.url}" class="static-avatar author-profile-image">
+                  {% include "partials/icons/avatar.njk" %}
+                </a>
+                `}
+                <span class="meta-content">
+                  <a class="meta-item" href="${originalAuthor.url}">{% t 'localization-meta.author', { authorName: '${originalAuthor.name}' } %} ({% t 'localization-meta.languages.en' %})</a>
+                  <time class="meta-item" datetime="${originalPost.publishedAt}"></time>
+                </span>
+            ` : ''}
             <li class="author-list-item">
               <div class="author-name-tooltip">
                 ${authorName}
@@ -117,8 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
               `
               }
               <span class="meta-content">
-                <a class="meta-item" href="${authorUrl}">${authorName}</a>
-                ${timeEl}
+                <a class="meta-item" href="${authorUrl}">
+                  ${originalPost ? `
+                    {% t 'localization-meta.translator', { translatorName: '${authorName}' } %}
+                  ` : `
+                    ${authorName}
+                  `}
+                </a>
+                <time class="meta-item" datetime="${publishedAt}"></time>
               </span>
             </li>
           </ul>
