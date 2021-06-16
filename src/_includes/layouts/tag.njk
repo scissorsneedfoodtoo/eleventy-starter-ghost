@@ -2,16 +2,16 @@
 {% from "partials/card.njk" import card %}
 
 {% set title = tag.name + " – " + site.title %}
-{% set popularTags = collections.popularTags %}
-{% set postCount = content %}
+{% set postCount = tag.count.posts %}
+{% set popularTags = ghostData.popularTags %}
 
 {% block content %}
     <div class="under-header-content">
         <h1 class="site-title tags-title">#{{ tag.name }}</h1>
         <h2 class="site-description">
-            {% if content == 0 %}
+            {% if postCount == 0 %}
                 {% t 'tag-page.collection-of-posts' %}
-            {% elif content == 1 %}
+            {% elif postCount == 1 %}
                 {% t 'tag-page.one-post' %}
             {% else %}
                 {% t 'tag-page.multiple-posts', { postCount: postCount } %}

@@ -1,11 +1,9 @@
 ---
 pagination:
-  data: collections.tags
+  data: ghostData.tags
   size: 1
   alias: tag
   addAllPagesToCollections: true
 layout: 'layouts/tag.njk'
 permalink: '{{ tag.url }}/{% if tag.page %}{{ tag.page }}/{% endif %}'
 ---
-
-{{ tag.count.posts }}
