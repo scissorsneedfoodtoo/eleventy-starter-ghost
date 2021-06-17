@@ -1,5 +1,5 @@
-const { api, enApi } = require('../../utils/ghost-api');
 const postsPerPage = process.env.POSTS_PER_PAGE;
+const { api, enApi } = require('../../utils/ghost-api');
 
 const wait = seconds => {
   return new Promise(resolve => {
@@ -179,8 +179,6 @@ module.exports = async () => {
     b.count.posts - a.count.posts ||
     a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en', { sensitivity: 'base' }
   )).slice(0, 15);
-
-  // console.log(popularTags);
 
   return {
     posts,

@@ -1,11 +1,11 @@
-const i18next = require("i18next");
-const Backend = require("i18next-fs-backend");
-const { readdirSync, lstatSync } = require("fs");
-const { join } = require("path");
-const siteData = require("../src/_data/site");
+const i18next = require('i18next');
+const Backend = require('i18next-fs-backend');
+const { readdirSync, lstatSync } = require('fs');
+const { join } = require('path');
+const { settings } = require('../utils/ghost-settings');
 
 (async () => {
-  const { lang } = await siteData();
+  const { lang } = await settings;
 
   i18next
     .use(Backend)

@@ -1,6 +1,7 @@
 const dayjs = require('dayjs');
 const localizedFormat = require('dayjs/plugin/localizedFormat');
 const relativeTime = require('dayjs/plugin/relativeTime');
+const { settings } = require('./ghost-settings');
 
 // Include dayjs locales
 require('dayjs/locale/es');
@@ -10,10 +11,8 @@ require('dayjs/locale/zh');
 dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
 
-const siteData = require('../src/_data/site');
-
 (async () => {
-  const { lang } = await siteData();
+  const { lang } = await settings;
   
   dayjs.locale(lang);
 })();
