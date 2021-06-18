@@ -35,6 +35,9 @@ module.exports = function(config) {
     }
   });
 
+  // Allow passthrough for scripts
+  config.addPassthroughCopy({'./src/_includes/js/': 'assets/js/'});
+
   // Assist RSS feed template
   config.addPlugin(pluginRSS);
 
