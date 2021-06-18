@@ -9,6 +9,6 @@
         {% set js %}
             {% include "js/pagination.js" %}
         {% endset %}
-        <script>{{ js | jsmin | safe }}</script>
+        <script>{{ js | jsMin | safe }}</script>
     {% endif %}
 {% endif %}

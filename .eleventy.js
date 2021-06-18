@@ -1,9 +1,9 @@
 require("dotenv").config();
 
-const htmlmin = require("html-minifier");
-const cleanCSS = require("clean-css");
-const { minify } = require("terser");
-const { readFileSync } = require("fs");
+const htmlMin = require("./utils/transforms/html-min");
+const cssMin = require("./utils/transforms/css-min");
+const jsMin = require("./utils/transforms/js-min");
+const { readFileSync, readdirSync, writeFileSync } = require("fs");
 const { basename, extname } = require("path");
 const Image = require("@11ty/eleventy-img");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
@@ -14,45 +14,31 @@ const cacheBuster = require("@mightyplow/eleventy-plugin-cache-buster");
 
 module.exports = function(config) {
   // Minify HTML
-  config.addTransform("htmlmin", (content, outputPath) => {
-    // Eleventy 1.0+: use this.inputPath and this.outputPath instead
-    if( outputPath && outputPath.endsWith(".html") ) {
-      let minified = htmlmin.minify(content, {
-        useShortDoctype: true,
-        removeComments: true,
-        collapseWhitespace: true,
-        minifyCSS: true
-      });
-      return minified;
-    }
-
-    return content;
-  });
+  config.addTransform("htmlMin", htmlMin);
 
   // Minify inline CSS
-  config.addFilter("cssmin", code => {
-    return new cleanCSS({}).minify(code).styles;
-  });
+  config.addFilter("cssMin", cssMin);
 
   // Minify inline JS
-  config.addNunjucksAsyncFilter("jsmin", async (
-    code,
-    callback
-  ) => {
-    try {
-      const minified = await minify(code);
-      callback(null, minified.code);
-    } catch (err) {
-      console.error("Terser error: ", err);
-      // Fail gracefully
-      callback(null, code);
-    }
-  });
+  config.addNunjucksAsyncFilter("jsMin", jsMin);
 
   // Allow passthrough for styles and scripts
   config.addPassthroughCopy({'./src/_includes/css': './assets/css'});
 
   config.addPassthroughCopy({'./src/_includes/js': './assets/js'});
+
+  // Minify CSS
+  config.on('afterBuild', () => {
+    const path = './dist/assets/css';
+    const cssFiles = readdirSync(path);
+
+    cssFiles.forEach(filename => {
+      const fullPath = `${path}/${filename}`;
+      const content = readFileSync(fullPath);
+
+      writeFileSync(fullPath, cssMin(content));
+    });
+  });
 
   // Basic cache busting
   config.addPlugin(

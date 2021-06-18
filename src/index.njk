@@ -30,5 +30,5 @@ pagination:
     {% set js %}
         {% include "js/time-ago.js" %}
     {% endset %}
-    <script>{{ js | jsmin | safe }}</script>
+    <script>{{ js | jsMin | safe }}</script>
 {% endblock %}
