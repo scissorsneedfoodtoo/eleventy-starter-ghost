@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const htmlmin = require("html-minifier");
 const cleanCSS = require("clean-css");
 const { minify } = require("terser");
 const { readFileSync } = require("fs");
@@ -9,11 +10,23 @@ const pluginRSS = require("@11ty/eleventy-plugin-rss");
 const { api } = require("./utils/ghost-api");
 const i18next = require("./i18n/config");
 const dayjs = require("./utils/dayjs");
-const htmlMinTransform = require("./src/transforms/html-min-transform.js");
 
 module.exports = function(config) {
   // Minify HTML
-  config.addTransform("htmlmin", htmlMinTransform);
+  config.addTransform("htmlmin", (content, outputPath) => {
+    // Eleventy 1.0+: use this.inputPath and this.outputPath instead
+    if( outputPath && outputPath.endsWith(".html") ) {
+      let minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true,
+        minifyCSS: true
+      });
+      return minified;
+    }
+
+    return content;
+  });
 
   // Minify inline CSS
   config.addFilter("cssmin", code => {
