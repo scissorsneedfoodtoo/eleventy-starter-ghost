@@ -70,7 +70,7 @@ module.exports = function(config) {
     return `
       <img
         ${cls.includes('lazyload') ? 'data-srcset' : 'srcset'}="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
-        sizes="${sizes}"
+        sizes="${sizes.replace(/\s+/g, ' ').trim()}"
         ${cls.includes('lazyload') ? 'data-src' : 'src'}="/assets/images/${imageName}-${widths[0]}w.webp"
         class="${cls}"
         alt="${alt}"
@@ -107,7 +107,7 @@ module.exports = function(config) {
         />
         <source 
           media="(min-width: 701px)"
-          sizes="${sizes}"
+          sizes="${sizes.replace(/\s+/g, ' ').trim()}"
           srcset="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
         />
         <img
