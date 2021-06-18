@@ -32,8 +32,6 @@ on every page through _includes/layouts/default.njk
 /* 1. Global - Set up the things
 /* ---------------------------------------------------------- */
 
-@import "global.css";
-
 body {
     background: #fff;
 }
