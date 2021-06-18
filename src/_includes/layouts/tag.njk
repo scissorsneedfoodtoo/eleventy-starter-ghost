@@ -31,7 +31,7 @@
             <section class="post-feed">
                 {% if tag.posts %}
                     {% for post in tag.posts %}
-                        {{ card(post, site.lang) }}
+                        {{ card(post) }}
                     {% endfor %}
                 {% endif %}
             </section>

@@ -1,4 +1,4 @@
-{% macro card(post, siteLang) %}
+{% macro card(post) %}
     {% set originalAuthor = post.original_post.primary_author %}
     <article class="post-card {{post.class}}">
         {% if post.feature_image %}
