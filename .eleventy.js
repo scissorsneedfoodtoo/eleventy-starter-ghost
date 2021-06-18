@@ -10,6 +10,7 @@ const pluginRSS = require("@11ty/eleventy-plugin-rss");
 const { api } = require("./utils/ghost-api");
 const i18next = require("./i18n/config");
 const dayjs = require("./utils/dayjs");
+const cacheBuster = require("@mightyplow/eleventy-plugin-cache-buster");
 
 module.exports = function(config) {
   // Minify HTML
@@ -48,8 +49,17 @@ module.exports = function(config) {
     }
   });
 
-  // Allow passthrough for scripts
-  config.addPassthroughCopy({'./src/_includes/js/': 'assets/js/'});
+  // Allow passthrough for styles and scripts
+  config.addPassthroughCopy({'./src/_includes/css': './assets/css'});
+
+  config.addPassthroughCopy({'./src/_includes/js': './assets/js'});
+
+  // Basic cache busting
+  config.addPlugin(
+    cacheBuster({
+      outputDirectory: './dist',
+    })
+  );
 
   // Assist RSS feed template
   config.addPlugin(pluginRSS);
@@ -144,6 +154,7 @@ module.exports = function(config) {
 
   config.addNunjucksShortcode("t", translateShortcode);
 
+  // Special handling for full stops
   function fullStopHandlerShortcode(siteLang) {
     const ideographicFullStopLanguageCodes = ['zh', 'zh-cn'];
 

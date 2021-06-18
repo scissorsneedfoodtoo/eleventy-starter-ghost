@@ -55,12 +55,9 @@
         <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Roboto+Mono:400,700?&display=swap">
 
         <!-- News Theme Styles -->
-        {% set css %}
-            {% include "css/screen.css" %}
-            {% include "css/global.css" %}
-            {% include "css/search-bar.css" %}
-        {% endset %}
-        <style>{{ css | cssmin | safe }}</style>
+        <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="{{ '/assets/css/global.css' | url }}" />
+        <link rel="stylesheet" type="text/css" href="{{ '/assets/css/screen.css' | url }}" />
+        <link rel="stylesheet" type="text/css" href="{{ '/assets/css/search-bar.css' | url }}" />
 
         <!-- Algolia search assets -->
         <script defer src="https://cdn.freecodecamp.org/news-assets/algolia/algoliasearch-3-33-0/algoliasearch.min.js"></script>
