@@ -38,7 +38,7 @@
                             image
                             doc.feature_image,
                             "post-card-image",
-                            doc.title,
+                            (doc.title | escape),
                             "(max-width: 800px) 400px,
                              (max-width: 1170px) 700px,
                              1400px",
