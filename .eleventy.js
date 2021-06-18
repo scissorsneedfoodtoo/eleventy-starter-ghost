@@ -15,11 +15,12 @@ module.exports = function(config) {
   // Minify HTML
   config.addTransform("htmlmin", htmlMinTransform);
 
-  // Inline CSS
+  // Minify inline CSS
   config.addFilter("cssmin", code => {
     return new cleanCSS({}).minify(code).styles;
   });
 
+  // Minify inline JS
   config.addNunjucksAsyncFilter("jsmin", async (
     code,
     callback
