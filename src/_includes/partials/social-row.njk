@@ -6,3 +6,10 @@
         {% t 'social-row.author-no-twitter' %}, <a id='tweet-btn' class='cta-button'>{% t 'buttons.author-no-twitter' %}</a>
     {% endif %}
 </p>
+
+{% block scripts %}
+    {% set js %}
+        {% include "js/social-row.js" %}
+    {% endset %}
+    <script>{{ js | jsMin | safe }}</script>
+{% endblock %}

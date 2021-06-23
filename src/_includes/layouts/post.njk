@@ -69,7 +69,6 @@
 {% block scripts %}
     {% set js %}
         {% include "js/fitvids.js" %}
-        {% include "js/social-row.js" %}
         document.addEventListener('DOMContentLoaded', () => {
             const postContent = document.querySelector('.post-full-content');
             if (postContent) fitVids(postContent);
