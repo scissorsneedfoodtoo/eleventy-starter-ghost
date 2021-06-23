@@ -11,6 +11,8 @@ const { api } = require("./utils/ghost-api");
 const i18next = require("./i18n/config");
 const dayjs = require("./utils/dayjs");
 const cacheBuster = require("@mightyplow/eleventy-plugin-cache-buster");
+const { settings } = require('./utils/ghost-settings');
+const probe = require('probe-image-size');
 
 module.exports = function(config) {
   // Minify HTML
@@ -183,6 +185,112 @@ module.exports = function(config) {
 
     return collection;
   });
+
+  // This counts on all images, including the site logo, being stored like on Ghost with the
+  // same directory structure
+  const domainReplacer = url => url.replace(process.env.GHOST_API_URL, process.env.SITE_URL);
+
+  async function createJsonLdShortcode(type, data) {
+    // Main site settings from Ghost API
+    let { url, logo, image_dimensions } = await settings;
+    url = `${domainReplacer(url)}/`;
+    const typeMap = {
+      index: 'WebSite',
+      article: 'Article',
+      tag: 'Series'
+    }
+    const baseData = {
+      "@context": "https://schema.org",
+      "@type": typeMap[type],
+      publisher: {
+        "@type": "Organization",
+        name: "freeCodeCamp.org",
+        url: url,
+        logo: {
+          "@type": "ImageObject",
+          url: domainReplacer(logo),
+          width: image_dimensions.logo.width,
+          height: image_dimensions.logo.height
+        }
+      },
+      "url": url,
+      // "image": {
+      //   "@type": "ImageObject",
+      //   "url": cover_image,
+      //   "width": image_dimensions.cover_image.width,
+      //   "height": image_dimensions.cover_image.height
+      // },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": url
+      },
+      // description: description
+    }
+    const returnData =  {...baseData};
+
+    // Conditionally set other properties based on
+    // objects passed to shortcodes
+
+    // Clean this up later when we move to using slugs for permalinks
+    if (data.url.startsWith('/')) returnData.url += data.url.substring(1);
+
+    if (data.cover_image || data.feature_image) {
+      const imageUrl = data.cover_image ? data.cover_image : data.feature_image;
+      const { width, height } = await probe(imageUrl);
+      returnData.image = {
+        "@type": "ImageObject",
+        url: domainReplacer(imageUrl),
+        width,
+        height
+      }
+    }
+
+    if (data.description) returnData.description = data.description;
+
+    
+
+
+
+    // eleventyComputed:
+    //   ldjson:
+    //     "@context": "https://schema.org"
+    //     "@type": "Article"
+    //     "publisher":
+    //       "@type": "Organization"
+    //       "name": "{{ site.title }}"
+    //       "url": "{{ site.url }}"
+    //       "logo":
+    //         "@type": "ImageObject"
+    //         "url": "{{ site.logo }}"
+    //     "author":
+    //       "@type": "Person"
+    //       "name": "{{ post.primary_author.name }}"
+    //       "image":
+    //         "@type": "ImageObject"
+    //         "url": "{{ post.primary_author.profile_image }}"
+    //       "url": "{{ site.url + post.primary_author.url }}"
+    //       "sameAs": [
+    //         "{{post.primary_author.website}}",
+    //         "https://facebook.com/{{post.primary_author.facebook}}",
+    //         "https://twitter.com/{{post.primary_author.twitter}}"
+    //       ]
+    //     "headline": "{{ post.title }}"
+    //     "url": "{{ post.url }}"
+    //     "datePublished": "{{ post.published_at }}"
+    //     "dateModified": "{{ post.updated_at }}"
+    //     "image":
+    //       "@type": "ImageObject"
+    //       "url": "{{ post.feature_image }}"
+    //     "description": "{{ post.excerpt }}"
+    //     "mainEntityOfPage": {
+    //       "@type": "WebPage",
+    //       "@id": "{{ site.url }}"
+    //     }
+
+    return JSON.stringify(returnData, null, '\t');
+  }
+
+  config.addNunjucksAsyncShortcode("createJsonLd", createJsonLdShortcode);
 
   // Display 404 page in BrowserSnyc
   config.setBrowserSyncConfig({

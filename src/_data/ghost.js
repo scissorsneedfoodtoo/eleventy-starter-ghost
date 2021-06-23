@@ -110,6 +110,8 @@ module.exports = async () => {
     posts.push(post);
   }
 
+  console.log(posts);
+
   const pages = ghostPages.map(page => {
     page.url = stripDomain(page.url);
     page.primary_author.page = stripDomain(page.primary_author.url);

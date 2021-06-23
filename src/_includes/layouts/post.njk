@@ -104,3 +104,7 @@
     <meta property="og:locale" content="{{ site.lang }}">
     <meta property="article:author" content="{{ site.url }}">
 {%- endblock -%}
+
+{% block jsonLd %}
+    <script type="application/ld+json">{% createJsonLd 'article', post %}</script>
+{% endblock %}

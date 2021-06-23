@@ -45,6 +45,15 @@
             <meta property="article:author" content="{{ site.url }}">
         {%- endblock -%}
 
+        {# {% if ldjson %}
+            <script type="application/ld+json">
+                {{ ldjson | dump(2) | safe }}
+            </script>
+        {% endif %} #}
+
+        {% block jsonLd %}
+        {% endblock %}
+
         <link rel="icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon.ico" type="image/png">
         <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism.min.css" />
         <noscript><link rel="stylesheet" href="https://cdn.freecodecamp.org/news-assets/prism-1-16-0/prism.min.css"></noscript>

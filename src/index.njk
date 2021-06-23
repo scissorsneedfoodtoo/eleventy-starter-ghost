@@ -32,3 +32,7 @@ pagination:
     {% endset %}
     <script>{{ js | jsMin | safe }}</script>
 {% endblock %}
+
+{% block jsonLd %}
+    <script type="application/ld+json">{% createJsonLd 'index', site %}</script>
+{% endblock %}
