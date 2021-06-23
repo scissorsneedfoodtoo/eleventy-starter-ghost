@@ -1,4 +1,4 @@
-{% macro card(post) %}
+{% macro card(post, index) %}
     {% set originalAuthor = post.original_post.primary_author %}
     <article class="post-card {{post.class}}">
         {% if post.feature_image %}
@@ -13,7 +13,8 @@
                      (max-width: 767px) 1000px,
                      (min-width: 768px) 300px,
                      92vw",
-                    [300, 600, 1000, 2000]
+                    [300, 600, 1000, 2000],
+                    index
                 %}
             </a>
         {% else %}

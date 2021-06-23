@@ -51,7 +51,7 @@ module.exports = function(config) {
   config.addPlugin(pluginRSS);
 
   // Copy images over from Ghost
-  function imageShortcode(src, cls, alt, sizes, widths) {
+  function imageShortcode(src, cls, alt, sizes, widths, index) {
     const imageFormats = ["webp"];
     const imageExtension = extname(src);
     const imageName = basename(src, imageExtension).split('?')[0]; // strip off url params, if any
@@ -69,10 +69,11 @@ module.exports = function(config) {
 
     return `
       <img
-        ${cls.includes('lazyload') ? 'data-srcset' : 'srcset'}="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
+        ${index === 0 ? `rel="preload" as="image"` : ''}
+        ${(cls.includes('lazyload') && index > 0) ? 'data-srcset' : 'srcset'}="${widths.map(width => `/assets/images/${imageName}-${width}w.webp ${width}w`).join()}"
         sizes="${sizes.replace(/\s+/g, ' ').trim()}"
-        ${cls.includes('lazyload') ? 'data-src' : 'src'}="/assets/images/${imageName}-${widths[0]}w.webp"
-        class="${cls}"
+        ${(cls.includes('lazyload') && index > 0) ? 'data-src' : 'src'}="/assets/images/${imageName}-${widths[0]}w.webp"
+        class="${index === 0 ? cls.replace('lazyload', '') : cls}"
         alt="${alt}"
         onerror="this.style.display='none'"
       />
