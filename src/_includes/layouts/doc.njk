@@ -13,32 +13,10 @@
                 </header>
                 {% if doc.feature_image %}
                     <figure class="post-full-image">
-                        {# {% 
-                            featureImage
-                            doc.feature_image,
-                            "post-card-image",
-                            doc.title,
-                            [
-                                {
-                                    mediaStr: "(max-width: 365px)",
-                                    width: 300
-                                },
-                                {
-                                    mediaStr: "(max-width: 655px)",
-                                    width: 600
-                                },
-                                {
-                                    mediaStr: "(min-width: 656px)",
-                                    width: 1000
-                                }
-                            ]
-                        %} #}
-
                         {% 
-                            image
-                            doc.feature_image,
-                            "post-card-image",
-                            (doc.title | escape),
+                            featureImage
+                            post.feature_image,
+                            (post.title | escape),
                             "(max-width: 800px) 400px,
                              (max-width: 1170px) 700px,
                              1400px",
