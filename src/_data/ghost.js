@@ -107,7 +107,6 @@ module.exports = async () => {
     // Convert publish date into a Date object
     post.published_at = new Date(post.published_at);
 
-    // console.log(post);
     posts.push(post);
   }
 

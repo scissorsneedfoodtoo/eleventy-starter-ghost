@@ -5,7 +5,7 @@
   
   const fetchNextPage = async () => {
     try {
-      const res = await fetch(`${window.location.origin}/${nextPageNum}/`);
+      const res = await fetch(`${window.location.href}/${nextPageNum}/`);
       nextPageNum++;
 
       if (res.ok) {
