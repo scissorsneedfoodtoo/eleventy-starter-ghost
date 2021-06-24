@@ -197,6 +197,7 @@ module.exports = function(config) {
     const typeMap = {
       index: 'WebSite',
       article: 'Article',
+      author: 'Person',
       tag: 'Series'
     }
     const baseData = {
@@ -214,22 +215,37 @@ module.exports = function(config) {
         }
       },
       "url": url,
-      // "image": {
-      //   "@type": "ImageObject",
-      //   "url": cover_image,
-      //   "width": image_dimensions.cover_image.width,
-      //   "height": image_dimensions.cover_image.height
-      // },
       mainEntityOfPage: {
         "@type": "WebPage",
         "@id": url
-      },
-      // description: description
+      }
     }
     const returnData =  {...baseData};
 
     // Conditionally set other properties based on
     // objects passed to shortcodes
+    const createAuthorObj = async (primaryAuthor) => {
+      const { website, twitter, facebook } = primaryAuthor;
+      const primaryAuthorImageUrl = primaryAuthor.profile_image ? primaryAuthor.profile_image : null;
+      const { width, height } = await probe(primaryAuthorImageUrl);
+
+      return {
+        '@type': 'Person',
+        name: primaryAuthor.name,
+        image: {
+          '@type': 'ImageObject',
+          url: domainReplacer(primaryAuthorImageUrl),
+          width,
+          height
+        },
+        url: domainReplacer(primaryAuthor.url), // check again later when using slugs throughout template and leaving URLs untouched
+        sameAs: [
+          website,
+          facebook ? `https://www.facebook.com/${facebook}` : null,
+          twitter ? twitter.replace('@', 'https://twitter.com/') : null
+        ].filter(url => url)
+      }
+    }
 
     // Clean this up later when we move to using slugs for permalinks
     if (data.url.startsWith('/')) returnData.url += data.url.substring(1);
@@ -247,45 +263,29 @@ module.exports = function(config) {
 
     if (data.description) returnData.description = data.description;
 
-    
+    if (type === 'article') {
+      if (data.published_at) returnData.datePublished = new Date(data.published_at).toISOString();
+      if (data.updated_at) returnData.dateModified = new Date(data.updated_at).toISOString();
+      if (data.tags && data.tags.length > 1) returnData.keywords = data.tags.length === 1 ? data.tags[0].name : data.tags.map(tag => tag.name);
+      if (data.excerpt) returnData.description = data.excerpt;
+      if (data.title) returnData.headline = data.title;
 
+      const authorObj = await createAuthorObj(data.primary_author);
+      returnData.author = { ...authorObj };
+    }
 
+    if (type === 'tag') {
+      returnData.name = data.name;
+    }
 
-    // eleventyComputed:
-    //   ldjson:
-    //     "@context": "https://schema.org"
-    //     "@type": "Article"
-    //     "publisher":
-    //       "@type": "Organization"
-    //       "name": "{{ site.title }}"
-    //       "url": "{{ site.url }}"
-    //       "logo":
-    //         "@type": "ImageObject"
-    //         "url": "{{ site.logo }}"
-    //     "author":
-    //       "@type": "Person"
-    //       "name": "{{ post.primary_author.name }}"
-    //       "image":
-    //         "@type": "ImageObject"
-    //         "url": "{{ post.primary_author.profile_image }}"
-    //       "url": "{{ site.url + post.primary_author.url }}"
-    //       "sameAs": [
-    //         "{{post.primary_author.website}}",
-    //         "https://facebook.com/{{post.primary_author.facebook}}",
-    //         "https://twitter.com/{{post.primary_author.twitter}}"
-    //       ]
-    //     "headline": "{{ post.title }}"
-    //     "url": "{{ post.url }}"
-    //     "datePublished": "{{ post.published_at }}"
-    //     "dateModified": "{{ post.updated_at }}"
-    //     "image":
-    //       "@type": "ImageObject"
-    //       "url": "{{ post.feature_image }}"
-    //     "description": "{{ post.excerpt }}"
-    //     "mainEntityOfPage": {
-    //       "@type": "WebPage",
-    //       "@id": "{{ site.url }}"
-    //     }
+    if (type === 'author') {
+      // This schema type is the only one without publisher info
+      delete returnData.publisher;
+      const authorObj = await createAuthorObj(data);
+      
+      returnData.sameAs = authorObj.sameAs;
+      returnData.name = authorObj.name;
+    }
 
     return JSON.stringify(returnData, null, '\t');
   }
