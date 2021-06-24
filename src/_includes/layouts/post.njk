@@ -15,7 +15,7 @@
                         </time>
                         {% if post.primary_tag %}
                             <span class="date-divider">/</span>
-                            <a href="{{ post.primary_tag.url }}">
+                            <a href="{{ post.primary_tag.path }}">
                                 #{{ post.primary_tag.name }}
                             </a>
                         {% endif %}
