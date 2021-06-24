@@ -5,7 +5,7 @@ pagination:
   alias: 'doc'
   addAllPagesToCollections: true
 layout: 'layouts/doc.njk'
-permalink: '/{{ doc.slug }}/'
+permalink: '{{ doc.path }}'
 ---
 
 {# pages are aliased as 'doc' to prevent conflict with the 11ty page object #}
