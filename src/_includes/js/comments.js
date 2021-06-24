@@ -29,7 +29,7 @@ function loadDiscourseComments() {
         // eslint-disable-next-line no-undef
         DiscourseEmbed = {
           discourseUrl,
-          discourseEmbedUrl: '{{ site.url + post.url }}'
+          discourseEmbedUrl: '{{ site.url + post.path }}'
         };
         var d = document.createElement('script');
         d.type = 'text/javascript';

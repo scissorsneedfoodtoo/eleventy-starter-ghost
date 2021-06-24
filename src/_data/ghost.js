@@ -98,7 +98,7 @@ module.exports = async () => {
       }
     }
 
-    post.url = stripDomain(post.url);
+    post.path = stripDomain(post.url);
     post.primary_author.url = stripDomain(post.primary_author.url);
     post.tags.map(tag => (tag.url = stripDomain(tag.url)));
     if (post.primary_tag) post.primary_tag.url = stripDomain(post.primary_tag.url);
@@ -107,11 +107,12 @@ module.exports = async () => {
     // Convert publish date into a Date object
     post.published_at = new Date(post.published_at);
 
+    // console.log(post);
     posts.push(post);
   }
 
   const pages = ghostPages.map(page => {
-    page.url = stripDomain(page.url);
+    page.path = stripDomain(page.url);
     page.primary_author.page = stripDomain(page.primary_author.url);
 
     // Convert publish date into a Date object

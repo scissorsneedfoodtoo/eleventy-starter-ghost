@@ -82,7 +82,7 @@
     <meta name="twitter:site" content="{{ site.twitter }}">
     <meta name="twitter:creator" content="{{ post.primary_author.twitter }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{ site.url + page.url }}">
+    <meta name="twitter:url" content="{{ site.url + post.path }}">
     <meta name="twitter:title" content="{{ title }} – {{ site.title }}">
     <meta name="twitter:description" content="{{ post.excerpt }}">
     <meta name="twitter:image" content="{{ post.feature_image }}">
@@ -95,7 +95,7 @@
     <meta itemprop="image" content="{{ post.feature_image }}">
 
     <!-- Facebook OpenGraph -->
-    <meta property="og:url" content="{{ site.url + page.url }}">
+    <meta property="og:url" content="{{ site.url + post.path }}/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ title }} – {{ site.title }}">
     <meta property="og:image" content="{{ post.feature_image }}">
