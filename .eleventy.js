@@ -248,7 +248,7 @@ module.exports = function(config) {
     }
 
     // Clean this up later when we move to using slugs for permalinks
-    if (data.url.startsWith('/')) returnData.url += data.url.substring(1);
+    returnData.url += data.path;
 
     if (data.cover_image || data.feature_image) {
       const imageUrl = data.cover_image ? data.cover_image : data.feature_image;

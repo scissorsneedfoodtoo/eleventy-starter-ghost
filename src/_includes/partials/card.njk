@@ -75,7 +75,7 @@
                                 {{ post.primary_author.name }}
                             </div>
                             {% if post.primary_author.profile_image %}
-                                <a href="{{ post.primary_author.url}}" class="static-avatar">
+                                <a href="{{ post.primary_author.path }}" class="static-avatar">
                                     {% 
                                         image
                                         post.primary_author.profile_image,
@@ -86,12 +86,12 @@
                                     %}
                                 </a>
                             {% else %}
-                                <a href="{{post.primary_author.url}}" class="static-avatar author-profile-image">
+                                <a href="{{ post.primary_author.path }}" class="static-avatar author-profile-image">
                                     {% include "partials/icons/avatar.njk" %}
                                 </a>
                             {% endif %}
                             <span class="meta-content">
-                                <a class="meta-item" href="{{post.primary_author.url}}">
+                                <a class="meta-item" href="{{ post.primary_author.path }}">
                                     {% if post.original_post %}
                                         {% t 'localization-meta.translator', { translatorName: post.primary_author.name } %}
                                     {% else %}
