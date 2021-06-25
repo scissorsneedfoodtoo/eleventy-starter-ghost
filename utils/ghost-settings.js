@@ -10,12 +10,20 @@ const ghostSettings = async () => {
     .catch(err => {
       console.error(err);
     });
+
+  if (process.env.SITE_URL) {
+    settings.url = process.env.SITE_URL;
+
+    const logoPath = `${settings.url}/assets/images/fcc_primary_large_24X210.svg`;
+    settings.logo = logoPath;
+
+    const coverImagePath = `${settings.url}/assets/images/fcc_ghost_publication_cover.png`;
+    settings.cover_image = coverImagePath;
+    settings.og_image = coverImagePath;
+    settings.twitter_image = coverImagePath;
+  }
+
   const logoDimensions = await probe(settings.logo);
-
-  if (process.env.SITE_URL) settings.url = process.env.SITE_URL;
-
-  settings.lang = siteLangHandler(settings.lang);
-
   settings.image_dimensions = {
     logo: {
       width: logoDimensions.width,
@@ -23,7 +31,7 @@ const ghostSettings = async () => {
     }
   }
 
-  // console.log(settings);
+  settings.lang = siteLangHandler(settings.lang);
 
   return settings;
 };

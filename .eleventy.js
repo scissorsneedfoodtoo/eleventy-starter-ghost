@@ -24,10 +24,8 @@ module.exports = function(config) {
   // Minify inline JS
   config.addNunjucksAsyncFilter("jsMin", jsMin);
 
-  // Allow passthrough for styles and scripts
-  config.addPassthroughCopy({'./src/_includes/css': './assets/css'});
-
-  config.addPassthroughCopy({'./src/_includes/js': './assets/js'});
+  // Allow passthrough for styles, scripts, and images
+  config.addPassthroughCopy({'./src/_includes/': './assets/'});
 
   // Minify CSS
   config.on('afterBuild', () => {
