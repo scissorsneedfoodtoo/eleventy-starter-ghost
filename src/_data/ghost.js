@@ -142,6 +142,8 @@ module.exports = async () => {
     });
   });
 
+  console.log(primaryAuthors);
+
   const tags = [];
   const visibleTags = posts.reduce((arr, post) => {
     return [

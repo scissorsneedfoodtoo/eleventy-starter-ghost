@@ -226,33 +226,19 @@ module.exports = function(config) {
     }
     const returnData =  {...baseData};
 
-    // Conditionally set other properties based on
-    // objects passed to shortcodes
-    const createAuthorObj = async (primaryAuthor) => {
-      const { website, twitter, facebook } = primaryAuthor;
-      const primaryAuthorImageUrl = primaryAuthor.profile_image ? primaryAuthor.profile_image : null;
-      const { width, height } = await probe(primaryAuthorImageUrl);
-
-      return {
-        '@type': 'Person',
-        name: primaryAuthor.name,
-        image: {
-          '@type': 'ImageObject',
-          url: domainReplacer(primaryAuthorImageUrl),
-          width,
-          height
-        },
-        url: domainReplacer(primaryAuthor.url), // check again later when using slugs throughout template and leaving URLs untouched
-        sameAs: [
-          website,
-          facebook ? `https://www.facebook.com/${facebook}` : null,
-          twitter ? twitter.replace('@', 'https://twitter.com/') : null
-        ].filter(url => url)
-      }
-    }
-
+    // Would probably be better to look up image dimensions in ghost.js,
+    // to prevent looking up the same dimensions for each author image.
+    // Could also keep a map of article or page feature_images, if we want
+    // to calculate all that there, too
     const createImageObj = async (url) => {
-      const { width, height } = await probe(url);
+      let width, height;
+      try {
+        const imageObj = await probe(url, { rejectUnauthorized: false });
+        width = imageObj.width;
+        height = imageObj.height;
+      } catch (err) {
+        console.log(err);
+      }
 
       return {
         "@type": "ImageObject",
@@ -260,6 +246,28 @@ module.exports = function(config) {
         width,
         height
       }
+    }
+
+    // Conditionally set other properties based on
+    // objects passed to shortcodes
+    const createAuthorObj = async (primaryAuthor) => {
+      const { website, twitter, facebook } = primaryAuthor;
+      const authorObj = {
+        '@type': 'Person',
+        name: primaryAuthor.name,
+        url: domainReplacer(primaryAuthor.url), // check again later when using slugs throughout template and leaving URLs untouched
+        sameAs: [
+          website ? website : null,
+          facebook ? `https://www.facebook.com/${facebook}` : null,
+          twitter ? twitter.replace('@', 'https://twitter.com/') : null
+        ].filter(url => url)
+      }
+
+      if (primaryAuthor.profile_image) {
+        authorObj.image = await createImageObj(primaryAuthor.profile_image);
+      }  
+
+      return authorObj;
     }
 
     // Remove first slash from path
@@ -279,26 +287,24 @@ module.exports = function(config) {
       if (data.title) returnData.headline = data.title;
 
       if (data.feature_image) {
-        const imageObj = await createImageObj(data.feature_image);
-        returnData.image = { ...imageObj };
+        returnData.image = await createImageObj(data.feature_image);
       }
 
-      const authorObj = await createAuthorObj(data.primary_author);
-      returnData.author = { ...authorObj };
+      returnData.author = await createAuthorObj(data.primary_author);
     }
 
     // Handle images for both types
     if (type === 'tag' || type === 'author') {
       if (data.cover_image || data.feature_image) {
         const imageUrl = data.cover_image ? data.cover_image : data.feature_image;
-        const imageObj = await createImageObj(imageUrl);
-        returnData.image = { ...imageObj };
+        returnData.image = await createImageObj(imageUrl);
       } else {
         delete returnData.image;
       }
     }
 
     if (type === 'tag') {
+      if (data.cover_image) returnData.image = await createImageObj(data.cover_image);
       returnData.name = data.name;
     }
 
