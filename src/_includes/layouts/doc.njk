@@ -45,7 +45,7 @@
 
 {% block scripts %}
     {% set js %}
-        {% include "js/fitvids.js" %}
+        {% include "assets/js/fitvids.js" %}
         document.addEventListener('DOMContentLoaded', () => {
             const postContent = document.querySelector('.post-full-content');
             if (postContent) fitVids(postContent);
@@ -83,8 +83,5 @@
 {%- endblock -%}
 
 {% block jsonLd %}
-    {% set structuredData %}
-        {% createJsonLd 'article', doc %}
-    {% endset %}
-    <script type="application/ld+json">{{ structuredData | jsMin | safe }}</script>
+    <script type="application/ld+json">{% createJsonLd 'article', doc %}</script>
 {% endblock %}

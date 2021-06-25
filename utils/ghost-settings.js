@@ -1,6 +1,8 @@
 const { api } = require('./ghost-api');
 const siteLangHandler = require('./site-lang-handler');
 const probe = require('probe-image-size');
+const { createReadStream } = require('fs');
+const path = require('path');
 
 const ghostSettings = async () => {
   const settings = await api.settings
@@ -11,23 +13,30 @@ const ghostSettings = async () => {
       console.error(err);
     });
 
-  if (process.env.SITE_URL) {
-    settings.url = process.env.SITE_URL;
+  if (process.env.SITE_URL) settings.url = process.env.SITE_URL;
 
-    const logoPath = `${settings.url}/assets/images/fcc_primary_large_24X210.svg`;
-    settings.logo = logoPath;
+  // Add passthrough image URLs to settings object
+  const logoPath = 'assets/images/fcc_primary_large_24X210.svg';
+  const logoUrl = `${settings.url}/${logoPath}`;
+  settings.logo = logoUrl;
 
-    const coverImagePath = `${settings.url}/assets/images/fcc_ghost_publication_cover.png`;
-    settings.cover_image = coverImagePath;
-    settings.og_image = coverImagePath;
-    settings.twitter_image = coverImagePath;
-  }
-
-  const logoDimensions = await probe(settings.logo);
+  const coverImagePath = 'assets/images/fcc_ghost_publication_cover.png';
+  const coverImageUrl = `${settings.url}/${coverImagePath}`;
+  settings.cover_image = coverImageUrl;
+  settings.og_image = coverImageUrl;
+  settings.twitter_image = coverImageUrl;
+  
+  // Determine image dimensions before server runs for structured data
+  const logoDimensions = await probe(createReadStream(path.resolve(__dirname, `../src/_includes/${logoPath}`)));
+  const coverImageDimensions = await probe(createReadStream(path.resolve(__dirname, `../src/_includes/${coverImagePath}`)))
   settings.image_dimensions = {
     logo: {
       width: logoDimensions.width,
       height: logoDimensions.height
+    },
+    cover_image: {
+      width: coverImageDimensions.width,
+      height: coverImageDimensions.height
     }
   }
 

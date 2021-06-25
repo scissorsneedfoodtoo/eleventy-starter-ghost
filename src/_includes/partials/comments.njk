@@ -1,7 +1,7 @@
 {% if post.tags | commentsEnabled %}
   {% block scripts %}
       {% set js %}
-          {% include "js/comments.js" %}
+          {% include "assets/js/comments.js" %}
       {% endset %}
       <script>{{ js | jsMin | safe }}</script>
   {% endblock %}

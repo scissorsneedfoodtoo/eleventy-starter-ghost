@@ -49,8 +49,5 @@
 {%- endblock -%}
 
 {% block jsonLd %}
-    {% set structuredData %}
-        {% createJsonLd 'author', author %}
-    {% endset %}
-    <script type="application/ld+json">{{ structuredData | jsMin | safe }}</script>
+    <script type="application/ld+json">{% createJsonLd 'author', author %}</script>
 {% endblock %}

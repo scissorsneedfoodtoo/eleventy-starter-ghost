@@ -25,7 +25,7 @@ module.exports = function(config) {
   config.addNunjucksAsyncFilter("jsMin", jsMin);
 
   // Allow passthrough for styles, scripts, and images
-  config.addPassthroughCopy({'./src/_includes/': './assets/'});
+  config.addPassthroughCopy({'./src/_includes/assets': './assets/'});
 
   // Minify CSS
   config.on('afterBuild', () => {
@@ -190,8 +190,8 @@ module.exports = function(config) {
 
   async function createJsonLdShortcode(type, data) {
     // Main site settings from Ghost API
-    let { url, logo, image_dimensions } = await settings;
-    url = `${domainReplacer(url)}/`;
+    let { url, logo, cover_image, image_dimensions } = await settings;
+    url = `${url}/`
     const typeMap = {
       index: 'WebSite',
       article: 'Article',
@@ -212,7 +212,13 @@ module.exports = function(config) {
           height: image_dimensions.logo.height
         }
       },
-      "url": url,
+      image: {
+        "@type": "ImageObject",
+        url: domainReplacer(cover_image),
+        width: image_dimensions.cover_image.width,
+        height: image_dimensions.cover_image.height
+      },
+      url: url,
       mainEntityOfPage: {
         "@type": "WebPage",
         "@id": url
@@ -245,31 +251,51 @@ module.exports = function(config) {
       }
     }
 
-    // Clean this up later when we move to using slugs for permalinks
-    returnData.url += data.path;
+    const createImageObj = async (url) => {
+      const { width, height } = await probe(url);
 
-    if (data.cover_image || data.feature_image) {
-      const imageUrl = data.cover_image ? data.cover_image : data.feature_image;
-      const { width, height } = await probe(imageUrl);
-      returnData.image = {
+      return {
         "@type": "ImageObject",
-        url: domainReplacer(imageUrl),
+        url,
         width,
         height
       }
     }
 
+    // Remove first slash from path
+    if (data.path) returnData.url += data.path.substring(1);
+
+    // Need to URL encode description
     if (data.description) returnData.description = data.description;
 
     if (type === 'article') {
       if (data.published_at) returnData.datePublished = new Date(data.published_at).toISOString();
       if (data.updated_at) returnData.dateModified = new Date(data.updated_at).toISOString();
-      if (data.tags && data.tags.length > 1) returnData.keywords = data.tags.length === 1 ? data.tags[0].name : data.tags.map(tag => tag.name);
+      // Need to filter out hidden tags first, then process
+      if (data.tags && data.tags.length > 1) returnData.keywords = data.tags.length === 1 ?
+        data.tags[0].name :
+        data.tags.map(tag => tag.name);
       if (data.excerpt) returnData.description = data.excerpt;
       if (data.title) returnData.headline = data.title;
 
+      if (data.feature_image) {
+        const imageObj = await createImageObj(data.feature_image);
+        returnData.image = { ...imageObj };
+      }
+
       const authorObj = await createAuthorObj(data.primary_author);
       returnData.author = { ...authorObj };
+    }
+
+    // Handle images for both types
+    if (type === 'tag' || type === 'author') {
+      if (data.cover_image || data.feature_image) {
+        const imageUrl = data.cover_image ? data.cover_image : data.feature_image;
+        const imageObj = await createImageObj(imageUrl);
+        returnData.image = { ...imageObj };
+      } else {
+        delete returnData.image;
+      }
     }
 
     if (type === 'tag') {
@@ -285,7 +311,8 @@ module.exports = function(config) {
       returnData.name = authorObj.name;
     }
 
-    return JSON.stringify(returnData, null, '\t');
+    return JSON.stringify(returnData, null, '\t'); // Pretty print for testing
+    // return JSON.stringify(returnData);
   }
 
   config.addNunjucksAsyncShortcode("createJsonLd", createJsonLdShortcode);

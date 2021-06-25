@@ -68,8 +68,5 @@
 {%- endblock -%}
 
 {% block jsonLd %}
-    {% set structuredData %}
-        {% createJsonLd 'tag', tag %}
-    {% endset %}
-    <script type="application/ld+json">{{ structuredData | jsMin | safe }}</script>
+    <script type="application/ld+json">{% createJsonLd 'tag', tag %}</script>
 {% endblock %}

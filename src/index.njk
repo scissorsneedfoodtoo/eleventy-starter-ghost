@@ -28,14 +28,11 @@ pagination:
 
 {% block scripts %}
     {% set js %}
-        {% include "js/time-ago.js" %}
+        {% include "assets/js/time-ago.js" %}
     {% endset %}
     <script>{{ js | jsMin | safe }}</script>
 {% endblock %}
 
 {% block jsonLd %}
-    {% set structuredData %}
-        {% createJsonLd 'index', site %}
-    {% endset %}
-    <script type="application/ld+json">{{ structuredData | jsMin | safe }}</script>
+    <script type="application/ld+json">{% createJsonLd 'index', site %}</script>
 {% endblock %}
