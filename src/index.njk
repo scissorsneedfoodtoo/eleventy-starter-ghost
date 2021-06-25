@@ -34,5 +34,8 @@ pagination:
 {% endblock %}
 
 {% block jsonLd %}
-    <script type="application/ld+json">{% createJsonLd 'index', site %}</script>
+    {% set structuredData %}
+        {% createJsonLd 'index', site %}
+    {% endset %}
+    <script type="application/ld+json">{{ structuredData | jsMin | safe }}</script>
 {% endblock %}

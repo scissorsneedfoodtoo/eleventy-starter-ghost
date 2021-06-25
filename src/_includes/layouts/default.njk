@@ -45,12 +45,6 @@
             <meta property="article:author" content="{{ site.url }}">
         {%- endblock -%}
 
-        {# {% if ldjson %}
-            <script type="application/ld+json">
-                {{ ldjson | dump(2) | safe }}
-            </script>
-        {% endif %} #}
-
         {% block jsonLd %}
         {% endblock %}
 
