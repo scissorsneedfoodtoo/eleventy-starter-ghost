@@ -53,6 +53,22 @@ const fetchFromGhost = async (endpoint, options) => {
   return posts;
 };
 
+const imageDimensionHandler = async (targetObj, type, mapObj, mapKey) => {
+  // Check map for existing dimensions
+  if (mapObj[mapKey] && mapObj[mapKey][type]) {
+    targetObj.image_dimensions = mapObj[mapKey];
+  } else {
+    // Get dimensions and append to targetObj and map
+    targetObj.image_dimensions = {...targetObj.image_dimensions};
+    mapObj[mapKey] = {...mapObj[mapKey]};
+
+    const { width, height } = await getImageDimensions(targetObj[type]);
+
+    targetObj.image_dimensions[type] = { width, height };
+    mapObj[mapKey][type] = { width, height };
+  }
+}
+
 module.exports = async () => {
   const ghostPosts = await fetchFromGhost('posts', {
     include: ['tags', 'authors'],
@@ -63,6 +79,7 @@ module.exports = async () => {
     filter: 'status:published'
   });
   const featureImageDimensions = {};
+  const authorImageDimensions = {};
 
   const posts = [];
   for (let i in ghostPosts) {
@@ -107,18 +124,15 @@ module.exports = async () => {
     post.authors.forEach(author => author.path = stripDomain(author.url));
 
     // Post image resolutions for structured data
-    if (post.feature_image) {
-      const currFeatureImage = post.feature_image;
-      post.image_dimensions = {};
+    if (post.feature_image) await imageDimensionHandler(post, 'feature_image', featureImageDimensions, post.feature_image);
 
-      // Check map for existing dimensions
-      if (featureImageDimensions[currFeatureImage]) {
-        post.image_dimensions.feature_image = featureImageDimensions[currFeatureImage];
-      } else {
-        const { width, height } = await getImageDimensions(post.feature_image);
-        post.image_dimensions.feature_image = { width, height};
-        featureImageDimensions[currFeatureImage] = { width, height };
-      }
+    // Author image resolutions for structured data
+    if (post.primary_author.profile_image) {
+      await imageDimensionHandler(post.primary_author, 'profile_image', authorImageDimensions, post.primary_author.slug);
+    }
+
+    if (post.primary_author.cover_image) {
+      await imageDimensionHandler(post.primary_author, 'cover_image', authorImageDimensions, post.primary_author.slug);
     }
 
     // Convert publish date into a Date object
@@ -132,6 +146,15 @@ module.exports = async () => {
     const page = ghostPages[i];
 
     page.path = stripDomain(page.url);
+
+    // Author image resolutions for structured data
+    if (page.primary_author.profile_image) {
+      await imageDimensionHandler(page.primary_author, 'profile_image', authorImageDimensions, page.primary_author.slug);
+    }
+
+    if (page.primary_author.cover_image) {
+      await imageDimensionHandler(page.primary_author, 'cover_image', authorImageDimensions, page.primary_author.slug);
+    }
 
     // Page image resolutions for structured data
     if (page.feature_image) {
@@ -151,28 +174,7 @@ module.exports = async () => {
 
   const authors = [];
   const primaryAuthors = getUniqueList(posts.map(post => post.primary_author), 'id');
-  for (let i in primaryAuthors) {
-    let author = primaryAuthors[i];
-
-    // Author image resolutions for structured data
-    if (author.profile_image || author.cover_image) author.image_dimensions = {};
-
-    if (author.profile_image) {
-      const { width, height } = await getImageDimensions(author.profile_image);
-      author.image_dimensions.profile_image = {
-        width,
-        height
-      }
-    } 
-    
-    if (author.cover_image) {
-      const { width, height } = await getImageDimensions(author.cover_image);
-      author.image_dimensions.cover_image = {
-        width,
-        height
-      }
-    }
-
+  primaryAuthors.forEach(author => {
     // Attach posts to their respective author
     const currAuthorPosts = posts.filter(post => post.primary_author.id === author.id);
 
@@ -192,7 +194,7 @@ module.exports = async () => {
         }
       });
     });
-  }
+  });
 
   const tags = [];
   const visibleTags = posts.reduce((arr, post) => {
@@ -202,13 +204,16 @@ module.exports = async () => {
     ]
   }, []);
   const allTags = getUniqueList(visibleTags, 'id');
-  allTags.forEach(tag => {
+  for (let i in allTags) {
+    const tag = allTags[i];
     // Attach posts to their respective tag
     const currTagPosts = posts.filter(post => post.tags.map(postTag => postTag.slug).includes(tag.slug));
     // Save post count to tag object to help determine popular tags
     tag.count = {
       posts: currTagPosts.length
     }
+
+    if (tag.feature_image) await imageDimensionHandler(tag, 'feature_image', featureImageDimensions, tag.feature_image);
 
     const paginatedCurrTagPosts = chunkArray(currTagPosts, postsPerPage);
 
@@ -224,7 +229,7 @@ module.exports = async () => {
         }
       });
     });
-  });
+  }
 
   const popularTags = [...allTags].sort((a, b) => 
     b.count.posts - a.count.posts ||
