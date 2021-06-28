@@ -279,10 +279,12 @@ module.exports = function(config) {
     if (type === 'article') {
       if (data.published_at) returnData.datePublished = new Date(data.published_at).toISOString();
       if (data.updated_at) returnData.dateModified = new Date(data.updated_at).toISOString();
-      // Need to filter out hidden tags first, then process
-      if (data.tags && data.tags.length > 1) returnData.keywords = data.tags.length === 1 ?
-        data.tags[0].name :
-        data.tags.map(tag => tag.name);
+      if (data.tags && data.tags.length > 1) {
+        // Filter out internal Ghost tags
+        const keywords = data.tags.map(tag => tag.name).filter(keyword => !keyword.startsWith('#'));
+
+        returnData.keywords = keywords.length === 1 ? keywords[0] : keywords;
+      };
       if (data.excerpt) returnData.description = data.excerpt;
       if (data.title) returnData.headline = data.title;
 
