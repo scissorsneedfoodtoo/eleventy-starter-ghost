@@ -2,13 +2,13 @@ const postsPerPage = process.env.POSTS_PER_PAGE;
 const { api, enApi } = require('../../utils/ghost-api');
 const getImageDimensions = require('../../utils/image-dimensions');
 
-const wait = seconds => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(seconds);
-    }, seconds * 1000);
-  });
-};
+// const wait = seconds => {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(seconds);
+//     }, seconds * 1000);
+//   });
+// };
 
 // Strip Ghost domain from urls
 const stripDomain = url => url.replace(process.env.GHOST_API_URL, "");
@@ -27,32 +27,6 @@ const chunkArray = (arr, size) => {
 
 const getUniqueList = (arr, key) => [...new Map(arr.map(item => [item[key], item])).values()];
 
-const fetchFromGhost = async (endpoint, options) => {
-  let currPage = 1;
-  let lastPage = 5;
-  let posts = [];
-
-  while (currPage && currPage <= lastPage) {
-    const data = await api[endpoint].browse({
-      ...options,
-      page: currPage
-    })
-    .catch(err => {
-      console.error(err);
-    });
-
-    data.forEach((post) => posts.push(post));
-
-    lastPage = data.meta.pagination.pages;
-    console.log(`Fetched ${endpoint} page ${currPage} of ${lastPage}...`);
-    currPage = data.meta.pagination.next;
-
-    await wait(0.25);
-  }
-
-  return posts;
-};
-
 const imageDimensionHandler = async (targetObj, type, mapObj, mapKey) => {
   // Check map for existing dimensions
   if (mapObj[mapKey] && mapObj[mapKey][type]) {
@@ -69,17 +43,72 @@ const imageDimensionHandler = async (targetObj, type, mapObj, mapKey) => {
   }
 }
 
+const fetchFromGhost = async (endpoint, options) => {
+  console.log(`Fetching ${endpoint}...`);
+  const data = [];
+  const promises = [];
+  const featureImageDimensions = {};
+  const authorImageDimensions = {};
+
+  const getGhostData = (page) => {
+    return api[endpoint].browse({
+      ...options,
+      page
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  // Get first page of results and set last page
+  const firstRes = await getGhostData(1);
+  let { pages, next } = firstRes.meta.pagination;
+
+  firstRes.forEach((post) => data.push(post));
+
+  while (next && next <= pages) {
+    promises.push(getGhostData(next));
+    next++;
+  }
+
+  const resolvedPromises = await Promise.all(promises);
+  resolvedPromises.forEach(res => res.forEach(post => data.push(post)));
+
+  // Get image dimensions and append to post / page
+  await Promise.all(
+    data.map(async post => {
+      // Post image resolutions for structured data
+      if (post.feature_image) await imageDimensionHandler(post, 'feature_image', featureImageDimensions, post.feature_image);
+
+      // Author image resolutions for structured data
+      if (post.primary_author.profile_image) {
+        await imageDimensionHandler(post.primary_author, 'profile_image', authorImageDimensions, post.primary_author.slug);
+      }
+
+      if (post.primary_author.cover_image) {
+        await imageDimensionHandler(post.primary_author, 'cover_image', authorImageDimensions, post.primary_author.slug);
+      }
+
+      post.tags.map(async tag => {
+        if (tag.feature_image) await imageDimensionHandler(tag, 'feature_image', featureImageDimensions, tag.feature_image);
+      });
+    })
+  );
+
+  return data;
+}
+
 module.exports = async () => {
   const ghostPosts = await fetchFromGhost('posts', {
     include: ['tags', 'authors'],
     filter: 'status:published'
   });
   const ghostPages = await fetchFromGhost('pages', {
-    include: ['authors'],
+    include: ['tags', 'authors'],
     filter: 'status:published'
   });
-  const featureImageDimensions = {};
-  const authorImageDimensions = {};
+
+  console.log(ghostPosts.length);
 
   const posts = [];
   for (let i in ghostPosts) {
@@ -123,18 +152,6 @@ module.exports = async () => {
     if (post.primary_tag) post.primary_tag.path = stripDomain(post.primary_tag.url);
     post.authors.forEach(author => author.path = stripDomain(author.url));
 
-    // Post image resolutions for structured data
-    if (post.feature_image) await imageDimensionHandler(post, 'feature_image', featureImageDimensions, post.feature_image);
-
-    // Author image resolutions for structured data
-    if (post.primary_author.profile_image) {
-      await imageDimensionHandler(post.primary_author, 'profile_image', authorImageDimensions, post.primary_author.slug);
-    }
-
-    if (post.primary_author.cover_image) {
-      await imageDimensionHandler(post.primary_author, 'cover_image', authorImageDimensions, post.primary_author.slug);
-    }
-
     // Convert publish date into a Date object
     post.published_at = new Date(post.published_at);
 
@@ -147,25 +164,25 @@ module.exports = async () => {
 
     page.path = stripDomain(page.url);
 
-    // Author image resolutions for structured data
-    if (page.primary_author.profile_image) {
-      await imageDimensionHandler(page.primary_author, 'profile_image', authorImageDimensions, page.primary_author.slug);
-    }
+    // // Author image resolutions for structured data
+    // if (page.primary_author.profile_image) {
+    //   await imageDimensionHandler(page.primary_author, 'profile_image', authorImageDimensions, page.primary_author.slug);
+    // }
 
-    if (page.primary_author.cover_image) {
-      await imageDimensionHandler(page.primary_author, 'cover_image', authorImageDimensions, page.primary_author.slug);
-    }
+    // if (page.primary_author.cover_image) {
+    //   await imageDimensionHandler(page.primary_author, 'cover_image', authorImageDimensions, page.primary_author.slug);
+    // }
 
-    // Page image resolutions for structured data
-    if (page.feature_image) {
-      const { width, height } = await getImageDimensions(page.feature_image);
-      page.image_dimensions = {
-        feature_image: {
-          width,
-          height
-        }
-      }
-    }
+    // // Page image resolutions for structured data
+    // if (page.feature_image) {
+    //   const { width, height } = await getImageDimensions(page.feature_image);
+    //   page.image_dimensions = {
+    //     feature_image: {
+    //       width,
+    //       height
+    //     }
+    //   }
+    // }
 
     // Convert publish date into a Date object
     page.published_at = new Date(page.published_at);
@@ -213,7 +230,7 @@ module.exports = async () => {
       posts: currTagPosts.length
     }
 
-    if (tag.feature_image) await imageDimensionHandler(tag, 'feature_image', featureImageDimensions, tag.feature_image);
+    // if (tag.feature_image) await imageDimensionHandler(tag, 'feature_image', featureImageDimensions, tag.feature_image);
 
     const paginatedCurrTagPosts = chunkArray(currTagPosts, postsPerPage);
 

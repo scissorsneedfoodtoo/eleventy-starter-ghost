@@ -230,15 +230,8 @@ module.exports = function(config) {
     // to prevent looking up the same dimensions for each author image.
     // Could also keep a map of article or page feature_images, if we want
     // to calculate all that there, too
-    const createImageObj = async (url) => {
-      let width, height;
-      try {
-        const imageObj = await probe(url, { rejectUnauthorized: false });
-        width = imageObj.width;
-        height = imageObj.height;
-      } catch (err) {
-        console.log(err);
-      }
+    const createImageObj = (url, obj) => {
+      let { width, height } = obj;
 
       return {
         "@type": "ImageObject",
@@ -250,12 +243,19 @@ module.exports = function(config) {
 
     // Conditionally set other properties based on
     // objects passed to shortcodes
-    const createAuthorObj = async (primaryAuthor) => {
-      const { website, twitter, facebook } = primaryAuthor;
+    const createAuthorObj = (primaryAuthor) => {
+      const {
+        name,
+        profile_image,
+        image_dimensions,
+        website,
+        twitter,
+        facebook
+      } = primaryAuthor;
       const authorObj = {
         '@type': 'Person',
-        name: primaryAuthor.name,
-        url: domainReplacer(primaryAuthor.url), // check again later when using slugs throughout template and leaving URLs untouched
+        name,
+        url: domainReplacer(url), // check again later when using slugs throughout template and leaving URLs untouched
         sameAs: [
           website ? website : null,
           facebook ? `https://www.facebook.com/${facebook}` : null,
@@ -263,8 +263,8 @@ module.exports = function(config) {
         ].filter(url => url)
       }
 
-      if (primaryAuthor.profile_image) {
-        authorObj.image = await createImageObj(primaryAuthor.profile_image);
+      if (profile_image) {
+        authorObj.image = createImageObj(profile_image, image_dimensions.profile_image);
       }  
 
       return authorObj;
@@ -289,7 +289,7 @@ module.exports = function(config) {
       if (data.title) returnData.headline = data.title;
 
       if (data.feature_image) {
-        returnData.image = await createImageObj(data.feature_image);
+        returnData.image = await createImageObj(data.feature_image, data.image_dimensions.feature_image);
       }
 
       returnData.author = await createAuthorObj(data.primary_author);
@@ -297,16 +297,17 @@ module.exports = function(config) {
 
     // Handle images for both types
     if (type === 'tag' || type === 'author') {
-      if (data.cover_image || data.feature_image) {
-        const imageUrl = data.cover_image ? data.cover_image : data.feature_image;
-        returnData.image = await createImageObj(imageUrl);
+      if (data.cover_image) {
+        returnData.image = createImageObj(data.cover_image, data.image_dimensions.cover_image);
+      } else if (data.feature_image) {
+        returnData.image = createImageObj(data.feature_image, data.image_dimensions.feature_image);
       } else {
         delete returnData.image;
       }
     }
 
     if (type === 'tag') {
-      if (data.cover_image) returnData.image = await createImageObj(data.cover_image);
+      if (data.cover_image) returnData.image = createImageObj(data.cover_image, data.image_dimensions.cover_image);
       returnData.name = data.name;
     }
 
