@@ -1,6 +1,6 @@
 const { api } = require('./ghost-api');
 const siteLangHandler = require('./site-lang-handler');
-const probe = require('probe-image-size');
+const getImageDimensions = require('./image-dimensions');
 const { createReadStream } = require('fs');
 const path = require('path');
 
@@ -27,8 +27,8 @@ const ghostSettings = async () => {
   settings.twitter_image = coverImageUrl;
   
   // Determine image dimensions before server runs for structured data
-  const logoDimensions = await probe(createReadStream(path.resolve(__dirname, `../src/_includes/${logoPath}`)));
-  const coverImageDimensions = await probe(createReadStream(path.resolve(__dirname, `../src/_includes/${coverImagePath}`)))
+  const logoDimensions = await getImageDimensions(createReadStream(path.resolve(__dirname, `../src/_includes/${logoPath}`)));
+  const coverImageDimensions = await getImageDimensions(createReadStream(path.resolve(__dirname, `../src/_includes/${coverImagePath}`)));
   settings.image_dimensions = {
     logo: {
       width: logoDimensions.width,

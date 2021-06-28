@@ -1,5 +1,6 @@
 const postsPerPage = process.env.POSTS_PER_PAGE;
 const { api, enApi } = require('../../utils/ghost-api');
+const getImageDimensions = require('../../utils/image-dimensions');
 
 const wait = seconds => {
   return new Promise(resolve => {
@@ -61,6 +62,7 @@ module.exports = async () => {
     include: ['authors'],
     filter: 'status:published'
   });
+  const featureImageDimensions = {};
 
   const posts = [];
   for (let i in ghostPosts) {
@@ -104,23 +106,73 @@ module.exports = async () => {
     if (post.primary_tag) post.primary_tag.path = stripDomain(post.primary_tag.url);
     post.authors.forEach(author => author.path = stripDomain(author.url));
 
+    // Post image resolutions for structured data
+    if (post.feature_image) {
+      const currFeatureImage = post.feature_image;
+      post.image_dimensions = {};
+
+      // Check map for existing dimensions
+      if (featureImageDimensions[currFeatureImage]) {
+        post.image_dimensions.feature_image = featureImageDimensions[currFeatureImage];
+      } else {
+        const { width, height } = await getImageDimensions(post.feature_image);
+        post.image_dimensions.feature_image = { width, height};
+        featureImageDimensions[currFeatureImage] = { width, height };
+      }
+    }
+
     // Convert publish date into a Date object
     post.published_at = new Date(post.published_at);
 
     posts.push(post);
   }
 
-  const pages = ghostPages.map(page => {
+  const pages = []
+  for (let i in ghostPages) {
+    const page = ghostPages[i];
+
     page.path = stripDomain(page.url);
+
+    // Page image resolutions for structured data
+    if (page.feature_image) {
+      const { width, height } = await getImageDimensions(page.feature_image);
+      page.image_dimensions = {
+        feature_image: {
+          width,
+          height
+        }
+      }
+    }
 
     // Convert publish date into a Date object
     page.published_at = new Date(page.published_at);
-    return page;
-  });
+    pages.push(page);
+  }
 
   const authors = [];
   const primaryAuthors = getUniqueList(posts.map(post => post.primary_author), 'id');
-  primaryAuthors.forEach(author => {
+  for (let i in primaryAuthors) {
+    let author = primaryAuthors[i];
+
+    // Author image resolutions for structured data
+    if (author.profile_image || author.cover_image) author.image_dimensions = {};
+
+    if (author.profile_image) {
+      const { width, height } = await getImageDimensions(author.profile_image);
+      author.image_dimensions.profile_image = {
+        width,
+        height
+      }
+    } 
+    
+    if (author.cover_image) {
+      const { width, height } = await getImageDimensions(author.cover_image);
+      author.image_dimensions.cover_image = {
+        width,
+        height
+      }
+    }
+
     // Attach posts to their respective author
     const currAuthorPosts = posts.filter(post => post.primary_author.id === author.id);
 
@@ -140,9 +192,7 @@ module.exports = async () => {
         }
       });
     });
-  });
-
-  console.log(primaryAuthors);
+  }
 
   const tags = [];
   const visibleTags = posts.reduce((arr, post) => {
