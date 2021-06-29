@@ -12,7 +12,6 @@ const i18next = require("./i18n/config");
 const dayjs = require("./utils/dayjs");
 const cacheBuster = require("@mightyplow/eleventy-plugin-cache-buster");
 const { settings } = require('./utils/ghost-settings');
-const probe = require('probe-image-size');
 
 module.exports = function(config) {
   // Minify HTML
