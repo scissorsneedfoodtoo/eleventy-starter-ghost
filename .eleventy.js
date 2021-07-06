@@ -161,27 +161,16 @@ module.exports = function(config) {
     return new Date(dateObj).toISOString().split("T")[0];
   });
 
+  // Format dates for RSS feed
+  const buildDateFormatterShortcode = dateStr => {
+    const dateObj = dateStr ? new Date(dateStr) : new Date();
+    return dateObj.toUTCString();
+  }
+
+  config.addNunjucksShortcode("buildDateFormatter", buildDateFormatterShortcode);
+
   config.addFilter("commentsEnabled", tagsArr => {
     return !tagsArr.map(tag => tag.name).includes('#disable-comments');
-  });
-
-  // Don't ignore the same files ignored in the git repo
-  config.setUseGitIgnore(false);
-
-  // The RSS feed seems to only work with static data or async collections,
-  // so make another call to the Ghost API here (alternative would be to write
-  // JSON to a separate file in _data/)
-  config.addCollection("rssFeed", async function(collection) {
-    collection = await api.posts
-      .browse({
-        include: "tags,authors",
-        limit: "10"
-      })
-      .catch(err => {
-        console.error(err);
-      });
-
-    return collection;
   });
 
   // This counts on all images, including the site logo, being stored like on Ghost with the
@@ -195,6 +184,8 @@ module.exports = function(config) {
     .replace(/&#39;/g, '&#x27;')
     .replace(/`/g, '&#x60;')
     .replace(/=/g, '&#x3D;');
+
+  config.addNunjucksShortcode("fullEscaper", fullEscaper);
 
   async function createJsonLdShortcode(type, data) {
     // Main site settings from Ghost API
@@ -332,6 +323,9 @@ module.exports = function(config) {
   }
 
   config.addNunjucksAsyncShortcode("createJsonLd", createJsonLdShortcode);
+
+  // Don't ignore the same files ignored in the git repo
+  config.setUseGitIgnore(false);
 
   // Display 404 page in BrowserSnyc
   config.setBrowserSyncConfig({

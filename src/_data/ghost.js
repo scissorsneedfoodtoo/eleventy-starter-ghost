@@ -231,11 +231,14 @@ module.exports = async () => {
     a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en', { sensitivity: 'base' }
   )).slice(0, 15);
 
+  const rssFeed = posts.slice(0, 10);
+
   return {
     posts,
     pages,
     authors,
     tags,
-    popularTags
+    popularTags,
+    rssFeed
   };
 };
