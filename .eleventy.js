@@ -12,6 +12,7 @@ const i18next = require("./i18n/config");
 const dayjs = require("./utils/dayjs");
 const cacheBuster = require("@mightyplow/eleventy-plugin-cache-buster");
 const { settings } = require('./utils/ghost-settings');
+const { escape } = require('lodash');
 
 module.exports = function(config) {
   // Minify HTML
@@ -187,6 +188,14 @@ module.exports = function(config) {
   // same directory structure
   const domainReplacer = url => url.replace(process.env.GHOST_API_URL, process.env.SITE_URL);
 
+  // Mimic Ghost/Handlebars escaping
+  // raw: & < > " ' ` =
+  // html-escaped: &amp; &lt; &gt; &quot; &#x27; &#x60; &#x3D;
+  const fullEscaper = s => escape(s)
+    .replace(/&#39;/g, '&#x27;')
+    .replace(/`/g, '&#x60;')
+    .replace(/=/g, '&#x3D;');
+
   async function createJsonLdShortcode(type, data) {
     // Main site settings from Ghost API
     let { url, logo, cover_image, image_dimensions } = await settings;
@@ -256,7 +265,7 @@ module.exports = function(config) {
         name,
         url: domainReplacer(url), // check again later when using slugs throughout template and leaving URLs untouched
         sameAs: [
-          website ? website : null,
+          website ? fullEscaper(website) : null,
           facebook ? `https://www.facebook.com/${facebook}` : null,
           twitter ? twitter.replace('@', 'https://twitter.com/') : null
         ].filter(url => url)
@@ -272,8 +281,7 @@ module.exports = function(config) {
     // Remove first slash from path
     if (data.path) returnData.url += data.path.substring(1);
 
-    // Need to URL encode description
-    if (data.description) returnData.description = data.description;
+    if (data.description) returnData.description = fullEscaper(data.description);
 
     if (type === 'article') {
       if (data.published_at) returnData.datePublished = new Date(data.published_at).toISOString();
@@ -284,8 +292,8 @@ module.exports = function(config) {
 
         returnData.keywords = keywords.length === 1 ? keywords[0] : keywords;
       };
-      if (data.excerpt) returnData.description = data.excerpt;
-      if (data.title) returnData.headline = data.title;
+      if (data.excerpt) returnData.description = fullEscaper(data.excerpt);
+      if (data.title) returnData.headline = fullEscaper(data.title);
 
       if (data.feature_image) {
         returnData.image = await createImageObj(data.feature_image, data.image_dimensions.feature_image);
@@ -316,7 +324,7 @@ module.exports = function(config) {
       const authorObj = await createAuthorObj(data);
       
       returnData.sameAs = authorObj.sameAs;
-      returnData.name = authorObj.name;
+      returnData.name = fullEscaper(authorObj.name);
     }
 
     return JSON.stringify(returnData, null, '\t'); // Pretty print for testing
