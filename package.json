@@ -1,7 +1,7 @@
 {
-  "name": "eleventy-starter-ghost",
+  "name": "eleventy-news",
   "version": "1.0.0",
-  "description": "A starter template to build websites with Ghost & Eleventy",
+  "description": "Eleventy for https://www.freecodecamp.org/news",
   "main": ".eleventy.js",
   "scripts": {
     "start": "npm run dev",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TryGhost/eleventy-starter-ghost.git"
+    "url": "https://github.com/freeCodeCamp/news"
   },
   "keywords": [
     "eleventy",
@@ -23,12 +23,18 @@
     "site",
     "jamstack"
   ],
-  "author": "David Darnes",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/TryGhost/eleventy-starter-ghost/issues"
+  "author": {
+    "email": "team@freecodecamp.org",
+    "name": "freeCodeCamp.org",
+    "url": "https://www.freecodecamp.org"
   },
-  "homepage": "https://github.com/TryGhost/eleventy-starter-ghost#readme",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/freeCodeCamp/news/issues"
+  },
+  "contributors": [
+    "https://github.com/freeCodeCamp/news/graphs/contributors"
+  ],
   "dependencies": {
     "@11ty/eleventy": "^0.12.1",
     "@11ty/eleventy-plugin-rss": "^1.1.1",
