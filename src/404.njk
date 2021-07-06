@@ -3,6 +3,7 @@ permalink: 404.html
 ---
 
 {% extends 'layouts/default.njk' %}
+{% from "partials/card.njk" import card %}
 
 {% set codeinjection_head = doc.codeinjection_head %}
 {% set codeinjection_foot = doc.codeinjection_foot %}
@@ -20,17 +21,14 @@ permalink: 404.html
                 </section>
             </div>
         </main>
-
-        {# {{#get "posts" include="tags,authors" limit="4"}}
         <aside class="outer">
             <div class="inner">
                 <div class="post-feed">
-                    {{#foreach posts}}
-                    {{> "post-card"}}
-                    {{/foreach}}
+                    {% for post in ghost.posts.slice(0, 4) %}
+                        {{ card(post, loop.index0) }}
+                    {% endfor %}
                 </div>
             </div>
         </aside>
-        {{/get}} #}
     </div>
 {% endblock %}

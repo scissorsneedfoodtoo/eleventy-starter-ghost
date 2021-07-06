@@ -233,12 +233,15 @@ module.exports = async () => {
 
   const rssFeed = posts.slice(0, 10);
 
+  const fourOhFourPosts = posts.slice(0, 4);
+
   return {
     posts,
     pages,
     authors,
     tags,
     popularTags,
-    rssFeed
+    rssFeed,
+    fourOhFourPosts
   };
 };
